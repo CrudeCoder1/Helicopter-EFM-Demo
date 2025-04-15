@@ -3,7 +3,8 @@ Helicopter EFM Demo for DCS World using the AH-6J as the airframe.
 
 Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 
-Change log
+
+## Change log
 
 0.4 13 October 2020
 - Added option to remove aiming dot (under special options)
@@ -20,7 +21,7 @@ Change log
 - Changed rockets in loadout from practice to HE and added White Phosphorus
 - Added menu background by Silvrav
 - Added segmented display to fuel gauge
-EFM:
+- EFM:
 - Lift now affected by missing rotor blades
 - Further reduced pitch-back at high speed
 - First implementation of ground effect and VRS introduced
@@ -33,7 +34,7 @@ EFM:
 - Added trim controls
 - Added controls indicator
 - M134 minigun now drops spent shells
-EFM:
+- EFM:
 - labeled data tables so they are easier to understand their affect on the FM
 - reduced rotational instability during straight and level flight
 
@@ -51,9 +52,9 @@ EFM:
 - Updated DCS API (wHumanCustomPhysicsAPI) with newest version
  
 0.11 23 March 2020
--Added more network animations for multiplayer
--Added option for copilot to take control
--Added Mainpanel layout diagram in Doc folder
+- Added more network animations for multiplayer
+- Added option for copilot to take control
+- Added Mainpanel layout diagram in Doc folder
 
 0.1 22 March 2020
 - Initial Release
