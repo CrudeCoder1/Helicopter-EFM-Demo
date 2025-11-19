@@ -1,0 +1,4 @@
+wave = "Effects/EngineTV3117InL"
+outer_radius = 1000
+position = {0.0, 0.0, -0.5} 
+pitch = 1.122

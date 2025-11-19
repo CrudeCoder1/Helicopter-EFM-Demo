@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="AH6.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AH6.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="UtilityFunctions.h" />
+    <ClInclude Include="Aerodynamics\AH6Aero.h">
+      <Filter>Aerodynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="Aerodynamics\AH6AeroData.h">
+      <Filter>Aerodynamics</Filter>
+    </ClInclude>
+    <ClInclude Include="EquationsOfMotion\AH6EquationsOfMotion.h">
+      <Filter>EquationsOfMotion</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AH6Engine.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Atmosphere\AH6Atmosphere.h">
+      <Filter>Atmosphere</Filter>
+    </ClInclude>
+    <ClInclude Include="Inputs\AH6Inputs.h">
+      <Filter>Inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ED_FM_Utility.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FM\wHumanCustomPhysicsAPI.h">
+      <Filter>include\FM</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\AH6FuelSystem.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AH6Constants.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="Airframe\AH6Airframe.h">
+      <Filter>Airframe</Filter>
+    </ClInclude>
+    <ClInclude Include="Electrics\AH6ElectricSystem.h">
+      <Filter>Electrics</Filter>
+    </ClInclude>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Filter Include="Aerodynamics">
+      <UniqueIdentifier>{85cac936-532d-42ee-bb93-fa92a9082ee1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EquationsOfMotion">
+      <UniqueIdentifier>{10b1275e-62af-4fa4-a24e-f6622d5e1a71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{2a589438-685e-419e-a028-e49caa20811e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Atmosphere">
+      <UniqueIdentifier>{fc3280db-4851-4500-8c0a-a6335717b2cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FlightControls">
+      <UniqueIdentifier>{a631e22a-a48d-4b68-8446-701e99146567}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Inputs">
+      <UniqueIdentifier>{a6f16d21-9208-4eca-98fd-bf413d528e4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{66f9c8b6-c5fe-45a4-8422-fdad2278c5c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\FM">
+      <UniqueIdentifier>{b32eeedc-a414-4987-8e4b-eb5b5ab2fb46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Electrics">
+      <UniqueIdentifier>{8d2233c9-616b-4f2c-8565-6c5b6a73949d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Airframe">
+      <UniqueIdentifier>{8c166f06-b752-4c2f-bc8a-34cd95f66da4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hydraulics">
+      <UniqueIdentifier>{291bd64d-dfda-4d93-bea3-5f26bc7296a1}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

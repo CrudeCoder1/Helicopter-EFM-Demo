@@ -1,0 +1,15 @@
+Engine Cold Start Procedure
+1. Power Selector Switch up for battery (B) or down for ground power (LCTRL+B) (ground crew must connect ground power for this option)
+2. Hold Starter Switch (Home) until N1 RPM is above 13%
+3. Push Throttle Idle cutoff (End) to allow fuel flow to start and continue holding Starter Switch until N1 RPM reaches 58+%
+4. Turn on Generator and Inverter Switches
+5. Increase N1 RPM to 100% by turning throttle (Page Up)
+
+
+Rearming is only possible with engine off
+
+
+N: Toggle Night Vision Goggles
+LALT+L: Flashlight
+1: Pilot Seat
+2: Copilot Seat

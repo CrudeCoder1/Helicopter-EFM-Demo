@@ -1,0 +1,4 @@
+inherit = "HelicopterFan"
+wave = "Effects/Rotor"
+gain = 1.89
+cone_outer_gain = 1.26
