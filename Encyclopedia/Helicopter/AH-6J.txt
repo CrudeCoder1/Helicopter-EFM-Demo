@@ -1,0 +1,30 @@
+AH-6J
+Helicopter/AH-6J.png
+AH-6J
+
+Name: AH-6J Little Bird
+Type: Attack Helicopter
+Crew: 2
+Length: 9.9m (32 ft 7 in)
+Rotor Diameter: 8.3m (27 ft 5 in)
+Height: 2.67 m (8 ft 9 in)
+
+Weight empty: 1156 Kg (2548 lb)
+Normal weight: 1360 Kg (3000 lb)
+Maximum weight: 1792 Kg (3950 lb)
+Maximum internal fuel: 454 l (120 US gal)
+Service ceiling: 5,700 m (18,700 ft)
+Maximum range: 430 Km (232 nmi)
+Maximum speed: 282km/h (152 knots)
+
+
+Armament: 
+Guns:
+2 x 50cal GAU-19
+2 x 7.62mm M134 Minigun
+
+Missiles (Equipped on later models with FLIR installed):
+2 x AGM-114 Hellfire air-to-ground missile.
+
+Rockets:
+2 x Hydra 70 rocket pods with 7 or 19 rockets per pod

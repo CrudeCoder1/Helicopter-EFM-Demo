@@ -18,7 +18,8 @@ elements["PNT-015"]	= default_2_position_tumb(_("Inverter Switch, ON/OFF"),				d
 --elements["PNT-022"]	= default_2_position_tumb(_("Start Pump Switch, ON/OFF"),		devices.FUEL_SYSTEM,	device_commands.FuelPumpSw,		22)
 
 -- Engines
-elements["PNT-004"]	= default_axis(_("Throttle"),	devices.EFM_HELPER, EFM_commands.throttle, 0, nil, 0.04) -- using blank arg # so actual arg can be controlled later
+--elements["PNT-004"]	= default_axis(_("Throttle"),	devices.EFM_HELPER, EFM_commands.throttle, 4, nil, 0.06) -- using blank arg # so actual arg can be controlled later
+elements["PNT-004"]	= default_axis_limited(_("Throttle"),devices.EFM_HELPER,EFM_commands.throttle,4,nil,0.07,true,false,{-1,1})
 elements["PNT-005"]	= default_2_position_tumb(_("Throttle Cutoff"),	devices.EFM_HELPER, EFM_commands.throttleIdleCutoff, 5)
 
 -- Weapons panel

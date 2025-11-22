@@ -34,8 +34,8 @@ base.level			 = NOCLIP_LEVEL
 base.isdraw			 = true
 base.change_opacity  = false
 base.isvisible		 = false
-base.element_params  = {"DC_POWER_AVAIL"}  
-base.controllers     = {{"opacity_using_parameter",0}} 
+base.element_params  = {"DC_Bus_Voltage"}  
+base.controllers     = {{"parameter_in_range",0,18,30}} 
 Add(base)
 
 
@@ -48,8 +48,8 @@ GMT_hours.init_pos        = {center[1]-.01,center[2],center[3]}
 GMT_hours.alignment       = "RightBottom"
 GMT_hours.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
 GMT_hours.formats         = {"%02.0f"} 
-GMT_hours.element_params  = {"GMT_HOURS","DC_POWER_AVAIL"}
-GMT_hours.controllers     = {{"text_using_parameter",0,0},{"opacity_using_parameter",1}}  
+GMT_hours.element_params  = {"GMT_HOURS","DC_Bus_Voltage"}
+GMT_hours.controllers     = {{"text_using_parameter",0,0},{"parameter_in_range",1,18,30}}  
 AddElement(GMT_hours)
 
 local GMT_mins           = CreateElement "ceStringPoly"
@@ -59,8 +59,8 @@ GMT_mins.init_pos        = center
 GMT_mins.alignment       = "CenterBottom"
 GMT_mins.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
 GMT_mins.formats         = {"%02.0f"} 
-GMT_mins.element_params  = {"GMT_MINS","DC_POWER_AVAIL"}
-GMT_mins.controllers     = {{"text_using_parameter",0,0},{"opacity_using_parameter",1}}  
+GMT_mins.element_params  = {"GMT_MINS","DC_Bus_Voltage"}
+GMT_mins.controllers     = {{"text_using_parameter",0,0},{"parameter_in_range",1,18,30}}  
 AddElement(GMT_mins)
 
 local GMT_sec           = CreateElement "ceStringPoly"
@@ -70,8 +70,8 @@ GMT_sec.init_pos        = {center[1]+.01,center[2],center[3]}
 GMT_sec.alignment       = "LeftBottom"
 GMT_sec.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
 GMT_sec.formats         = {"%02.0f"} 
-GMT_sec.element_params  = {"GMT_SECS","DC_POWER_AVAIL"}
-GMT_sec.controllers     = {{"text_using_parameter",0,0},{"opacity_using_parameter",1}}  
+GMT_sec.element_params  = {"GMT_SECS","DC_Bus_Voltage"}
+GMT_sec.controllers     = {{"text_using_parameter",0,0},{"parameter_in_range",1,18,30}}  
 AddElement(GMT_sec)
 
 
@@ -82,8 +82,8 @@ LT_hours.init_pos        = {center[1]-.01,center[2]-0.005,center[3]}
 LT_hours.alignment       = "RightTop"
 LT_hours.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
 LT_hours.formats         = {"%02.0f"} 
-LT_hours.element_params  = {"LT_HOURS","DC_POWER_AVAIL"}
-LT_hours.controllers     = {{"text_using_parameter",0,0},{"opacity_using_parameter",1}}  
+LT_hours.element_params  = {"LT_HOURS","DC_Bus_Voltage"}
+LT_hours.controllers     = {{"text_using_parameter",0,0},{"parameter_in_range",1,18,30}}  
 AddElement(LT_hours)
 
 local LT_mins           = CreateElement "ceStringPoly"
@@ -93,6 +93,6 @@ LT_mins.init_pos        = {center[1],center[2]-0.005,center[3]}
 LT_mins.alignment       = "CenterTop"
 LT_mins.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
 LT_mins.formats         = {"%02.0f"} 
-LT_mins.element_params  = {"GMT_MINS","DC_POWER_AVAIL"}
-LT_mins.controllers     = {{"text_using_parameter",0,0},{"opacity_using_parameter",1}}  
+LT_mins.element_params  = {"GMT_MINS","DC_Bus_Voltage"}
+LT_mins.controllers     = {{"text_using_parameter",0,0},{"parameter_in_range",1,18,30}}  
 AddElement(LT_mins)

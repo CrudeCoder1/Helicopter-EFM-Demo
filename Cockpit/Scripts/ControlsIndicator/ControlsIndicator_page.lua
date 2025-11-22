@@ -17,10 +17,12 @@ local ds           = 0.05 * size
 local collec_shift = 0.3*size
 local rud_shift    = 0.1*size
 
+local lineMat = MakeMaterial("arcade.tga",{200, 0, 0, 200})
+
 base       			= CreateElement "ceMeshPoly"
 base.name		    = "base"
 base.primitivetype  = "triangles"
-base.material       = MakeMaterial(nil,{255, 0, 0, 100})
+base.material       = MakeMaterial(nil,{100, 100, 100, 80})
 base.vertices       = {{-(size + collec_shift + rud_shift + 3.0*line_width + ds), -(box_height )},
                        {-(size + collec_shift + rud_shift + 3.0*line_width + ds),  box_height  }, 
                        { size  + ds                            ,  box_height  },
@@ -40,7 +42,7 @@ pitch_scale.vertices       = {{-size   , -line_width},
                               { size   ,  line_width},
                               { size   , -line_width}}
 pitch_scale.indices		   = default_box_indices
-pitch_scale.material	   = MakeMaterial("arcade.tga",{255, 0, 0, 255})
+pitch_scale.material	   = lineMat
 pitch_scale.init_rot       = {90,0,0}
 pitch_scale.tex_params	   = {256/512,176.5/512,0.5*tex_scale,2*tex_scale}
 pitch_scale.parent_element = base.name
@@ -53,7 +55,7 @@ roll_scale.vertices       = {{-size   , -line_width},
                              { size   ,  line_width},
                              { size   , -line_width}}
 roll_scale.indices		  = default_box_indices
-roll_scale.material	      = MakeMaterial("arcade.tga",{255, 0, 0, 255})
+roll_scale.material	      = lineMat
 roll_scale.tex_params	  = {256/512,176.5/512,tex_scale,2*tex_scale}
 roll_scale.parent_element = base.name
 AddElement(roll_scale)
@@ -66,7 +68,7 @@ stick_position.vertices         = {{-stick_index_sz, -stick_index_sz},
                                    { stick_index_sz,  stick_index_sz},
                                    { stick_index_sz, -stick_index_sz}}
 stick_position.indices          = default_box_indices
-stick_position.material	       = MakeMaterial("arcade.tga",{255, 0, 0, 255})
+stick_position.material	       = lineMat
 stick_position.tex_params	   = {330/512,365.5 / 512,2*tex_scale,2*tex_scale/0.8}
 stick_position.element_params  = {"PITCH_INPUT","ROLL_INPUT"} 
 stick_position.controllers    = {{"move_left_right_using_parameter",1, size},
@@ -89,7 +91,7 @@ rudder_index.controllers 	 = {{"move_up_down_using_parameter",0, size}}
 rudder_index.init_rot       = {90,0}
 rudder_index.parent_element = rudder_scale.name
 rudder_index.tex_params	   = {256/512,176.5/512,0.5*tex_scale/3,2*tex_scale/3}
-rudder_index.material	       = MakeMaterial("arcade.tga",{255, 0, 0, 255})
+rudder_index.material	       = lineMat
 AddElement(rudder_index)
 
 
@@ -112,7 +114,7 @@ collective_index.element_params  = {"COLLECTIVE_INPUT"}
 collective_index.controllers = {{"move_up_down_using_parameter",0, size}}
 collective_index.tex_params	   = {256/512,176.5/512,0.5*tex_scale/3,2*tex_scale/3}
 collective_index.init_rot    = {-90,0,0}
-collective_index.material=MakeMaterial("arcade.tga",{255, 0, 0, 255})
+collective_index.material=lineMat
 collective_index.parent_element  = collective_scale.name
 AddElement(collective_index)
 

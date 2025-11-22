@@ -4,7 +4,7 @@ local dev = GetSelf()
 local update_time_step = 0.01 --update will be called 10 times per second
 make_default_activity(update_time_step)
 
-elec_dc_ok  = get_param_handle("DC_POWER_AVAIL")
+DCbusVoltage  = get_param_handle("DC_Bus_Voltage")
 
 function post_initialize()
 
@@ -38,7 +38,7 @@ end
 function update() 
 --local lightState = get_aircraft_draw_argument_value(208)    
  --print_message_to_user(":"..lightState)
-	if elec_dc_ok:get()==1 then
+	if DCbusVoltage:get()>=15 then
 	--	set_aircraft_draw_argument_value(51,extlight_taxi) -- 51 is animation to move landing lights open, 208 for actual light beam
 		set_aircraft_draw_argument_value(208,extLDG) 
 		set_aircraft_draw_argument_value(190,navBrightness)

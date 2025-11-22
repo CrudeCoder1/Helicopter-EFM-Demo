@@ -1,18 +1,15 @@
-local count = 0
-local function counter()
-	count = count + 1
-	return count
-end
--------DEVICE ID-------
-devices = {}
-devices["ELECTRIC_SYSTEM"]	= counter()
-devices["WEAPON_SYSTEM"]	= counter()
-devices["RWR"] 				= counter()
-devices["EXTLIGHTS"]		= counter()
-devices["UHF_RADIO"]		= counter()
-devices["INTERCOM"]			= counter()
-devices["HELMET_DEVICE"] 	= counter() 
-devices["AVIONICS"]			= counter()
-devices["DIGITAL_CLOCK"]	= counter() 
-devices["KNEEBOARD"]		= counter() 
-devices["EFM_HELPER"]		= counter() 
+-------DEVICE IDs, Do not change unless updated in EFM
+devices = {
+-- 0 reserved for mainpanel
+ELECTRIC_SYSTEM = 1,
+WEAPON_SYSTEM 	= 2,
+RWR		 		= 3,
+EXTLIGHTS		= 4,
+UHF_RADIO		= 5,
+INTERCOM		= 6,
+NVGs			= 7,
+AVIONICS		= 8,
+DIGITAL_CLOCK 	= 9,
+KNEEBOARD 		= 10,
+EFM_HELPER 		= 11,
+}

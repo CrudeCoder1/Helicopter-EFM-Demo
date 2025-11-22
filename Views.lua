@@ -8,7 +8,7 @@ ViewSettings = {
 		EyePoint               = {0.1,0.10,0.0}, -- Distance from pivot point. To simulate pivot around human neck, use {0.16,0.1,0}
 		ShoulderSize		   = 0.25,
 		Allow360rotation	   = false,
-		limits_6DOF            = {x = {0.0,2},y ={-1,1},z = {-1,1},roll = 90.000000},-- movement back/front bottom/top right/left
+		limits_6DOF            = {x = {0.0,2},y ={-1,1},z = {-1,1},roll = 90.000000},-- limits movement back/front bottom/top right/left
 	},
 	[2] = {-- player slot 2 (copilot)
 		CameraViewAngleLimits  = {20,140},

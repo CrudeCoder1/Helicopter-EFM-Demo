@@ -197,7 +197,7 @@ function AH6_GAU19(tbl)
 	tbl.effective_fire_distance = 1800
 	tbl.drop_cartridge 			= 204 -- drop shell shape/size from  aircraft_gun_mounts.lua
 	tbl.muzzle_pos				= tbl.muzzle_pos or {0,0,0} -- all position from connector
-	tbl.muzzle_pos_connector	= tbl.muzzle_pos_connector 	or  "Gun_point" -- all position from connector
+	tbl.muzzle_pos_connector	= tbl.muzzle_pos_connector 	or  "Gun_Point" -- all position from connector
 	tbl.azimuth_initial 		= tbl.azimuth_initial    or 0   
 	tbl.elevation_initial 		= tbl.elevation_initial  or 0   
 	if  tbl.effects == nil then

@@ -13,7 +13,7 @@ local dev = GetSelf()
 
 rwrPower = get_param_handle("RWR_POWER")
 rwrBrightness = get_param_handle("RWR_BRIGHTNESS")
-elec_dc_ok  = get_param_handle("DC_POWER_AVAIL")
+DCbusVoltage  = get_param_handle("DC_Bus_Voltage")
 rwrPower:set(0)
 rwrBrightness:set(1)
 
@@ -136,7 +136,7 @@ local tmp_type
 		
 	end
 
-	if elec_dc_ok:get()==1 and RWR_Power then
+	if DCbusVoltage:get()>=20 and RWR_Power then
 		rwrPower:set(1) -- used for the indicator/display
 	else
 		rwrPower:set(0)

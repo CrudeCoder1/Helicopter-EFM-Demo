@@ -7,7 +7,7 @@ local update_rate = 0.01
 make_default_activity(update_rate)
 
 
-elec_dc_ok  = get_param_handle("DC_POWER_AVAIL")
+DCbusVoltage  = get_param_handle("DC_Bus_Voltage")
 
 local pickle_engaged = false
 
@@ -31,7 +31,7 @@ local singleFired = 0
 local rocketSelect = 0
 local gunSelect = 0
 function update() 
-    if master_arm == 1 and elec_dc_ok:get() == 1 then
+    if master_arm == 1 and DCbusVoltage:get() >=20 then
 		for i=1,5,1 do
 			local station = WeaponSystem:get_station_info(i-1)
 			if rocketSelect > 0 and rocketSelect < 0.9 and i==1 then
@@ -127,7 +127,7 @@ local syncTest=	get_aircraft_draw_argument_value(1000)
     elseif command == Keys.PickleOff then
         pickle_engaged = false 
 		singleFired = 0
-    elseif command == Keys.TriggerFireOn and master_arm == 1 and elec_dc_ok:get() == 1 then
+    elseif command == Keys.TriggerFireOn and master_arm == 1 and DCbusVoltage:get() >=20 then
 		
 		if gunSelect > 0 and gunSelect < 0.9 then
 			local gunInfo = WeaponSystem:get_station_info(0)

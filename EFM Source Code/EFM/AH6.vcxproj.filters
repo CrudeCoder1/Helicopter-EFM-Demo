@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="dllmain.cpp" />
+    <ClCompile Include="AH6.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="FlightModel\Aero.cpp">
+      <Filter>FlightModel</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\MatrixFunction.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ED_FM_Utility.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GlobalParams.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="include\GlobalData.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\ndinterp.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\UtilityFunctions.h">
+      <Filter>Include</Filter>
+    </ClInclude>
+    <ClInclude Include="FlightModel\Aero.h">
+      <Filter>FlightModel</Filter>
+    </ClInclude>
+    <ClInclude Include="FlightModel\aero_coefficients.h">
+      <Filter>FlightModel</Filter>
+    </ClInclude>
+    <ClInclude Include="FlightModel\NACA0015_airfoil.h">
+      <Filter>FlightModel</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\ElectricSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Engine.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\FuelSystem.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="AH6.h" />
+    <ClInclude Include="include\Cockpit\CockpitAPI.h">
+      <Filter>Include\Cockpit</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Cockpit\ccParametersAPI.h">
+      <Filter>Include\Cockpit</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FM\wHumanCustomPhysicsAPI.h">
+      <Filter>Include\FM</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FM\API_Declare.h">
+      <Filter>Include\FM</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\Damage.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="EFMData.h" />
+    <ClInclude Include="Systems\FlightControls.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Include">
+      <UniqueIdentifier>{fdd1be88-2c3e-4a66-a54f-970e23b29946}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FlightModel">
+      <UniqueIdentifier>{7d55bebb-831f-4a26-9172-a6aa4b25b1ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Systems">
+      <UniqueIdentifier>{6fccdc7f-00a5-4c1b-8888-fa7261a32493}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\FM">
+      <UniqueIdentifier>{16bece50-40a8-496f-af86-d8dabcf62713}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Include\Cockpit">
+      <UniqueIdentifier>{15ed02a8-831d-44f3-a1e4-57dfd3f47fe3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

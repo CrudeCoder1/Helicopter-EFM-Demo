@@ -4,13 +4,14 @@ declare_plugin(self_ID,
 dirName			= current_mod_path,
 displayName		= _("AH-6J Little Bird"),
 fileMenuName	= _("AH-6J"),
---version 		= "0.4",
 state			= "installed",
+--developerName	= _(" "),
 info			= _("The AH-6J Little Bird is a light attack helicopter used by the 160th Special Operations Aviation Regiment (SOAR) of the US Army."),
+encyclopedia_path = current_mod_path..'/Encyclopedia',
 
 binaries =
 { 
-'AH6',
+'AH6J',
 },
 Skins =
 {
@@ -63,9 +64,9 @@ make_view_settings('AH-6', ViewSettings, SnapViews)
 local FM =
 {
 	[1] = self_ID,
-	[2] = "AH6", -- name of dll
+	[2] = "AH6J", -- name of dll
 	center_of_mass = {0,0,0},  -- center of mass position relative to object 3d model center for empty aircraft
-	moment_of_inertia = {446, 979, 1219, 128}, -- moment of inertia of empty (Ixx,Iyy,Izz,Ixz)	in kgm^2 
+	moment_of_inertia = {458, 1008, 1242, 129},--{446, 979, 1219, 128}, -- moment of inertia of empty (Ixx,Iyy,Izz,Ixz DCS axis)/(Ix,Iz,Iy,Ixy normal axis) [kg*m^2]
 }
 
 make_flyable('AH-6',current_mod_path..'/Cockpit/Scripts/', FM, current_mod_path..'/comm.lua')

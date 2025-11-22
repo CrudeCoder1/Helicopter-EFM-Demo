@@ -5,6 +5,16 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 
 
 ## Change log
+0.5.0
+- Complete EFM rewrite:
+  - Flight model changed from linear table-based, to dynamic Blade Element Theory
+  - Engine model reworked including governor, oil pressure/temp, torque and clutch model added
+- Vertical Instrument Displays (VIDS) more accurate with red, yellow, and green
+- Throttle handle and cutoff behavior more accurate
+- Control indicator colors adjusted
+- AI cruise speed corrected
+- Added Encyclopedia
+- New GAU-19 model and texture
 
 0.4 13 October 2020
 - Added option to remove aiming dot (under special options)

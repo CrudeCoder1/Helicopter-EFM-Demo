@@ -24,8 +24,8 @@ base.level			 = 5
 base.isdraw			 = true
 base.change_opacity  = false
 base.isvisible		 = false
-base.element_params  = {"DC_POWER_AVAIL"}  
-base.controllers     = {{"parameter_in_range",0,0.9,1.1}} 
+base.element_params  = {"DC_Bus_Voltage"}  
+base.controllers     = {{"parameter_in_range",0,15,30}}
 Add(base)
 
 local bearing           = CreateElement "ceStringPoly"
