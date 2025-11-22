@@ -22,10 +22,10 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 - Added menu background by Silvrav
 - Added segmented display to fuel gauge
 - EFM:
- - Lift now affected by missing rotor blades
- - Further reduced pitch-back at high speed
- - First implementation of ground effect and VRS introduced
- - Added experimental N2 and TOT simulation
+  - Lift now affected by missing rotor blades
+  - Further reduced pitch-back at high speed
+  - First implementation of ground effect and VRS introduced
+  - Added experimental N2 and TOT simulation
 
 0.3 26 June 2020
 - Added GAU-19 .50 cal gattling gun
@@ -35,8 +35,8 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 - Added controls indicator
 - M134 minigun now drops spent shells
 - EFM:
- - labeled data tables so they are easier to understand their affect on the FM
- - reduced rotational instability during straight and level flight
+  - labeled data tables so they are easier to understand their affect on the FM
+  - reduced rotational instability during straight and level flight
 
 0.21 20 June 2020
 - Fixed throttle wrap-around when using keyboard
