@@ -8,6 +8,7 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 0.6.0
 - Added New External and cockpit models (WIP)
 - Added New textures (WIP)
+- Added new M134 model and textures
 - Added New collision model
 - Added Skid suspension
 - Added New rotor blur
@@ -86,3 +87,8 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 
 0.1 22 March 2020
 - Initial Release
+
+Credits:
+Modelled using Blender 4
+Textured in Substance Painter
+M134 model downloaded from https://sketchfab.com/3d-models/minigun-m-134-2961cd5d09844921b045761108956470 and modified (CC Attribution)

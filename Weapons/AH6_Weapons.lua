@@ -129,15 +129,15 @@ function M134(tbl)
     tbl.aft_gun_mount           = false
     tbl.effective_fire_distance = 1000
     tbl.drop_cartridge          = 205	--drop shell shape/size from  aircraft_gun_mounts.lua
-    tbl.muzzle_pos              = tbl.muzzle_pos            or  {0.886,-0.259,0}     -- all position from connector
-    tbl.muzzle_pos_connector    = tbl.muzzle_pos_connector  or  "Gun_point" -- all position from connector
+    tbl.muzzle_pos              = {0.948,-0.04,0}     -- all position from connector
+    tbl.muzzle_pos_connector    = "Gun_Point" -- all position from connector
     tbl.azimuth_initial         = tbl.azimuth_initial       or  0
     tbl.elevation_initial       = tbl.elevation_initial     or  0
     if  tbl.effects == nil then
         tbl.effects = {{ name = "FireEffect"     , arg = tbl.effect_arg_number or 436 },
                        { name = "HeatEffectExt"  , shot_heat = 7.823, barrel_k = 0.462 * 16.0},
                        { name = "SmokeEffect"},
-					   { name = "GatlingEffect", arg = 800, barrels_n = 6, spin_up_t = 1, spin_down_t = 0.01}
+					   { name = "GatlingEffect", arg = 1, barrels_n = 6, spin_up_t = 1, spin_down_t = 0.01}
 					   }
     end
     return declare_weapon(tbl)
