@@ -5,7 +5,25 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 
 
 ## Change log
-0.5.0
+0.6.0
+- Added New External and cockpit models (WIP)
+- Added New textures (WIP)
+- Added New collision model
+- Added Skid suspension
+- Added New rotor blur
+- Added Blade droop
+- Added rotor brake
+- Added multiple options for aiming mark (dot, '+', 'X', and circle)
+- Added Lights and brightness controls for
+	- External lights
+	- Internal panel and post lights
+	- DHI and VIDS brightness and test switches
+	- Clock and radar altimeter
+- Added ME options to add or remove doors and IR suppressor (cosmetic only)
+- Added clock controls and Elapsed Time mode
+- Fixed overlapping key binds
+
+0.5.0 22 Nov 2025
 - Complete EFM rewrite:
   - Flight model changed from linear table-based, to dynamic Blade Element Theory
   - Engine model reworked including governor, oil pressure/temp, torque and clutch model added

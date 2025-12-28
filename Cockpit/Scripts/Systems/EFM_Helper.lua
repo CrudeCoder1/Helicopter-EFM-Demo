@@ -8,7 +8,7 @@ make_default_activity(update_rate)
 local dev = GetSelf()
 
 local SHOW_CONTROLS  = get_param_handle("SHOW_CONTROLS")
-local option_aimingMarkRemove = get_plugin_option_value("AH-6J","aimingMarkRemove","local")
+local option_aimingMark = get_plugin_option_value("AH-6J","aimingMarkOption","local")
 
 
 function post_initialize()
@@ -28,12 +28,22 @@ function post_initialize()
 		dev:performClickableAction(EFM_commands.inverterSwitch,0)
     end
 	
-	if option_aimingMarkRemove == true then
+	if option_aimingMark == 0 then
 		set_aircraft_draw_argument_value(510,1)
 	else
 		set_aircraft_draw_argument_value(510,0)
 	end
 	
+	if option_aimingMark == 1 then
+		set_aircraft_draw_argument_value(511,0)
+	elseif option_aimingMark == 2 then
+		set_aircraft_draw_argument_value(511,0.25)
+	elseif option_aimingMark == 3 then
+		set_aircraft_draw_argument_value(511,0.5)
+	elseif option_aimingMark == 4 then
+		set_aircraft_draw_argument_value(511,0.75)
+	end
+	get_param_handle("DC_Bus_Voltage"):set(28)-- allows electronics to be on before closing briefing window
 	--show_param_handles_list()--see all param handles in-game
 end
 
@@ -44,12 +54,12 @@ dev:listen_command(Keys.ExtPwrSwitch)
 dev:listen_command(Keys.ThrottleIncrease)
 dev:listen_command(Keys.ThrottleDecrease)
 dev:listen_command(Keys.ThrottleCutoff)
-dev:listen_command(Keys.showControlInd)
+dev:listen_command(Keys.iCommandPlane_ShowControls)
 
 function SetCommand(command,value)
 	PwrSwpos = get_cockpit_draw_argument_value(17)
-	Throtpos = get_cockpit_draw_argument_value(4)
-	CutOffpos = get_cockpit_draw_argument_value(5)
+	Throtpos = get_cockpit_draw_argument_value(154)
+	CutOffpos = get_cockpit_draw_argument_value(155)
 	if command == Keys.BattSwitch then
 		if PwrSwpos == 1 then
 			dev:performClickableAction(EFM_commands.batterySwitch,0)
@@ -79,7 +89,7 @@ function SetCommand(command,value)
 	elseif command==Keys.ThrottleCutoff then
 		dev:performClickableAction(EFM_commands.throttleIdleCutoff,1-CutOffpos)
 		dispatch_action(nil,EFM_commands.throttleIdleCutoff,1-CutOffpos)
-	elseif command == Keys.showControlInd then
+	elseif command == Keys.iCommandPlane_ShowControls then
 		SHOW_CONTROLS:set(1-SHOW_CONTROLS:get())
 		
 		

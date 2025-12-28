@@ -17,11 +17,15 @@ function post_initialize()
     WeaponSystem:performClickableAction(device_commands.SalvoSw,0,true)
     local birth = LockOn_Options.init_conditions.birth_place	--"GROUND_COLD","GROUND_HOT","AIR_HOT"
     if birth=="GROUND_HOT" or birth=="AIR_HOT" then 	 
-        WeaponSystem:performClickableAction(device_commands.MasterArm,1,true) 	
+        WeaponSystem:performClickableAction(device_commands.MasterArm,1)
+		WeaponSystem:performClickableAction(device_commands.LftGunPwr,1)
+		WeaponSystem:performClickableAction(device_commands.RhtGunPwr,1)
     elseif birth=="GROUND_COLD" then
-        WeaponSystem:performClickableAction(device_commands.MasterArm,0,true)
+        WeaponSystem:performClickableAction(device_commands.MasterArm,0)
+		WeaponSystem:performClickableAction(device_commands.LftGunPwr,0)
+		WeaponSystem:performClickableAction(device_commands.RhtGunPwr,0)
     end
-	set_aircraft_draw_argument_value(1000,0)
+	--set_aircraft_draw_argument_value(1000,0)
 end
 
 
@@ -30,13 +34,18 @@ local release_interval = 0.10 -- time between each shot
 local singleFired = 0
 local rocketSelect = 0
 local gunSelect = 0
+local LeftGunPower = false
+local LeftGunArmed = false
+local RightGunPower = false
+local RightGunArmed = false
+
 function update() 
     if master_arm == 1 and DCbusVoltage:get() >=20 then
 		for i=1,5,1 do
 			local station = WeaponSystem:get_station_info(i-1)
-			if rocketSelect > 0 and rocketSelect < 0.9 and i==1 then
+			if rocketSelect <= 0 and i==1 then
 				allowRocketShoot=true
-			elseif rocketSelect > 0.34 and i==5 then
+			elseif rocketSelect >= 0 and i==5 then
 				allowRocketShoot=true
 			else 
 				allowRocketShoot=false
@@ -60,31 +69,31 @@ function update()
 	local gun0Info = WeaponSystem:get_station_info(0)
 	local gun1Info = WeaponSystem:get_station_info(1)
 	if gun1Info.weapon.level2== wsType_Shell then
-		set_aircraft_draw_argument_value(501,1)	-- draws the right ammo box if the gun is mounted
+		set_aircraft_draw_argument_value(1001,1)	-- draws the left ammo box if the gun is mounted
 	else 
 		if gun0Info.weapon.level2== wsType_Shell then
-			set_aircraft_draw_argument_value(501,1)	-- draws the right ammo box if the gun is mounted
+			set_aircraft_draw_argument_value(1001,1)	-- draws the left ammo box if the gun is mounted
 		else
-			set_aircraft_draw_argument_value(501,0)
+			set_aircraft_draw_argument_value(1001,0)
 		end
 	end
 	
 	local gun3Info = WeaponSystem:get_station_info(3)
 	local gun4Info = WeaponSystem:get_station_info(4)
 	if gun3Info.weapon.level2== wsType_Shell then
-		set_aircraft_draw_argument_value(502,1)	-- draws the right ammo box if the gun is mounted
+		set_aircraft_draw_argument_value(1002,1)	-- draws the right ammo box if the gun is mounted
 	else 
 		if gun4Info.weapon.level2== wsType_Shell then
-			set_aircraft_draw_argument_value(502,1)	-- draws the right ammo box if the gun is mounted
+			set_aircraft_draw_argument_value(1002,1)	-- draws the right ammo box if the gun is mounted
 		else
-			set_aircraft_draw_argument_value(502,0)
+			set_aircraft_draw_argument_value(1002,0)
 		end
 	end
 	
 	
 	--syncSwitches()
 end
-
+--[[
 local previousSwitchState = 0
 function syncSwitches()
 local syncTest=	get_aircraft_draw_argument_value(1000)
@@ -93,7 +102,7 @@ local syncTest=	get_aircraft_draw_argument_value(1000)
 	end
 	previousSwitchState=syncTest
 end
-
+--]]
 
 WeaponSystem:listen_command(Keys.PickleOn)
 WeaponSystem:listen_command(Keys.PickleOff)
@@ -108,7 +117,7 @@ WeaponSystem:listen_command(device_commands.GunSelector)
 WeaponSystem:listen_command(device_commands.JettSwCover)
 
 function SetCommand(command,value)
-local syncTest=	get_aircraft_draw_argument_value(1000)
+--local syncTest=	get_aircraft_draw_argument_value(1000)
 	if command == device_commands.JettSw then
 		if value == 1 then
 		WeaponSystem:emergency_jettison(0)
@@ -122,6 +131,16 @@ local syncTest=	get_aircraft_draw_argument_value(1000)
 		rocketSelect = value
 	elseif command == device_commands.GunSelector then
 		gunSelect = value
+		
+	elseif command == device_commands.LftGunPwr then
+		LeftGunPower = value > 0.0
+	elseif command == device_commands.LftGunArm then
+		LeftGunArmed = value > 0.0
+	elseif command == device_commands.RhtGunPwr then
+		RightGunPower = value > 0.0
+	elseif command == device_commands.RhtGunArm then
+		RightGunArmed = value > 0.0
+		
 	elseif command == Keys.PickleOn then
         pickle_engaged = true
     elseif command == Keys.PickleOff then
@@ -129,14 +148,14 @@ local syncTest=	get_aircraft_draw_argument_value(1000)
 		singleFired = 0
     elseif command == Keys.TriggerFireOn and master_arm == 1 and DCbusVoltage:get() >=20 then
 		
-		if gunSelect > 0 and gunSelect < 0.9 then
+		if LeftGunPower and LeftGunArmed then
 			local gunInfo = WeaponSystem:get_station_info(0)
 			if gunInfo.weapon.level2 == wsType_Shell then -- prevent shooting rockets if those are mounted
 				WeaponSystem:launch_station(0)
 			end
 			WeaponSystem:launch_station(1)
 		end
-		if gunSelect > 0.65 then
+		if RightGunPower and RightGunArmed then
 			local gunInfo = WeaponSystem:get_station_info(4)
 			if gunInfo.weapon.level2 == wsType_Shell then -- prevent shooting rockets if those are mounted
 				WeaponSystem:launch_station(4)

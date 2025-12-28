@@ -31,16 +31,17 @@ enum InternalAnimationArgs
 	INT_StickPitch = 1,
 	INT_StickRoll = 2,
 	INT_Collective = 3,
-	INT_Throttle = 4,
-	INT_IdleCutoff = 5,
+	INT_Pedals = 4,
+	INT_Throttle = 154,
+	INT_IdleCutoff = 155,
 
-	INT_N1rpmNeedle = 118,
-	INT_N1rpmNeedleSmall = 119,
-	INT_OilPressNeedle = 120,
-	INT_OilTempNeedle = 121,
-	INT_DCAmpsNeedle = 122,
+	INT_N1rpmNeedle = 320,
+	INT_N1rpmNeedleSmall = 321,
+	INT_OilPressNeedle = 319,
+	INT_OilTempNeedle = 318,
+	INT_DCAmpsNeedle = 322,
 	//123 slip ball
-	INT_OATNeedle = 124,
+	INT_OATNeedle = 328,
 };
 
 
@@ -49,11 +50,13 @@ enum ExternalAnimationArgs
 	EXT_Collective = 9,
 	EXT_CyclicRoll = 11,
 	EXT_CyclicPitch = 15,
-	EXT_RotorSpin = 37,//this is control arg
-	EXT_TRspin = 40,
+	//EXT_Pedals = 17,
+	EXT_RotorDroop = 36,
+	EXT_RotorSpin = 37,//this is control arg, actual arg is 40
+	EXT_TRspin = 42,//this is control arg, actual arg is 41
 	EXT_NavLights = 190,
 	EXT_LandingLight = 208,
-	EXT_TRcollective = 500,
+	EXT_TRcollective = 17,
 	//510 aiming mark
 };
 
@@ -73,6 +76,7 @@ enum AH6InputCommands
 	trimDown = 3018,
 	trimLeft = 3019,
 	trimRight = 3020,
+	rotorBrake = 3021,
 
 
 

@@ -3,7 +3,7 @@ dialog = {
 		["containerPlugin"] = {
 			["children"] = {
 			
-				------------ aiming mark check box ---------------------
+				--[[---------- aiming mark check box ---------------------
 				["aimingMarkRemoveCheckbox"] = {
 					["params"] = {
 						["bounds"] = {
@@ -15,7 +15,7 @@ dialog = {
 						["enabled"] = true,
 						["state"] = true,
 						["tabOrder"] = 0,
-						["text"] = "$COCKPITOPTION",
+						["text"] = "Remove Aiming Mark",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0,
@@ -26,8 +26,51 @@ dialog = {
 											},
 								},
 					["type"] = "CheckBox",
+				},--]]
+				------------------ Aiming Mark Dropdown -----------------
+				["aimingMarkOptionComboList"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 180,
+							["x"] = 200,
+							["y"] = 100,
+						},
+						["enabled"] = true,
+						["tabOrder"] = 0,
+						["text"] = "Item1",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "comboListSkin_options",
+						},
+					},
+					["type"] = "ComboList",
 				},
-				
+				["aimingMarkOptionLabel"] = {
+					["params"] = {
+						["bounds"] = {
+							["h"] = 24,
+							["w"] = 188,
+							["x"] = 57,
+							["y"] = 100,
+						},
+						["enabled"] = true,
+						["text"] = "Aiming Mark",
+						["tooltip"] = "",
+						["visible"] = true,
+						["zindex"] = 0,
+					},
+					["skin"] = {
+						["params"] = {
+							["name"] = "staticOptionsCaptionSkin",
+						},
+					},
+					["type"] = "Static",
+				},
 				------------ plane title ------------------------ 
 				["nameLabel"] = {
 					["params"] = {
@@ -38,7 +81,7 @@ dialog = {
 							["y"] = 42,
 						},
 						["enabled"] = true,
-						["text"] = "$PLANENAME",
+						["text"] = "AH-6J",
 						["tooltip"] = "",
 						["visible"] = true,
 						["zindex"] = 0,

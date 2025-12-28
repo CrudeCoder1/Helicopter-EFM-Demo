@@ -1,4 +1,4 @@
-local self_ID = "AH-6"
+local self_ID = "AH-6J"
 declare_plugin(self_ID,
 {
 dirName			= current_mod_path,
@@ -23,7 +23,7 @@ Skins =
 Missions =
 {
 	{
-		name	= _("AH-6"),
+		name	= _("AH-6J"),
 		dir		= "Missions",
 	},
 },
@@ -36,7 +36,7 @@ LogBook =
 },
 InputProfiles = 
 {
-	["AH-6"] = current_mod_path .. '/Input',	
+	["AH-6J"] = current_mod_path .. '/Input',	
 },
 Options =
 {
@@ -44,31 +44,33 @@ Options =
         name		= _("AH-6J"),
         nameId		= "AH-6J",
         dir			= "Options",
-        CLSID		= "{AH-6J options}"
+        CLSID		= "{AH-6J options}",
+		--allow_in_simulation = true
     },
 },
 })
 -------------------------------------------------------------------------------
 mount_vfs_model_path(current_mod_path.."/Shapes")
+mount_vfs_model_path(current_mod_path.."/Cockpit/Shapes")
 --mount_vfs_liveries_path (current_mod_path.."/Liveries")
 mount_vfs_texture_path(current_mod_path.."/Textures")
-mount_vfs_texture_path(current_mod_path.."/Textures/Avionics")--for textures used in cockpit systems i.e. digital fonts
+mount_vfs_texture_path(current_mod_path.."/Textures/AH6J_ExternalTextures")
+mount_vfs_texture_path(current_mod_path.."/Cockpit/Textures/AH6J_CockpitTextures")
+mount_vfs_texture_path(current_mod_path.."/Cockpit/Textures/Avionics")--for textures used in cockpit systems i.e. digital fonts
 mount_vfs_texture_path(current_mod_path.."/Skins/1/ME")
 
-dofile(current_mod_path..'/AH-6.lua')
+dofile(current_mod_path..'/AH-6J.lua')
 dofile(current_mod_path..'/Weapons/AH6_Weapons.lua')
 dofile(current_mod_path..'/UnitPayloads/AH-6.lua')
 dofile(current_mod_path.."/Views.lua")
-make_view_settings('AH-6', ViewSettings, SnapViews)
+make_view_settings('AH-6J', ViewSettings, SnapViews)
 
-local FM =
-{
-	[1] = self_ID,
-	[2] = "AH6J", -- name of dll
-	center_of_mass = {0,0,0},  -- center of mass position relative to object 3d model center for empty aircraft
-	moment_of_inertia = {458, 1008, 1242, 129},--{446, 979, 1219, 128}, -- moment of inertia of empty (Ixx,Iyy,Izz,Ixz DCS axis)/(Ix,Iz,Iy,Ixy normal axis) [kg*m^2]
-}
+local cfg_path = current_mod_path.."/FM_Config.lua"
+dofile(cfg_path)
+EFM[1] 				= self_ID
+EFM[2] 				= 'AH6J'
+EFM.config_path 	= cfg_path
 
-make_flyable('AH-6',current_mod_path..'/Cockpit/Scripts/', FM, current_mod_path..'/comm.lua')
+make_flyable('AH-6J',current_mod_path..'/Cockpit/Scripts/', EFM, current_mod_path..'/comm.lua')
 
 plugin_done()

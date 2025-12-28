@@ -5,7 +5,7 @@ SetScale(METERS)
 DEFAULT_LEVEL = 6
 NOCLIP_LEVEL  = DEFAULT_LEVEL - 1
 local FONT    = MakeFont({used_DXUnicodeFontData = "font7segment"},{0,255,0,215})
-center={-0.112,-0.283,0.362}  --- {L/R,U/D,forward/back}
+center={0,-0.006,0}  --- {L/R,U/D,forward/back}
 
 
 function AddElement(object)
@@ -44,55 +44,60 @@ Add(base)
 local GMT_hours           = CreateElement "ceStringPoly"
 GMT_hours.name            = create_guid_string()
 GMT_hours.material        = FONT
-GMT_hours.init_pos        = {center[1]-.01,center[2],center[3]}		
+GMT_hours.parent_element  = "base"
+GMT_hours.init_pos        = {-.01,0,0}		
 GMT_hours.alignment       = "RightBottom"
 GMT_hours.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
 GMT_hours.formats         = {"%02.0f"} 
-GMT_hours.element_params  = {"GMT_HOURS","DC_Bus_Voltage"}
-GMT_hours.controllers     = {{"text_using_parameter",0,0},{"parameter_in_range",1,18,30}}  
+GMT_hours.element_params  = {"GMT_HOURS","CLOCK_BRIGHTNESS"}
+GMT_hours.controllers     = {{"text_using_parameter",0,0},{"opacity_using_parameter",1}}  
 AddElement(GMT_hours)
 
 local GMT_mins           = CreateElement "ceStringPoly"
 GMT_mins.name            = create_guid_string()
 GMT_mins.material        = FONT
-GMT_mins.init_pos        = center 
+GMT_mins.parent_element  = "base"
+GMT_mins.init_pos        = {0,0,0} 
 GMT_mins.alignment       = "CenterBottom"
 GMT_mins.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
 GMT_mins.formats         = {"%02.0f"} 
-GMT_mins.element_params  = {"GMT_MINS","DC_Bus_Voltage"}
-GMT_mins.controllers     = {{"text_using_parameter",0,0},{"parameter_in_range",1,18,30}}  
+GMT_mins.element_params  = {"GMT_MINS","CLOCK_BRIGHTNESS"}
+GMT_mins.controllers     = {{"text_using_parameter",0,0},{"opacity_using_parameter",1}}  
 AddElement(GMT_mins)
 
 local GMT_sec           = CreateElement "ceStringPoly"
 GMT_sec.name            = create_guid_string()
 GMT_sec.material        = FONT
-GMT_sec.init_pos        = {center[1]+.01,center[2],center[3]}
+GMT_sec.parent_element  = "base"
+GMT_sec.init_pos        = {0.01,0,0}
 GMT_sec.alignment       = "LeftBottom"
 GMT_sec.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
 GMT_sec.formats         = {"%02.0f"} 
-GMT_sec.element_params  = {"GMT_SECS","DC_Bus_Voltage"}
-GMT_sec.controllers     = {{"text_using_parameter",0,0},{"parameter_in_range",1,18,30}}  
+GMT_sec.element_params  = {"GMT_SECS","CLOCK_BRIGHTNESS"}
+GMT_sec.controllers     = {{"text_using_parameter",0,0},{"opacity_using_parameter",1}}  
 AddElement(GMT_sec)
 
 
-local LT_hours           = CreateElement "ceStringPoly"
-LT_hours.name            = create_guid_string()
-LT_hours.material        = FONT
-LT_hours.init_pos        = {center[1]-.01,center[2]-0.005,center[3]}		
-LT_hours.alignment       = "RightTop"
-LT_hours.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
-LT_hours.formats         = {"%02.0f"} 
-LT_hours.element_params  = {"LT_HOURS","DC_Bus_Voltage"}
-LT_hours.controllers     = {{"text_using_parameter",0,0},{"parameter_in_range",1,18,30}}  
-AddElement(LT_hours)
+local digit_hours           = CreateElement "ceStringPoly"
+digit_hours.name            = create_guid_string()
+digit_hours.material        = FONT
+digit_hours.parent_element  = "base"
+digit_hours.init_pos        = {-.01,-0.005,0}		
+digit_hours.alignment       = "RightTop"
+digit_hours.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
+digit_hours.formats         = {"%02.0f"} 
+digit_hours.element_params  = {"CLOCK_HOURS","CLOCK_BRIGHTNESS"}
+digit_hours.controllers     = {{"text_using_parameter",0,0},{"opacity_using_parameter",1}}  
+AddElement(digit_hours)
 
-local LT_mins           = CreateElement "ceStringPoly"
-LT_mins.name            = create_guid_string()
-LT_mins.material        = FONT
-LT_mins.init_pos        = {center[1],center[2]-0.005,center[3]}	 
-LT_mins.alignment       = "CenterTop"
-LT_mins.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
-LT_mins.formats         = {"%02.0f"} 
-LT_mins.element_params  = {"GMT_MINS","DC_Bus_Voltage"}
-LT_mins.controllers     = {{"text_using_parameter",0,0},{"parameter_in_range",1,18,30}}  
-AddElement(LT_mins)
+local digit_mins           = CreateElement "ceStringPoly"
+digit_mins.name            = create_guid_string()
+digit_mins.material        = FONT
+digit_mins.parent_element  = "base"
+digit_mins.init_pos        = {0,-0.005,}	 
+digit_mins.alignment       = "CenterTop"
+digit_mins.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
+digit_mins.formats         = {"%02.0f"} 
+digit_mins.element_params  = {"CLOCK_MINS","CLOCK_BRIGHTNESS"}
+digit_mins.controllers     = {{"text_using_parameter",0,0},{"opacity_using_parameter",1}}  
+AddElement(digit_mins)

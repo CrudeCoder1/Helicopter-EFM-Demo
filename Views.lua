@@ -2,7 +2,7 @@ ViewSettings = {
 	Cockpit = {
 	[1] = {-- player slot 1 (pilot)
 		CameraViewAngleLimits  = {20,140},-- FOV Min Max (how much zoom in/out)
-		CockpitLocalPoint      = {0.0,0.0,0.0},	--where to line up center of cockpit model  {forward/back,up/down,left/right}
+		CockpitLocalPoint      = {0.617,0.12116,0.0},	--where to line up center of cockpit model  {forward/back,up/down,left/right}
 		CameraAngleRestriction = {false,90,0.50}, 
 		CameraAngleLimits      = {200,-90,90}, -- View right/left, View down/up
 		EyePoint               = {0.1,0.10,0.0}, -- Distance from pivot point. To simulate pivot around human neck, use {0.16,0.1,0}
@@ -39,9 +39,9 @@ local function head_pos_default(tab)
 	tab.viewAngle = tab.viewAngle  or 75 -- FOV
 	tab.hAngle    = tab.hAngle     or  0
 	tab.vAngle    = tab.vAngle     or -8 -- angles down pilot view
-	tab.x_trans   = tab.x_trans    or  0.725 --moves pilot view forward .725
-	tab.y_trans   = tab.y_trans    or  0.14 -- moves view up
-	tab.z_trans   = tab.z_trans    or  0.35 -- moves view to right seat
+	tab.x_trans   = tab.x_trans    or  0.0 --moves pilot view forward 
+	tab.y_trans   = tab.y_trans    or  0.0 -- moves view up
+	tab.z_trans   = tab.z_trans    or  0.3466  -- moves view to right seat
 	tab.rollAngle = tab.rollAngle  or  0
 	return tab
 end
@@ -66,7 +66,7 @@ SnapViews = {
 		[1]  = head_pos_default({
 					viewAngle = 70,
 					vAngle	 = 0,
-					x_trans	 = 0.54,
+					x_trans	 = 0.05,
 					y_trans	 = -0.33,
 					z_trans	 = 0.0,
 		}),--Num 0
@@ -87,7 +87,7 @@ SnapViews = {
 		[1]  = head_pos_default2({
 					viewAngle = 70,
 					vAngle	 = 0,
-					x_trans	 = 0.54,
+					x_trans	 = 0.05,
 					y_trans	 = -0.33,
 					z_trans	 = 0.0,
 		}),--Num 0

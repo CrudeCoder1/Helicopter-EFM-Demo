@@ -487,8 +487,9 @@ void AH6Aero::MainRotorModule()
 	{
 		animPos += 1.0;
 	}
-	cockpitAPI.setExternalDrawArg(EXT_RotorSpin, (float)LinInterp(animPos, 0, 1, 1, 0));// linInterp required due to external model error of incorrect rotor spin direction
-
+	cockpitAPI.setExternalDrawArg(EXT_RotorSpin, (float)animPos);
+	cockpitAPI.setExternalDrawArg(EXT_RotorDroop, (float)LinInterp(Omega, 0, OmegaT * 0.1, -1.0f, 0.0f));
+	
 
 	if (p_EFMdata.time > p_EFMdata.deltaTime * 2)//delay adding forces if there is an initialization issue
 	{
@@ -700,6 +701,19 @@ void AH6Aero::TailRotorModule()
 {
 	double ThetaCTR = p_flightControl.PedalInput * 16.0 + 9.0;//TR collective pitch, 14.0 + 4.0
 
+	double DeltaPsi = OmegaTR * p_EFMdata.deltaTime;//MR advance angle, [rad]
+	PsiTR += DeltaPsi;//MR rotational position
+	if (PsiTR > M_PI)
+	{
+		PsiTR -= 2.0 * M_PI;
+	}
+	double animPos = PsiTR / (2.0 * M_PI);//animation is 0-1, but PsiTR is -Pi to Pi
+	if (animPos < 0)
+	{
+		animPos += 1.0;
+	}
+	cockpitAPI.setExternalDrawArg(EXT_TRspin, (float)animPos);// TODO change rotation speed of TR
+
 	double lTR = (FSTR - FSCG) / 12.0;//TR moment arm x axis, [ft]
 	double hTR = (WLTR - WLCG) / 12.0;//TR moment arm z axis, [ft]
 	double bTR = BLTR / 12.0;		  //TR moment arm y axis, [ft]
@@ -712,9 +726,9 @@ void AH6Aero::TailRotorModule()
 	double VYTR = VYTRB * cos(GammaTR) + VZTRB * sin(GammaTR);	//TR y shaft axis velocity, [ft/sec]
 	double VZTR = -VYTRB * sin(GammaTR) + VZTRB * cos(GammaTR);	//TR z shaft axis velocity, [ft/sec]
 
-	double MuXTR = VXTR / (OmegaTR * RTR);//x shaft axis velocity at TR hub
-	double MuYTR = VYTR / (OmegaTR * RTR);//y shaft axis velocity at TR hub
-	double MuZTR = VZTR / (OmegaTR * RTR);//z shaft axis velocity at TR hub
+	double MuXTR = VXTR / (OmegaTR_T * RTR);//x shaft axis velocity at TR hub
+	double MuYTR = VYTR / (OmegaTR_T * RTR);//y shaft axis velocity at TR hub
+	double MuZTR = VZTR / (OmegaTR_T * RTR);//z shaft axis velocity at TR hub
 	double MuTR2 = pow(MuXTR, 2) + pow(MuYTR, 2);
 
 	double ThetaTR = (ThetaCTR - TTR * da0overdT * tan(Delt3TR)) / 57.3;//actual TR collective pitch angle, [rad]
@@ -729,7 +743,7 @@ void AH6Aero::TailRotorModule()
 	LambdaTR = MuZTR - DWTR;
 
 	double CTHTR = 2.0 * DWTR * sqrt(MuTR2 + pow(LambdaTR, 2));//TR thrust coef
-	TTR = CTHTR * pow(Omega / OmegaT, 2) * p_EFMdata.rho_SlgFt3 * M_PI * pow(RTR, 4) * pow(OmegaTR, 2) * KTRBLK;//Thrust TR, [lb]
+	TTR = CTHTR * pow(Omega / OmegaT, 2) * p_EFMdata.rho_SlgFt3 * M_PI * pow(RTR, 4) * pow(OmegaTR_T, 2) * KTRBLK;//Thrust TR, [lb]
 
 	double XTR = -DragTR * 0.5 * p_EFMdata.rho_SlgFt3 * pow(VXTR, 2);
 	double YTR = TTR * sin(GammaTR);
@@ -760,10 +774,10 @@ void AH6Aero::RotorDegreeOfFreedom(double engtorque)
 	// torque "required/used" by main rotor	
 	QMRfiltered = QMRfiltered * ((KFRQ - 1.0) / KFRQ) + (1.0 / KFRQ) * QMR;//filtered torque (required to maintain constant rpm) from main rotor
 	double rotorBrakeTorque = 0.0;
-	//if (isRotorBrakeEngaged)// additional torque from rotor brake to help MR stop sooner
-	//{
-	//	rotorBrakeTorque = LinInterp(Omega, OmegaT * 0.4, 0.0, 200, 500);
-	//}
+	if (isRotorBrakeEngaged)// additional torque from rotor brake to help MR stop sooner
+	{
+		rotorBrakeTorque = LinInterp(Omega, OmegaT * 0.4, 0.0, 200, 500);
+	}
 	double netMRTorque = -QMRfiltered - rotorBrakeTorque;
 
 	// torque produced by engine pre-clutch
@@ -797,9 +811,10 @@ void AH6Aero::RotorDegreeOfFreedom(double engtorque)
 	double OmegaMRDot = netMRTorque / JMR;//MR acceleration, [rad/s^2].   to disable rotor DOF set to 0
 	Omega += OmegaMRDot * p_EFMdata.deltaTime;
 	Omega = limit(Omega, 0.0, OmegaT * 1.2);//limit rotor speed to 120% to avoid FM anomalies, it should probably break at that point anyways
+	OmegaTR = OmegaTR_T * Omega / OmegaT;
 
 
 	//----- Outputs for lua indicator script -----
-	cockpitAPI.setParamNumber(N2_RPM, OmegaE / OmegaT * 100.0);
-	cockpitAPI.setParamNumber(NR_RPM, Omega / OmegaT * 100.0);	
+	cockpitAPI.setParamNumber(EFM_N2_RPM, OmegaE / OmegaT * 100.0);
+	cockpitAPI.setParamNumber(EFM_NR_RPM, Omega / OmegaT * 100.0);
 }

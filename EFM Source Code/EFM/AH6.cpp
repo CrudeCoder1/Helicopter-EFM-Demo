@@ -303,14 +303,14 @@ void ed_fm_set_command(int command, float value)
 		value = normalized * 8.f - 2.f;
 	}
 
-	switch ((int)device_id) // sort inputs by device
-	{
+	//switch ((int)device_id) // sort inputs by device
+	//{
 	//case ELECTRIC_SYSTEM_DEVICE:
 		//Electrics.setCommand(command, value);
 		//break;
-	default:
-		break;
-	}
+	//default:
+	//	break;
+	//}
 
 	switch (command)
 	{
@@ -368,6 +368,9 @@ void ed_fm_set_command(int command, float value)
 		Electrics.setInverterSw(value);
 		break;
 
+	case rotorBrake:
+		Aero.setRotorBrake(value);
+
 	default:
 		break;
 	}
@@ -409,16 +412,17 @@ void ed_fm_set_draw_args_v2(float* drawargs, size_t size)
 	drawargs[EXT_TRcollective] = (float)-flightControls.PedalInput;
 	drawargs[EXT_Collective] = (float)flightControls.CollectiveInput;
 	drawargs[EXT_CyclicRoll] = (float)flightControls.rollOutput;
-	drawargs[EXT_CyclicPitch] = (float)-flightControls.pitchOutput;
+	drawargs[EXT_CyclicPitch] = (float)flightControls.pitchOutput;
 	
 }
 
 // cockpit draw arguments
 void ed_fm_set_fc3_cockpit_draw_args_v2(float * drawargs,size_t size)
 {
-	drawargs[INT_StickPitch] = (float)-flightControls.pitchOutput;
+	drawargs[INT_StickPitch] = (float)flightControls.pitchOutput;
 	drawargs[INT_StickRoll] = (float)flightControls.rollOutput;
 	drawargs[INT_Collective] = (float)flightControls.CollectiveInput;
+	drawargs[INT_Pedals] = (float)-flightControls.PedalInput;
 	drawargs[INT_OATNeedle] = (float) limit(EFMdata.ambientTemp_C /60 , 0, 1.0);
 	
 }
@@ -453,6 +457,15 @@ double ed_fm_get_param(unsigned param_enum)
 	case ED_FM_PROPELLER_0_TILT:   // for helicopter
 		return flightControls.CollectiveInput * 19;
 	case ED_FM_PROPELLER_0_INTEGRITY_FACTOR:   // for 0 to 1 , 0 is fully broken 
+		return 1;
+
+	case ED_FM_PROPELLER_1_RPM:	// this is neccesary for rotor sound, rpm should match definition in AH-6.lua tail_rotor_RPM
+		return Aero.getTRomega() * Convert::radSecToRPM;
+	case ED_FM_PROPELLER_1_PITCH:  // propeller blade pitch
+
+	case ED_FM_PROPELLER_1_TILT:   // for helicopter
+		return flightControls.PedalInput * 16;
+	case ED_FM_PROPELLER_1_INTEGRITY_FACTOR:   // for 0 to 1 , 0 is fully broken 
 		return 1;
 
 	case ED_FM_ENGINE_1_RPM:

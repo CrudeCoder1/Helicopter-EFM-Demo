@@ -40,8 +40,8 @@ private:
     MatrixFunction fn_engHP{ _HP_data, _N1_Points, _N1percent };
 
     EDPARAM cockpitAPI;
-    void* VIDS_TRQ = cockpitAPI.getParamHandle("VIDS_TRQ"); // for use in digital VIDS gauge
-    void* VIDS_TOT = cockpitAPI.getParamHandle("VIDS_TOT"); // for use in digital VIDS gauge
+    void* ENGINE_TRQ = cockpitAPI.getParamHandle("ENGINE_TRQ"); // for use in digital VIDS gauge
+    void* ENGINE_TOT = cockpitAPI.getParamHandle("ENGINE_TOT"); // for use in digital VIDS gauge
 
     double TargetN2 = 98.0;// adjustable governor target to be used for collective switch
     double N1Cmd = 100.0;// target N1 before delta limit
@@ -264,7 +264,7 @@ public:
         
         //conversion for torque[lb-ft] to pressure[psi] based on chapter 7 in manual, says 500shp=70psi & 575=80.9psi. 500hp=5529ftlb; 575hp=6358ftlb <- what page??
         Torque_PSI = EnginePower_HP * (59.0 / 425.0);// conversion from fig.7-33 (pg.7-19)
-        cockpitAPI.setParamNumber(VIDS_TRQ, Torque_PSI);
+        cockpitAPI.setParamNumber(ENGINE_TRQ, Torque_PSI);
 
 
         cockpitAPI.setCockpitDrawArg(INT_N1rpmNeedle, (float)(N1_PCT / 100));
@@ -274,7 +274,7 @@ public:
 
         updateEngineOil();
         turbineOutletTemp = deltaLimit(turbineOutletTemp, TOTcmd, TOTrate);
-        cockpitAPI.setParamNumber(VIDS_TOT, turbineOutletTemp);
+        cockpitAPI.setParamNumber(ENGINE_TOT, turbineOutletTemp);
     }
 
     void updateTOT()

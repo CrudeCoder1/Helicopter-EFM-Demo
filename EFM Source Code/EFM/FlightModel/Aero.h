@@ -51,8 +51,8 @@ public:
     MatrixFunction fn_lagDamp{ _lagDamp_data, _LagDamp_Points, _DeltDot };
 
     EDPARAM cockpitAPI;
-    void* N2_RPM = cockpitAPI.getParamHandle("N2_RPM"); // for use in digital gauge
-    void* NR_RPM = cockpitAPI.getParamHandle("NR_RPM"); // for use in digital gauge
+    void* EFM_N2_RPM = cockpitAPI.getParamHandle("EFM_N2_RPM"); // for use in digital gauge
+    void* EFM_NR_RPM = cockpitAPI.getParamHandle("EFM_NR_RPM"); // for use in digital gauge
 
 
     void Initialize();
@@ -100,6 +100,10 @@ public:
     {
         return Omega;
     }
+    double getTRomega()
+    {
+        return OmegaTR;
+    }
     double getN2omega()
     {
         return OmegaE;
@@ -107,6 +111,11 @@ public:
     const double getN2PCT()
     {
         return OmegaE / OmegaT * 100.0;
+    }
+
+    void setRotorBrake(float value)
+    {
+        isRotorBrakeEngaged = value > 0.0;
     }
 
 private:
@@ -161,7 +170,7 @@ private:
     const double BLTR{ -11.0 };			//buttline TR(y pos), [in]
     const double FSTR{ 292.0 };			// fuselage station(x pos) TR, [in]
     const double WLTR{ 54.1 };			//waterline(height) pos, [in]
-    const double OmegaTR{ 297.2 };		//TR rotational speed, [rad/sec]
+    const double OmegaTR_T{ 297.2 };	//TR nominal rotational speed, [rad/sec] (297.2 = 2838rpm)
     const int bNTR{ 2 };				//number of TR blades
     const double cTR{ 0.4 };			//TR blade chord, [ft]
     const double RTR{ 2.375 };			//TR radius, [ft]
@@ -249,10 +258,12 @@ private:
     double VYIW = 0.0;      //wing sidewash velocity at VT, y axis, [ft/s]
 
     // tail rotor variable setup
+    double OmegaTR = 0.0;   // tail rotor rotional veloctiy [rad/s]
+    double PsiTR = 0.0;     // whole rotor rotation, -pi to pi [rad]
     double TTR = 0.0;       // tail rotor thrust, [lb]
     double DWTR = 0.0;      // downwash Tail rotor, normalized 0-1 (ie 1==OmegaT * RMR)
     double LambdaTR = 0.0;  //tail rotor inflow, normalized 0-1 (ie 1==OmegaT * RMR)
-    double TRSolidity = 0.0;    // solidity of TR, ie ratio of blade area to disk size
+    double TRSolidity = 0.0; // solidity of TR, ie ratio of blade area to disk size
 
 
     // Body states
@@ -276,6 +287,7 @@ private:
     double QMRfiltered = 0.0;// filtered MR torque, [ft-lb]
     bool isClutchEngaged = true;
     double OmegaE = 0.0;//engine shaft speed (N2), [rad/sec]
+    bool isRotorBrakeEngaged = false;
 
 };
 

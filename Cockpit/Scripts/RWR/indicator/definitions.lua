@@ -6,4 +6,4 @@ RWR_DEFAULT_NOCLIP_LEVEL  = RWR_DEFAULT_LEVEL - 1
 RWR_SCALE = 0.447
 
 
-center={-1.124,-2.049,3.575} --{Left/Right,Up/Down,forward/back} 
+center={0,0,0}--{-1.124,-2.049,3.575} --{Left/Right,Up/Down,forward/back} 

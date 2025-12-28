@@ -21,7 +21,7 @@ Keys =
 	PickleOff		= counter(),
 	MasterArm		= counter(),
 	
-	showControlInd = counter(),
+	iCommandPlane_ShowControls = 851;--need this bc show controls is in common_keyboard_binding
 }
 
 count = 3200
@@ -39,10 +39,21 @@ device_commands = { -- commands for lua
 	RocketSelector	= counter();
 	GunSelector		= counter();
 	
+	LftGunPwr		= counter();
+	LftGunArm		= counter();
+	RhtGunPwr		= counter();
+	RhtGunArm		= counter();
+	
 	PositionLights	= counter();
 	CovertLight		= counter();
 	AntiCollision	= counter();
 	LandingLightSw	= counter();
+	RadioLightKnob  = counter();
+	PanelLightKnob  = counter();
+	AMSBacklightKnob= counter();
+	
+	VIDSdigitSw  	= counter();
+	VIDSbrtKnob  	= counter();
 	
 	RWRpower		= counter();
 	RWRBrightness	= counter();
@@ -51,6 +62,12 @@ device_commands = { -- commands for lua
 	ADIadjust		= counter();
 	LOset			= counter();
 	HIset			= counter();
+	DHItest			= counter();
+	DHIbrightness	= counter();
+	RadAltBrightness= counter();
+	M880Select		= counter();
+	M880Control		= counter();
+	M880Brightness	= counter();
 }
 
 EFM_commands = 	-- commands for use in EFM (make sure to copy to inputs.h)
@@ -66,6 +83,8 @@ EFM_commands = 	-- commands for use in EFM (make sure to copy to inputs.h)
 	trimDown			= 3018,
 	trimLeft			= 3019,
 	trimRight			= 3020,
+	
+	rotorBrake			= 3021,
 }
 
 

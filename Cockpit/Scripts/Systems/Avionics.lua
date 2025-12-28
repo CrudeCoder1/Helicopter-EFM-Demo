@@ -28,7 +28,9 @@ local alt_adj_MBxxNx = get_param_handle("ALT_ADJ_MBxxNx") --
 local alt_adj_MBxxxN = get_param_handle("ALT_ADJ_MBxxxN") -- 
 local current_Ralt = get_param_handle("CURRENT_RALT")
 local Ralt_Off = get_param_handle("RALT_OFF")
-local current_hdg = get_param_handle("CURRENT_HDG")
+local RADALT_BRIGHTNESS = get_param_handle("RADALT_BRIGHTNESS")
+local DHI_HEADING = get_param_handle("DHI_HEADING")
+local DHI_BRIGHTNESS  = get_param_handle("DHI_BRIGHTNESS")
 local current_fuelT  = get_param_handle("CURRENT_FUELT")
 
 
@@ -39,13 +41,15 @@ alt_1k:set(0.0)
 alt_100s:set(0.0)
 current_Ralt:set(0)
 Ralt_Off:set(0)
-current_hdg:set(0)
+DHI_HEADING:set(0)
 current_fuelT:set(0)
+
+local DHI_test = 0
 
 
 function post_initialize()
 	current_fuelT:set(sensor_data.getTotalFuelWeight()*KG_TO_POUNDS)
-	current_hdg:set(360-(sensor_data.getHeading()*radian_to_degree))
+	DHI_HEADING:set(360-(sensor_data.getHeading()*radian_to_degree))
 	update_altimeter()
 	local dev = GetSelf()
     local birth = LockOn_Options.init_conditions.birth_place	
@@ -54,6 +58,8 @@ function post_initialize()
     elseif birth=="GROUND_COLD" then
         		
     end
+	dev:performClickableAction(device_commands.DHIbrightness, 1)
+	dev:performClickableAction(device_commands.RadAltBrightness, 1)
 end
 
 dev:listen_command(device_commands.AltimeterSet)
@@ -65,6 +71,12 @@ function SetCommand(command,value)
 		elseif alt_setting < ALT_PRESSURE_MIN then
 			alt_setting = ALT_PRESSURE_MIN
 		end
+	elseif command == device_commands.DHItest then
+		DHI_test = value
+	elseif command == device_commands.DHIbrightness then
+		DHI_BRIGHTNESS:set(value)
+	elseif command == device_commands.RadAltBrightness then
+		RADALT_BRIGHTNESS:set(value)
 	end
 end
 
@@ -120,7 +132,12 @@ function update()
 	update_altimeter()
 	update_radar_altitude()
 	current_fuelT:set(sensor_data.getTotalFuelWeight()*KG_TO_POUNDS)
-	current_hdg:set(360-(sensor_data.getHeading()*radian_to_degree))
+	if DHI_test>0 then
+		DHI_HEADING:set(888)
+	else
+		DHI_HEADING:set(360-(sensor_data.getHeading()*radian_to_degree))
+	end
+	
 
 	
 	set_aircraft_draw_argument_value(38,0.9)-- to see if this affects ground crew

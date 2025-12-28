@@ -18,7 +18,7 @@ M80 = {
         explosive       = 0.000,
         v0              = 856.2,   -- 2809 fps = 856.2 m/s
         Dv0             = 0.0060,
-        Da0             = 0.0022, -- dispersion amount
+        Da0             = 0.0012, -- dispersion amount
         Da1             = 0.0,
         life_time       = 30,
         caliber         = 7.62, --mm
@@ -48,7 +48,7 @@ M61 = {
         explosive       = 0.000,
         v0              = 854.6,   -- 2804 fps = 854.6 m/s
         Dv0             = 0.0060,
-        Da0             = 0.0022, -- dispersion amount
+        Da0             = 0.0012, -- dispersion amount
         Da1             = 0.0,
         life_time       = 30,
         caliber         = 7.62, --mm
@@ -78,7 +78,7 @@ M62 = {
         explosive       = 0.000,
         v0              = 856.2,   -- 2809 fps = 856.2 m/s
         Dv0             = 0.0060,
-        Da0             = 0.0022, -- dispersion amount
+        Da0             = 0.0012, -- dispersion amount
         Da1             = 0.0,
         life_time       = 30,
         caliber         = 7.62, --mm
