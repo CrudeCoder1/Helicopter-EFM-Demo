@@ -17,32 +17,36 @@ Keys =
 	
 	TriggerFireOn	= counter(),
 	TriggerFireOff 	= counter(),
-	PickleOn		= counter(),
-	PickleOff		= counter(),
-	MasterArm		= counter(),
+	MasterArmToggle	= counter(),
 	
 	iCommandPlane_ShowControls = 851;--need this bc show controls is in common_keyboard_binding
 }
 
 count = 3200
 device_commands = { -- commands for lua
-
+	CautionTest		= counter();
 	AuxPowerSw  	= counter();
 	
 	FuelShutoffSw	= counter();
 	FuelPumpSw 		= counter();
 	
+	AMSPwrSw		= counter();
+	AMSbuttonBrght  = counter();
 	MasterArm		= counter();
-	SalvoSw			= counter();
+	RippleSw		= counter();
+	PairSw			= counter();
 	JettSw			= counter();
 	JettSwCover		= counter();
 	RocketSelector	= counter();
-	GunSelector		= counter();
+
 	
 	LftGunPwr		= counter();
 	LftGunArm		= counter();
 	RhtGunPwr		= counter();
 	RhtGunArm		= counter();
+	
+	RocketFireButton= counter();
+	GunTrigger		= counter();
 	
 	PositionLights	= counter();
 	CovertLight		= counter();
@@ -51,6 +55,7 @@ device_commands = { -- commands for lua
 	RadioLightKnob  = counter();
 	PanelLightKnob  = counter();
 	AMSBacklightKnob= counter();
+	LightKillSw		= counter();
 	
 	VIDSdigitSw  	= counter();
 	VIDSbrtKnob  	= counter();
@@ -68,6 +73,14 @@ device_commands = { -- commands for lua
 	M880Select		= counter();
 	M880Control		= counter();
 	M880Brightness	= counter();
+	AttIndPwrSw		= counter();
+	PitotHeatSw		= counter();
+	AntiIceSw		= counter();
+	ScavAirSw		= counter();
+	MasterRadioSw	= counter();
+	FQIbrtKnob		= counter();
+	FQIdayNhtSw		= counter();
+	
 }
 
 EFM_commands = 	-- commands for use in EFM (make sure to copy to inputs.h)

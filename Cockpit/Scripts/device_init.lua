@@ -13,7 +13,8 @@ creators[devices.DIGITAL_CLOCK]    	= {"avLuaDevice"            ,LockOn_Options.
 creators[devices.EFM_HELPER]    	= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/EFM_Helper.lua"} 
 creators[devices.INTERCOM]     		= {"avIntercom"             ,LockOn_Options.script_path.."Systems/Intercom.lua", {devices.UHF_RADIO} }
 creators[devices.UHF_RADIO]     	= {"avUHF_ARC_164"          ,LockOn_Options.script_path.."Systems/UHF_radio.lua", {devices.INTERCOM, devices.ELECTRIC_SYSTEM} } 
-creators[devices.VIDS]    			= {"avLuaDevice"            ,LockOn_Options.script_path.."VIDS/VIDS_device.lua"} 
+creators[devices.VIDS]    			= {"avLuaDevice"            ,LockOn_Options.script_path.."VIDS/VIDS_device.lua"}
+creators[devices.FUEL_SYSTEM]    	= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/FuelSystem.lua"}
 creators[devices.NVGs] 				= {"avNightVisionGoggles"}
 
 indicators = {}

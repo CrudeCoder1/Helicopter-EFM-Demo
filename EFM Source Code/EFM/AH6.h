@@ -20,6 +20,7 @@
 #include "Systems/Damage.h"			// damages model
 #include "Systems/ElectricSystem.h"	// Generators, battery etc.
 #include "Systems/FlightControls.h"
+#include "Systems/CautionLights.h"
 #include "FlightModel/Aero.h"		// Aerodynamic model functions
 
 
@@ -31,6 +32,7 @@ FuelSystem Fuel;
 AH6JDamage damageModel;
 ElectricSystem Electrics;
 FlightControls flightControls;
+LightSystem Lighting;
 TurboshaftEngine Engine(EFMdata, flightControls);
 AH6Aero Aero(EFMdata, damageModel, flightControls);
 

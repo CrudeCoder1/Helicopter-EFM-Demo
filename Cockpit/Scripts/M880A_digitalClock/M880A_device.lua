@@ -14,10 +14,13 @@ local CLOCK_MODE = get_param_handle("CLOCK_MODE") -- 0:GMT, 1:LocalTime, 2: Elap
 local CLOCK_BRIGHTNESS = get_param_handle("CLOCK_BRIGHTNESS")
 
 
-theatre  = get_terrain_related_data("name")
+--theatre  = get_terrain_related_data("name")
+local Terrain = require("terrain")
 local GMToffset = 0
 function post_initialize()
-	if theatre == 'Caucasus' then
+	local timeDelta = Terrain.GetTerrainConfig("SummerTimeDelta")
+	GMToffset = -timeDelta
+	--[[if theatre == 'Caucasus' then
 		GMToffset = -3
 	elseif theatre == 'Nevada' then
 		GMToffset = 8
@@ -25,8 +28,8 @@ function post_initialize()
 		GMToffset = -4
 	--elseif theatre == 'Syria' then -- syria doesnt seem to be registered as a theatre 
 		--GMToffset = -2
-	end
-	--print_message_to_user(theatre)
+	end--]]
+
 	dev:performClickableAction(device_commands.M880Brightness, 1)
 	CLOCK_MODE:set(1)
 end
@@ -64,7 +67,15 @@ function update()
 	local int1,frac1 = math.modf(frac*60)
 	GMTsec:set(frac1*60)
 	
-	GMThour:set(hour + GMToffset)
+	-- fix wraparound
+	if (hour+GMToffset) < 0 then 
+		GMThour:set(hour + 24 + GMToffset)
+	elseif (hour+GMToffset) > 24 then
+		GMThour:set(hour - 24 + GMToffset)
+	else
+		GMThour:set(hour + GMToffset)
+	end
+	
 	
 	if ETisCounting then
 		elapsedTime = elapsedTime + update_time_step

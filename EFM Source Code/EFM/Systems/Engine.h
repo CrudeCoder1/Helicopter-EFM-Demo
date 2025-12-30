@@ -275,11 +275,13 @@ public:
         updateEngineOil();
         turbineOutletTemp = deltaLimit(turbineOutletTemp, TOTcmd, TOTrate);
         cockpitAPI.setParamNumber(ENGINE_TOT, turbineOutletTemp);
+
+        G_Params.cautionLight[CL_EngOut] = engineState == ENG_Off;
     }
 
     void updateTOT()
     {
-        // TODO added heat with svac air on
+        // TODO added heat with scav air on
         // 10deg increase when anti-ice is on
         // TOT data from from fig.7-33 (pg.7-19)
         double startTmp = LinInterp(p_EFMdata.altitudeMSL_FT, 0, 10000, 435, 460);
@@ -330,5 +332,6 @@ public:
         engOilPressCmd_psi *= engOilPress_tempBias;
         oilPressure = deltaLimit(oilPressure, engOilPressCmd_psi, 5.0);
         cockpitAPI.setCockpitDrawArg(INT_OilPressNeedle, (float)(oilPressure / 200.0));
+        G_Params.cautionLight[CL_XmsnPress] = oilPressure < 15;
     }
 };

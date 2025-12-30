@@ -4,8 +4,9 @@ SetScale(METERS)
 
 DEFAULT_LEVEL = 6
 NOCLIP_LEVEL  = DEFAULT_LEVEL - 1
-local FONT    = MakeFont({used_DXUnicodeFontData = "font7segment"},{0,255,0,215})
-center={0,-0.006,0}  --- {L/R,U/D,forward/back}
+green_color = {0,255,0,215}
+local FONT    = MakeFont({used_DXUnicodeFontData = "font7segment"},green_color)
+center={0,-0.005,0}  --- {L/R,U/D,forward/back}
 
 
 function AddElement(object)
@@ -17,7 +18,7 @@ end
 
 verts = {}
 dx=.037
-dy=.0147
+dy=.019
 verts [1]= {-dx,-dy}
 verts [2]= {-dx,dy}
 verts [3]= {dx,dy}
@@ -82,7 +83,7 @@ local digit_hours           = CreateElement "ceStringPoly"
 digit_hours.name            = create_guid_string()
 digit_hours.material        = FONT
 digit_hours.parent_element  = "base"
-digit_hours.init_pos        = {-.01,-0.005,0}		
+digit_hours.init_pos        = {-.01,-0.004,0}		
 digit_hours.alignment       = "RightTop"
 digit_hours.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
 digit_hours.formats         = {"%02.0f"} 
@@ -94,10 +95,50 @@ local digit_mins           = CreateElement "ceStringPoly"
 digit_mins.name            = create_guid_string()
 digit_mins.material        = FONT
 digit_mins.parent_element  = "base"
-digit_mins.init_pos        = {0,-0.005,}	 
+digit_mins.init_pos        = {0,-0.004,}	 
 digit_mins.alignment       = "CenterTop"
 digit_mins.stringdefs      = {0.012,0.75 * 0.012, 0, 0}  -- {size vertical, horizontal, 0, 0}
 digit_mins.formats         = {"%02.0f"} 
 digit_mins.element_params  = {"CLOCK_MINS","CLOCK_BRIGHTNESS"}
 digit_mins.controllers     = {{"text_using_parameter",0,0},{"opacity_using_parameter",1}}  
 AddElement(digit_mins)
+
+-- Mode marker lines
+local GMT_Marker			= CreateElement "ceSMultiLine"
+GMT_Marker.name				= "GMT_Marker"
+GMT_Marker.material			= MakeMaterial(nil,green_color)
+GMT_Marker.thickness    	= 3
+GMT_Marker.fuzziness    	= 0.5
+GMT_Marker.init_pos			= {-.02,-0.02,0}
+GMT_Marker.vertices 		= {{0, 0}, {0, 0.003}}
+GMT_Marker.indices  		= {0, 1}
+GMT_Marker.parent_element	= base.name
+GMT_Marker.element_params  	= {"CLOCK_MODE","CLOCK_BRIGHTNESS"}
+GMT_Marker.controllers		= {{"parameter_in_range",0,0},{"opacity_using_parameter",1}}
+AddElement(GMT_Marker)
+
+local LT_Marker			 = CreateElement "ceSMultiLine"
+LT_Marker.name			 = "LT_Marker"
+LT_Marker.material		 = MakeMaterial(nil,green_color)
+LT_Marker.thickness    	 = 3
+LT_Marker.fuzziness    	 = 0.5
+LT_Marker.init_pos		 = {-.01,-0.02,0}
+LT_Marker.vertices 		 = {{0, 0}, {0, 0.003}}
+LT_Marker.indices  		 = {0, 1}
+LT_Marker.parent_element = base.name
+LT_Marker.element_params = {"CLOCK_MODE","CLOCK_BRIGHTNESS"}
+LT_Marker.controllers	 = {{"parameter_in_range",0,1},{"opacity_using_parameter",1}}
+AddElement(LT_Marker)
+
+local ET_Marker			 = CreateElement "ceSMultiLine"
+ET_Marker.name			 = "ET_Marker"
+ET_Marker.material		 = MakeMaterial(nil,green_color)
+ET_Marker.thickness    	 = 3
+ET_Marker.fuzziness    	 = 0.5
+ET_Marker.init_pos		 = {0.01,-0.02,0}
+ET_Marker.vertices 		 = {{0, 0}, {0, 0.003}}
+ET_Marker.indices  		 = {0, 1}
+ET_Marker.parent_element = base.name
+ET_Marker.element_params = {"CLOCK_MODE","CLOCK_BRIGHTNESS"}
+ET_Marker.controllers	 = {{"parameter_in_range",0,2},{"opacity_using_parameter",1}}
+AddElement(ET_Marker)

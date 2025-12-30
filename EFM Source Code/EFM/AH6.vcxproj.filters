@@ -66,6 +66,9 @@
     <ClInclude Include="Systems\FlightControls.h">
       <Filter>Systems</Filter>
     </ClInclude>
+    <ClInclude Include="Systems\CautionLights.h">
+      <Filter>Systems</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Include">

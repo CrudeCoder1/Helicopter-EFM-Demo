@@ -138,7 +138,7 @@ public:
 			isFuelFlow = false;
 		}
 
-		
+		G_Params.cautionLight[CL_FuelLow] = isLowFuel();
 	}
 
 };

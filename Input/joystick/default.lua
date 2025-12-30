@@ -20,13 +20,12 @@ join(res.keyCommands,{
 	{pressed = EFM_commands.trimRight, name = _('Cyclic Trim Right'), category = _('Systems')},
 
 -- Weapons                                                                        
-    {pressed = Keys.TriggerFireOn, up = Keys.TriggerFireOff, name = _('Gun Fire Trigger'), category = _('Weapons')},
-    {down = Keys.PickleOn, up = Keys.PickleOff, name = _('Rocket Fire Button'), category = 'Weapons'},
-	{down = Keys.MasterArm, name = _('Master Arm'), category = _('Weapons')},
+    {down = device_commands.GunTrigger, up = device_commands.GunTrigger,cockpit_device_id = devices.WEAPON_SYSTEM,value_down = 1.0, value_up = 0.0, name = _('Gun Fire Trigger'), category = _('Weapons')},
+    {down = device_commands.RocketFireButton, up = device_commands.RocketFireButton,cockpit_device_id = devices.WEAPON_SYSTEM,value_down = 1.0, value_up = 0.0, name = _('Rocket Fire Button'), category = 'Weapons'},	
+	{down = Keys.MasterArmToggle, name = _('Master Arm Toggle'), category = _('Weapons')},
 	
 -- Lighting
     {down = Keys.LandingLight, 							name = _('Landing Light'),	category = _('Lighting')},
-	--{down = 3256, cockpit_device_id  = 0,	value_down = 1.0,	name = _('Flashlight'),	category = _('Lighting')},
 	
 -- Others
 	{down 	= iCommandPlaneEject, 				 name = _('Eject (3 times)'), category = _('General')},
@@ -43,8 +42,7 @@ join(res.keyCommands,{
 	
 	--{combos = {{key = 'P', reformers = {'RShift'}}}, down = iCommandCockpitShowPilotOnOff, name = _('Show Pilot Body'), category = _('General')},
 
-    --{down = Keys.showControlInd,				name = _('Show controls indicator') ,			 category = _('General')},
-
+    
 })
 
 -- joystick axis 

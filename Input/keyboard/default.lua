@@ -21,13 +21,12 @@ join(res.keyCommands,{
 	{combos = {{key = '/', reformers = {'RCtrl'}}}, pressed = EFM_commands.trimRight, name = _('Cyclic Trim Right'), category = _('Systems')},
 
 -- Weapons                                                                        
-    {combos = {{key = 'Space'}}, pressed = Keys.TriggerFireOn, up = Keys.TriggerFireOff, name = _('Gun Fire Trigger'), category = _('Weapons')},
-    {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = Keys.PickleOn, up = Keys.PickleOff, name = _('Rocket Fire Button'), category = 'Weapons'},
-	{combos = {{key = 'M'}}, down = Keys.MasterArm, name = _('Master Arm'), category = _('Weapons')},
+    {combos = {{key = 'Space'}}, down = device_commands.GunTrigger, up = device_commands.GunTrigger,cockpit_device_id = devices.WEAPON_SYSTEM,value_down = 1.0, value_up = 0.0, name = _('Gun Fire Trigger'), category = _('Weapons')},
+    {combos = {{key = 'Space', reformers = {'LAlt'}}}, down = device_commands.RocketFireButton, up = device_commands.RocketFireButton,cockpit_device_id = devices.WEAPON_SYSTEM,value_down = 1.0, value_up = 0.0, name = _('Rocket Fire Button'), category = 'Weapons'},
+	{combos = {{key = 'M'}}, down = Keys.MasterArmToggle, name = _('Master Arm Toggle'), category = _('Weapons')},
 	
 -- Lighting
     {combos = {{key = 'L', reformers = {'RShift'}}},	down = Keys.LandingLight, 							name = _('Landing Light'),	category = _('Lighting')},
-	--{combos = {{key = 'L', reformers = {'LAlt'}}},	down = 3256, cockpit_device_id  = 0,	value_down = 1.0,	name = _('Flashlight'),	category = _('Lighting')},
 	
 -- Others
 	{combos = {{key = 'E', reformers = {'LCtrl'}}}, down 	= iCommandPlaneEject, 				 name = _('Eject (3 times)'), category = _('General')},
@@ -44,8 +43,7 @@ join(res.keyCommands,{
 	
 	--{combos = {{key = 'P', reformers = {'RShift'}}}, down = iCommandCockpitShowPilotOnOff, name = _('Show Pilot Body'), category = _('General')},
 
-    --{combos = {{key = 'Enter', reformers = {'RCtrl'}}},			 down = Keys.showControlInd,				name = _('Show controls indicator') ,			 category = _('General')},
-
+    
 
 })
 return res

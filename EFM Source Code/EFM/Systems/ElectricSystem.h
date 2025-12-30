@@ -55,14 +55,16 @@ private:
 	SLAB_Battery battery;
 
 	EDPARAM cockpitAPI;
-	void* external_power = cockpitAPI.getParamHandle("EXTERNAL_POWER"); // to get ground power status from lua functions
-	void* DC_Bus_Voltage = cockpitAPI.getParamHandle("DC_Bus_Voltage");// for use in lua scripts
-	void* AC_115_Bus_Voltage = cockpitAPI.getParamHandle("AC_115_Bus_Voltage");// for use in lua scripts
-	void* AC_26_Bus_Voltage = cockpitAPI.getParamHandle("AC_26_Bus_Voltage");// for use in lua scripts
+
 
 public:
 	ElectricSystem() {}
 	~ElectricSystem() {}
+
+	void* external_power = cockpitAPI.getParamHandle("EXTERNAL_POWER"); // to get ground power status from lua functions
+	void* DC_Bus_Voltage = cockpitAPI.getParamHandle("DC_Bus_Voltage");// for use in lua scripts
+	void* AC_115_Bus_Voltage = cockpitAPI.getParamHandle("AC_115_Bus_Voltage");// for use in lua scripts
+	void* AC_26_Bus_Voltage = cockpitAPI.getParamHandle("AC_26_Bus_Voltage");// for use in lua scripts
 		
 	void initCold()
 	{
@@ -156,6 +158,9 @@ public:
 		cockpitAPI.setParamNumber(DC_Bus_Voltage, DCbusVoltage);
 		cockpitAPI.setParamNumber(AC_115_Bus_Voltage, ACbus115Voltage);
 		cockpitAPI.setParamNumber(AC_26_Bus_Voltage, ACbus26Voltage);
+
+		G_Params.cautionLight[CL_GenOut] = generatorVoltage < battery.getBatteryVoltage();
+		
 	}
 
 };

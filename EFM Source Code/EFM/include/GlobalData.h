@@ -42,6 +42,8 @@ enum InternalAnimationArgs
 	INT_DCAmpsNeedle = 322,
 	//123 slip ball
 	INT_OATNeedle = 328,
+
+	INT_CautionBrightness = 410,
 };
 
 
@@ -78,6 +80,8 @@ enum AH6InputCommands
 	trimRight = 3020,
 	rotorBrake = 3021,
 
+	cautionTest = 3201,
+
 
 
 	// joystick axis commands
@@ -95,7 +99,7 @@ enum Devices
 	ELECTRIC_SYSTEM_DEVICE = 1,
 	WEAPON_SYSTEM_DEVICE = 2,
 	RWR_DEVICE = 3,
-	EXTLIGHTS_DEVICE = 4,
+	LIGHTING_DEVICE = 4,
 	UHF_RADIO_DEVICE = 5,
 	INTERCOM_DEVICE = 6,
 	HELMET_DEVICE_DEVICE = 7,
@@ -103,6 +107,8 @@ enum Devices
 	DIGITAL_CLOCK_DEVICE = 9,
 	KNEEBOARD_DEVICE = 10,
 	EFM_HELPER_DEVICE = 11,
+	VIDS_DEVICE = 12,
+	FUEL_SYSTEM_DEVICE = 13,
 };
 
 // from Scripts\Aircrafts\_Common\Damage.lua
@@ -194,4 +200,26 @@ enum damageCells
 
 	TAIL_TOP = 100,
 
+};
+
+enum Caution_Lights
+{
+	CL_Test,
+	CL_ReIGN,
+	CL_IFF,
+	CL_AirFilter,
+	CL_Blank,
+	CL_FuelFilter,
+	CL_FuelLow,
+	CL_TRChips,
+	CL_MRChips,
+	CL_EngChips,
+	CL_GenOut,
+	CL_BattTemp140,
+	CL_BattTemp160,
+	CL_XmsnTemp,
+	CL_XmsnPress,
+	CL_EngOut,
+	
+	CL_MaxNumber,
 };

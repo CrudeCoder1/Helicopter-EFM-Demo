@@ -5,7 +5,19 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 
 
 ## Change log
-0.6.0
+0.6.1
+- Improved weapon system to use AMS power, pair and ripple switches
+- Improved clock with mode marker lines and proper GMT offset for all maps
+- Fixed position lights switch norm and covert swapped
+- Added radar altimeter HI and LO lights
+- Fixed altimeter setting now correctly provides pressure altitude. Alitmeter setting also set to mission weather on hot starts
+- Added Attitude indicator power switch	
+- Added several non-functional switches now clickable
+- Added brightness control for fuel quantity indicator
+- Added cautions lights: GEN OUT, ENG OUT, FUEL LEVEL LOW, XMSN OIL PRESS and Press to test button
+- Added new kneeboard checklist
+
+0.6.0 28 Dec 2025
 - Added New External and cockpit models (WIP)
 - Added New textures (WIP)
 - Added new M134 model and textures

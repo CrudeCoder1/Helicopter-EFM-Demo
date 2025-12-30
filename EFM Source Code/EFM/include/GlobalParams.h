@@ -11,7 +11,7 @@ struct EFM_Globals
 {
 
 	//caution lights
-	//bool cautionLight[16]{ false };
+	bool cautionLight[16]{ false };
 
 	
 

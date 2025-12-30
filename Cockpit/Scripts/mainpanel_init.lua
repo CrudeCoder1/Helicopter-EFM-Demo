@@ -30,29 +30,23 @@ RadarAltNeedle.input				= {0, 200, 1500}
 RadarAltNeedle.output				= {0,0.5, 1}
 RadarAltNeedle.parameter_name		= "CURRENT_RALT"
 
-RadarAltOff							= CreateGauge("parameter")
-RadarAltOff.arg_number				= 323
-RadarAltOff.input					= {0,1}
-RadarAltOff.output					= {0,1}
-RadarAltOff.parameter_name			= "RALT_OFF"
-
 VVneedle							= CreateGauge()
 VVneedle.arg_number					= 317
 VVneedle.input						= {-30.48,-20.32,-10.16,-5.08,0,5.08,10.16,20.32,30.48} --1000,2000,4000,6000 ft/min converted to m/s
 VVneedle.output						= {-1,-0.75,-0.5,-0.25,0,0.25,0.5,0.75,1}
 VVneedle.controller					= controllers.base_gauge_VerticalVelocity --m/s
 
-ADIPitch							= CreateGauge()
+ADIPitch							= CreateGauge("parameter")
 ADIPitch.arg_number					= 303
 ADIPitch.input						= {-math.rad(90),0, math.rad(90)}
 ADIPitch.output						= {-1,0, 1}
-ADIPitch.controller					= controllers.base_gauge_Pitch
+ADIPitch.parameter_name				= "AttInd_Pitch"
 
-ADIBank								= CreateGauge()
+ADIBank								= CreateGauge("parameter")
 ADIBank.arg_number					= 302
 ADIBank.input						= {-math.pi, math.pi}
 ADIBank.output						= {1, -1}
-ADIBank.controller					= controllers.base_gauge_Roll
+ADIBank.parameter_name				= "AttInd_Roll"
 
 ADIslip								= CreateGauge()
 ADIslip.arg_number					= 301
@@ -64,7 +58,7 @@ Compass								= CreateGauge("parameter")
 Compass.arg_number					= 327
 Compass.input						= {0,360}
 Compass.output						= {0,1}
-Compass.parameter_name				= "CURRENT_HDG"
+Compass.parameter_name				= "COMPASS_HDG"
 
 Alt100								= CreateGauge("parameter")
 Alt100.arg_number					= 305
@@ -86,20 +80,20 @@ Alt10k.parameter_name				= "ALT_10000"
 
 AltAdjINHG1							= CreateGauge("parameter")
 AltAdjINHG1.arg_number				= 312
-AltAdjINHG1.input					= {0,10}
-AltAdjINHG1.output					= {0,1}
+AltAdjINHG1.input					= {0, 2,   2.999,  3,   3.999,  10}
+AltAdjINHG1.output					= {0, 0.2, 0.2,    0.3, 0.3,   1}
 AltAdjINHG1.parameter_name			= "ALT_ADJ_Nxxx"
 
 AltAdjINHG2							= CreateGauge("parameter")
 AltAdjINHG2.arg_number				= 313
-AltAdjINHG2.input					= {0,10}
-AltAdjINHG2.output					= {0,1}
+AltAdjINHG2.input					= {0,0.99,1.0,1.9,2.0,2.9,3.0,3.9,4.0,4.9,5.0,5.9,6.0,6.9,7.0,7.9,8.0,8.99,9.0,9.99,10}
+AltAdjINHG2.output					= {0, 0, 0.1,0.1,0.2,0.2,0.3,0.3,0.4,0.4,0.5,0.5,0.6,0.6,0.7,0.7,0.8,0.8,0.9,0.9,1 }
 AltAdjINHG2.parameter_name			= "ALT_ADJ_xNxx"
 
 AltAdjINHG3							= CreateGauge("parameter")
 AltAdjINHG3.arg_number				= 314
-AltAdjINHG3.input					= {0,10}
-AltAdjINHG3.output					= {0,1}
+AltAdjINHG3.input					= {0,0.9,1.0,1.9,2.0,2.9,3.0,3.9,4.0,4.9,5.0,5.9,6.0,6.9,7.0,7.9,8.0,8.9,9.0,9.9,10}
+AltAdjINHG3.output					= {0, 0, 0.1,0.1,0.2,0.2,0.3,0.3,0.4,0.4,0.5,0.5,0.6,0.6,0.7,0.7,0.8,0.8,0.9,0.9,1 }
 AltAdjINHG3.parameter_name			= "ALT_ADJ_xxNx"
 
 AltAdjINHG4							= CreateGauge("parameter")

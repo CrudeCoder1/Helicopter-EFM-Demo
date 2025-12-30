@@ -12,15 +12,16 @@ DCbusVoltage  = get_param_handle("DC_Bus_Voltage")
 
 local LdgingLghtSw = 0
 local posLightSw = 0
-local formationBrightness = 0
+--local formationBrightness = 0
 local radioBrght = 0
 local panelBrght = 0
 local AMSbackBrght = 0
+local LightingKill = false
 
 function post_initialize()
 	local birth = LockOn_Options.init_conditions.birth_place
     if birth=="GROUND_HOT" or birth=="AIR_HOT" then 	 
-        dev:performClickableAction(device_commands.PositionLights, 1)
+        dev:performClickableAction(device_commands.PositionLights, -1)
     elseif birth=="GROUND_COLD" then
 		dev:performClickableAction(device_commands.PositionLights, 0)
     end
@@ -46,7 +47,8 @@ function SetCommand(command,value)
 		panelBrght = value
 	elseif command == device_commands.AMSBacklightKnob then
 		AMSbackBrght = value
-		
+	elseif command == device_commands.LightKillSw and value > 0 then
+		LightingKill = not LightingKill
 	end
 end
 
@@ -56,8 +58,8 @@ local function updateExternalLights()
 	--	set_aircraft_draw_argument_value(51,extlight_taxi) -- 51 is animation to move landing lights open, 208 for actual light beam
 		set_aircraft_draw_argument_value(208,LdgingLghtSw) 
 		
-		if posLightSw>=0 then
-			set_aircraft_draw_argument_value(190,posLightSw)
+		if posLightSw<=0 then
+			set_aircraft_draw_argument_value(190,-posLightSw)
 			set_aircraft_draw_argument_value(201, 0)
 		else -- covert
 			set_aircraft_draw_argument_value(190,0)
@@ -69,6 +71,11 @@ local function updateExternalLights()
 		set_aircraft_draw_argument_value(208,0) 
 		set_aircraft_draw_argument_value(190,0)
 	--	set_aircraft_draw_argument_value(88,0)
+	end
+	
+	if LightingKill then
+		set_aircraft_draw_argument_value(190,0)
+		set_aircraft_draw_argument_value(208,0)
 	end
 end
 
@@ -84,6 +91,7 @@ local function updateInternalLights()
 		cockpitDev:set_argument_value(450, 0)
 	end
 end
+
 
 function update() 
 	updateExternalLights()

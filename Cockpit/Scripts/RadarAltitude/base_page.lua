@@ -3,7 +3,7 @@ dofile(LockOn_Options.common_script_path.."elements_defs.lua")
 SetScale(METERS) 
 
 local fontDotMatrix = MakeFont({used_DXUnicodeFontData = "fontDotMatrix"},{0,255,0,255}) --(R,G,B,opacity)
-local center = {0,0,0}--{0.11316,-0.295462,0.673 -1}  --- {L/R,U/D,forward/back}
+local center = {0.0017,0,0}  --- {L/R,U/D,forward/back}
 
 verts = {}
 dx=.02

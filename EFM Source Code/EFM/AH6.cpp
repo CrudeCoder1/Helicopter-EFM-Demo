@@ -132,6 +132,7 @@ void ed_fm_simulate(double dt)
 	Aero.update(Engine.getEngTorque());
 	Fuel.update(Engine.getFuelFlow(), dt); // note, still uses fuel when sim is paused
 	Electrics.update(dt, Engine.getN1RPM());
+	Lighting.updateFrame();
 
 }
 
@@ -303,14 +304,14 @@ void ed_fm_set_command(int command, float value)
 		value = normalized * 8.f - 2.f;
 	}
 
-	//switch ((int)device_id) // sort inputs by device
-	//{
-	//case ELECTRIC_SYSTEM_DEVICE:
-		//Electrics.setCommand(command, value);
-		//break;
-	//default:
-	//	break;
-	//}
+	switch ((int)device_id) // sort inputs by device
+	{
+	case LIGHTING_DEVICE:
+		Lighting.setCommand(command, value);
+		break;
+	default:
+		break;
+	}
 
 	switch (command)
 	{
