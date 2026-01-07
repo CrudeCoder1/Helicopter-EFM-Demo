@@ -5,6 +5,10 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 
 
 ## Change log
+0.6.2
+- Added key commands for pitch, roll, yaw, and collective
+- Fixed cyclic trim direction
+
 0.6.1
 - Improved weapon system to use AMS power, pair and ripple switches
 - Improved clock with mode marker lines and proper GMT offset for all maps

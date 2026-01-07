@@ -77,15 +77,15 @@ function SetCommand(command,value)
 			dispatch_action(nil,EFM_commands.batterySwitch,-1)
 		end
 	elseif command==Keys.ThrottleIncrease then
-		local amount = Throtpos + 0.002
+		local amount = Throtpos + 0.005
 		if amount > 0.998 then
 			amount = 0.998
 		end
 		dev:performClickableAction(EFM_commands.throttle,amount)
 		dispatch_action(nil,EFM_commands.throttle,amount)
 	elseif command==Keys.ThrottleDecrease then
-		dev:performClickableAction(EFM_commands.throttle,Throtpos - 0.002)
-		dispatch_action(nil,EFM_commands.throttle,Throtpos - 0.002)
+		dev:performClickableAction(EFM_commands.throttle,Throtpos - 0.005)
+		dispatch_action(nil,EFM_commands.throttle,Throtpos - 0.005)
 	elseif command==Keys.ThrottleCutoff then
 		dev:performClickableAction(EFM_commands.throttleIdleCutoff,1-CutOffpos)
 		dispatch_action(nil,EFM_commands.throttleIdleCutoff,1-CutOffpos)

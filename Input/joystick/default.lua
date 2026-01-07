@@ -14,10 +14,7 @@ join(res.keyCommands,{
     {down = Keys.BattSwitch, name = _('Battery Switch'), category = _('Systems')}, 
 	{down = Keys.ExtPwrSwitch, name = _('External Power Switch'), category = _('Systems')}, 
 	
-	{pressed = EFM_commands.trimUp, name = _('Cyclic Trim Up'), category = _('Systems')},
-	{pressed = EFM_commands.trimDown, name = _('Cyclic Trim Down'), category = _('Systems')},
-	{pressed = EFM_commands.trimLeft, name = _('Cyclic Trim Left'), category = _('Systems')},
-	{pressed = EFM_commands.trimRight, name = _('Cyclic Trim Right'), category = _('Systems')},
+
 
 -- Weapons                                                                        
     {down = device_commands.GunTrigger, up = device_commands.GunTrigger,cockpit_device_id = devices.WEAPON_SYSTEM,value_down = 1.0, value_up = 0.0, name = _('Gun Fire Trigger'), category = _('Weapons')},
@@ -41,8 +38,22 @@ join(res.keyCommands,{
 	{down = iCommandNetCrewRequestControl,				name = _('Request Aircraft Control'),category = _('Crew Control')},
 	
 	--{combos = {{key = 'P', reformers = {'RShift'}}}, down = iCommandCockpitShowPilotOnOff, name = _('Show Pilot Body'), category = _('General')},
+	
+-- Flight Controls
+	{pressed = EFM_commands.KeyRudderLeft,	up = EFM_commands.KeyRudderStop, name = _('Aircraft Yaw Left'),	category = _('Flight Control')},
+	{pressed = EFM_commands.KeyRudderRight,	up = EFM_commands.KeyRudderStop, name = _('Aircraft Yaw Right'),category = _('Flight Control')},
+	{pressed = EFM_commands.KeyCollectiveUp, name = _('Collective up'), category = _('Flight Control')},
+	{pressed = EFM_commands.KeyCollectiveDown, name = _('Collective down'), category = _('Flight Control')},
+	
+	{pressed = EFM_commands.KeyCyclicBack,	name = _('Aircraft Pitch Up'),category = _('Flight Control')},
+	{pressed = EFM_commands.KeyCyclicForward,	name = _('Aircraft Pitch Down'),category = _('Flight Control')},
+	{pressed = EFM_commands.KeyCyclicLeft,	name = _('Aircraft Roll Left'),category = _('Flight Control')},
+	{pressed = EFM_commands.KeyCyclicRight,	name = _('Aircraft Roll Right'),category = _('Flight Control')},
 
-    
+    {pressed = EFM_commands.trimUp, name = _('Cyclic Trim Up'), category = _('Flight Control')},
+	{pressed = EFM_commands.trimDown, name = _('Cyclic Trim Down'), category = _('Flight Control')},
+	{pressed = EFM_commands.trimLeft, name = _('Cyclic Trim Left'), category = _('Flight Control')},
+	{pressed = EFM_commands.trimRight, name = _('Cyclic Trim Right'), category = _('Flight Control')},
 })
 
 -- joystick axis 

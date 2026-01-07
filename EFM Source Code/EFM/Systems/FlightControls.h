@@ -48,6 +48,44 @@ public:
 		rollTrim = 0.0;
 		pitchTrim = 0.0;
 	}
+
+	void setPedLeft()
+	{
+		PedalInput = limit(PedalInput + 0.008, -1.0, 1.0);
+	}
+	void setPedRight()
+	{
+		PedalInput = limit(PedalInput - 0.008, -1.0, 1.0);
+	}
+	void setPedStop()
+	{
+		PedalInput = limit(PedalInput, -0.5, 0.5);
+	}
+	void setCollUp()
+	{
+		CollectiveInput = limit(CollectiveInput + 0.007, 0, 1.0);
+	}
+	void setCollDown()
+	{
+		CollectiveInput = limit(CollectiveInput - 0.007, 0, 1.0);
+	}
+	void setCyclicForward()
+	{
+		PitchInput = limit(PitchInput + 0.007, -1.0, 1.0);
+	}
+	void setCyclicBack()
+	{
+		PitchInput = limit(PitchInput - 0.007, -1.0, 1.0);
+	}
+	void setCyclicLeft()
+	{
+		RollInput = limit(RollInput - 0.007, -1.0, 1.0);
+	}
+	void setCyclicRight()
+	{
+		RollInput = limit(RollInput + 0.007, -1.0, 1.0);
+	}
+
 	/*
 	void setCommand(int command, const float value)
 	{

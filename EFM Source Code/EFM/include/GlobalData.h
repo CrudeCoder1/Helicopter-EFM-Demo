@@ -79,6 +79,15 @@ enum AH6InputCommands
 	trimLeft = 3019,
 	trimRight = 3020,
 	rotorBrake = 3021,
+	KeyRudderLeft = 3022,
+	KeyRudderRight = 3023,
+	KeyRudderStop = 3024,
+	KeyCollectiveUp = 3025,
+	KeyCollectiveDown = 3026,
+	KeyCyclicForward = 3027,
+	KeyCyclicBack = 3028,
+	KeyCyclicLeft = 3029,
+	KeyCyclicRight = 3030,
 
 	cautionTest = 3201,
 
@@ -109,6 +118,7 @@ enum Devices
 	EFM_HELPER_DEVICE = 11,
 	VIDS_DEVICE = 12,
 	FUEL_SYSTEM_DEVICE = 13,
+	Flight_Control_DEVICE = 14,
 };
 
 // from Scripts\Aircrafts\_Common\Damage.lua

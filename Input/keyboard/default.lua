@@ -15,10 +15,7 @@ join(res.keyCommands,{
     {combos = {{key = 'B'}}, down = Keys.BattSwitch, name = _('Battery Switch'), category = _('Systems')}, 
 	{combos = {{key = 'B', reformers = {'LCtrl'}}}, down = Keys.ExtPwrSwitch, name = _('External Power Switch'), category = _('Systems')}, 
 	
-	{combos = {{key = ';', reformers = {'RCtrl'}}}, pressed = EFM_commands.trimUp, name = _('Cyclic Trim Up'), category = _('Systems')},
-	{combos = {{key = '.', reformers = {'RCtrl'}}}, pressed = EFM_commands.trimDown, name = _('Cyclic Trim Down'), category = _('Systems')},
-	{combos = {{key = ',', reformers = {'RCtrl'}}}, pressed = EFM_commands.trimLeft, name = _('Cyclic Trim Left'), category = _('Systems')},
-	{combos = {{key = '/', reformers = {'RCtrl'}}}, pressed = EFM_commands.trimRight, name = _('Cyclic Trim Right'), category = _('Systems')},
+
 
 -- Weapons                                                                        
     {combos = {{key = 'Space'}}, down = device_commands.GunTrigger, up = device_commands.GunTrigger,cockpit_device_id = devices.WEAPON_SYSTEM,value_down = 1.0, value_up = 0.0, name = _('Gun Fire Trigger'), category = _('Weapons')},
@@ -43,7 +40,21 @@ join(res.keyCommands,{
 	
 	--{combos = {{key = 'P', reformers = {'RShift'}}}, down = iCommandCockpitShowPilotOnOff, name = _('Show Pilot Body'), category = _('General')},
 
-    
+-- Flight Controls
+	{combos = {{key = 'Z'}}, pressed = EFM_commands.KeyRudderLeft,	up = EFM_commands.KeyRudderStop, name = _('Aircraft Yaw Left'),	category = _('Flight Control')},
+	{combos = {{key = 'X'}}, pressed = EFM_commands.KeyRudderRight,	up = EFM_commands.KeyRudderStop, name = _('Aircraft Yaw Right'),category = _('Flight Control')},
+    {combos = defaultDeviceAssignmentFor("thrust_up"), pressed = EFM_commands.KeyCollectiveUp, name = _('Collective up'), category = _('Flight Control')},
+	{combos = defaultDeviceAssignmentFor("thrust_down"), pressed = EFM_commands.KeyCollectiveDown, name = _('Collective down'), category = _('Flight Control')},
+
+	{combos = {{key = 'Down'}}, pressed = EFM_commands.KeyCyclicBack,	name = _('Aircraft Pitch Up'),category = _('Flight Control')},
+	{combos = {{key = 'Up'}}, pressed = EFM_commands.KeyCyclicForward,	name = _('Aircraft Pitch Down'),category = _('Flight Control')},
+	{combos = {{key = 'Left'}}, pressed = EFM_commands.KeyCyclicLeft,	name = _('Aircraft Roll Left'),category = _('Flight Control')},
+	{combos = {{key = 'Right'}}, pressed = EFM_commands.KeyCyclicRight,	name = _('Aircraft Roll Right'),category = _('Flight Control')},   
+
+	{combos = {{key = ';', reformers = {'RCtrl'}}}, pressed = EFM_commands.trimUp, name = _('Cyclic Trim Up'), category = _('Flight Control')},
+	{combos = {{key = '.', reformers = {'RCtrl'}}}, pressed = EFM_commands.trimDown, name = _('Cyclic Trim Down'), category = _('Flight Control')},
+	{combos = {{key = ',', reformers = {'RCtrl'}}}, pressed = EFM_commands.trimLeft, name = _('Cyclic Trim Left'), category = _('Flight Control')},
+	{combos = {{key = '/', reformers = {'RCtrl'}}}, pressed = EFM_commands.trimRight, name = _('Cyclic Trim Right'), category = _('Flight Control')},
 
 })
 return res

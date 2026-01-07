@@ -83,7 +83,7 @@ device_commands = { -- commands for lua
 	
 }
 
-EFM_commands = 	-- commands for use in EFM (make sure to copy to inputs.h)
+EFM_commands = 	-- commands for use in EFM (make sure to copy to GlobalData.h)
 {
 	starterButton 		= 3010,
 	throttleIdleCutoff	= 3011,
@@ -98,6 +98,15 @@ EFM_commands = 	-- commands for use in EFM (make sure to copy to inputs.h)
 	trimRight			= 3020,
 	
 	rotorBrake			= 3021,
+	KeyRudderLeft		= 3022,
+	KeyRudderRight		= 3023,
+	KeyRudderStop		= 3024,
+	KeyCollectiveUp		= 3025,
+	KeyCollectiveDown	= 3026,
+	KeyCyclicForward	= 3027,
+	KeyCyclicBack		= 3028,
+	KeyCyclicLeft		= 3029,
+	KeyCyclicRight		= 3030,
 }
 
 

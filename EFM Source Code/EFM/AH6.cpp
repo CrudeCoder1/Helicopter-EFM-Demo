@@ -309,6 +309,9 @@ void ed_fm_set_command(int command, float value)
 	case LIGHTING_DEVICE:
 		Lighting.setCommand(command, value);
 		break;
+	//case Flight_Control_DEVICE:
+		//flightControls.setCommand(command, value);
+		//break;
 	default:
 		break;
 	}
@@ -332,16 +335,45 @@ void ed_fm_set_command(int command, float value)
 		break;
 
 	case trimUp:
-		flightControls.pitchTrim = limit(flightControls.pitchTrim - 0.0015, -1, 1);
+		flightControls.pitchTrim = limit(flightControls.pitchTrim + 0.0015, -1, 1);
 		break;
 	case trimDown:
-		flightControls.pitchTrim = limit(flightControls.pitchTrim + 0.0015, -1, 1);
+		flightControls.pitchTrim = limit(flightControls.pitchTrim - 0.0015, -1, 1);
 		break;
 	case trimLeft:
 		flightControls.rollTrim = limit(flightControls.rollTrim - 0.0015, -1, 1);
 		break;
 	case trimRight:
 		flightControls.rollTrim = limit(flightControls.rollTrim + 0.0015, -1, 1);
+		break;
+
+	case KeyRudderLeft:
+		flightControls.setPedLeft();
+		break;
+	case KeyRudderRight:
+		flightControls.setPedRight();
+		break;
+	case KeyRudderStop:
+		flightControls.setPedStop();
+		break;
+	case KeyCollectiveUp:
+		flightControls.setCollUp();
+		break;
+	case KeyCollectiveDown:
+		flightControls.setCollDown();
+		break;
+
+	case KeyCyclicForward:
+		flightControls.setCyclicForward();
+		break;
+	case KeyCyclicBack:
+		flightControls.setCyclicBack();
+		break;
+	case KeyCyclicLeft:
+		flightControls.setCyclicLeft();
+		break;
+	case KeyCyclicRight:
+		flightControls.setCyclicRight();
 		break;
 	
 	case starterButton:
