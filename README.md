@@ -5,11 +5,14 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 
 
 ## Change log
-0.6.2
+- Added ARC-182 radio functionality (working ATC thanks to Luiz Renault)
+- Fixed left seat view in wrong spot
+
+0.6.2 7 Jan 2026
 - Added key commands for pitch, roll, yaw, and collective
 - Fixed cyclic trim direction
 
-0.6.1
+0.6.1 30 Dec 2025
 - Improved weapon system to use AMS power, pair and ripple switches
 - Improved clock with mode marker lines and proper GMT offset for all maps
 - Fixed position lights switch norm and covert swapped
@@ -107,4 +110,5 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 Credits:
 Modelled using Blender 4
 Textured in Substance Painter
+Luiz Renault for providing avSimplestRadio.dll for functioning radios
 M134 model downloaded from https://sketchfab.com/3d-models/minigun-m-134-2961cd5d09844921b045761108956470 and modified (CC Attribution)

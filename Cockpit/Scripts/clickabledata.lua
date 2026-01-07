@@ -83,6 +83,19 @@ elements["PNT_27"]	= default_axis_limited(_("VIDS Brightness Knob"), 		 		device
 
 elements["PNT_151"]	= default_2_position_tumb(_("Rotor Brake Handle, ON/OFF"),			devices.EFM_HELPER, EFM_commands.rotorBrake,	151)
 
+--- V/UHF AN/ARC-182 control panel
+elements["PNT_104"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Tens"),	devices.ARC182,	device_commands.ARC182_freqTens, device_commands.ARC182_freqTens, 104)
+elements["PNT_103"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Ones"),	devices.ARC182, device_commands.ARC182_freqOnes,	device_commands.ARC182_freqOnes, 103)
+elements["PNT_102"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Tenths"),	devices.ARC182, device_commands.ARC182_freqTenths,	device_commands.ARC182_freqTenths,  102)
+elements["PNT_101"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Hundredths"),	devices.ARC182, device_commands.ARC182_freqHundredths,	device_commands.ARC182_freqHundredths, 101)
+elements["PNT_100"] = default_2_position_tumb(_("ARC-182 AM/FM Mode Switch, AM/FM"),	devices.ARC182, device_commands.ARC182_AMFM,		100)
+elements["PNT_95"] = default_axis(_("ARC-182 Volume"),						devices.ARC182, device_commands.ARC182_vol,		95)
+elements["PNT_98"] = multiposition_switch(_("ARC-182 Mode Control Selector, OFF/T+R/T+R&G/DF/TEST"),	devices.ARC182, device_commands.ARC182_mode,	98, 5, 0.25, false, 0, 3, false)
+elements["PNT_99"] = default_axis(_("ARC-182 Brightness"),					devices.ARC182, device_commands.ARC182_brightness,		99)
+elements["PNT_96"] = multiposition_switch(_("ARC-182 Frequency Mode Knob"),	 devices.ARC182, device_commands.ARC182_FreqSelType, 96, 4, 0.2, false, 0.2, 3, false)
+elements["PNT_97"] = multiposition_switch(_("ARC-182 Channel Selector Knob"),devices.ARC182, device_commands.ARC182_ChannelSel, 97, 30, 1/30, false, 0, 3, true)
+
+
 -- non functional
 elements["PNT_11"]	= default_2_position_tumb(_("Pitot Heat Switch, ON/OFF (No function)"),		devices.EFM_HELPER, device_commands.PitotHeatSw,	11)
 elements["PNT_14"]	= default_2_position_tumb(_("Auxilary Power Switch, ON/OFF (No function)"),	devices.EFM_HELPER, device_commands.AuxPowerSw,	14)

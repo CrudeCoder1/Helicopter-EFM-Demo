@@ -362,28 +362,57 @@ AH6J = {
 
 
 	HumanRadio = {
-		frequency = 124.0,
-		editable = true,
-		minFrequency = 118,
-		maxFrequency = 143.975,
-		modulation = MODULATION_AM
+		frequency     = 305.0,
+        editable     = true,
+        minFrequency     = 30.000,
+        maxFrequency     = 399.975,
+		rangeFrequency = {
+			{min = 30.0,  max = 87.975, modulation	= MODULATION_FM},
+			{min = 108.0, max = 173.975, modulation	= MODULATION_AM_AND_FM, modulationDef = MODULATION_FM},
+			{min = 225.0, max = 399.975, modulation	= MODULATION_AM_AND_FM, modulationDef = MODULATION_AM},
+		},
+        modulation     = MODULATION_AM
 	},
 
 	panelRadio = {		
-		[1] = {
-			name = _("FM Radio"),		   
-			range = {{min = 30, max = 87.975}},
-			channels = {
-						[1] = { name = _("Channel 1"),		default = 30.0, modulation = _("FM")}, --, connect = true}, -- default
-						[2] = { name = _("Channel 2"),		default = 31.0, modulation = _("FM")},
-						[3] = { name = _("Channel 3"),		default = 32.0, modulation = _("FM")},
-						[4] = { name = _("Channel 4"),		default = 33.0, modulation = _("FM")},
-						[5] = { name = _("Channel 5"),		default = 40.0, modulation = _("FM")},
-						[6] = { name = _("Channel 6"),		default = 41.0, modulation = _("FM")},
-						[7] = { name = _("Channel 0"),		default = 42.0, modulation = _("FM")},
-						[8] = { name = _("Channel RG"),		default = 50.0, modulation = _("FM")},
-			}
-		},
+		[1] = {  
+				name = _("VHF/UHF AN/ARC-182"),
+				range = {{min = 30.0, max = 87.975, modulation	= MODULATION_FM},
+					 {min = 108.0, max = 173.975, modulation	= MODULATION_AM_AND_FM, modulationDef = MODULATION_FM},
+					 {min = 225.0, max = 399.975, modulation	= MODULATION_AM_AND_FM, modulationDef = MODULATION_AM}},
+				channels = {
+				[1] =  { name = _("Channel 1"),	 default = 305.0, connect = true}, -- default
+				[2] =  { name = _("Channel 2"),	 default = 264.0},	-- min. water : 135.0, 264.0
+				[3] =  { name = _("Channel 3"),	 default = 265.0},	-- nalchik : 136.0, 265.0
+				[4] =  { name = _("Channel 4"),	 default = 256.0},	-- sochi : 127.0, 256.0
+				[5] =  { name = _("Channel 5"),	 default = 254.0},	-- maykop : 125.0, 254.0
+				[6] =  { name = _("Channel 6"),	 default = 250.0},	-- anapa : 121.0, 250.0
+				[7] =  { name = _("Channel 7"),	 default = 270.0},	-- beslan : 141.0, 270.0
+				[8] =  { name = _("Channel 8"),	 default = 257.0},	-- krasnodar-pashk. : 128.0, 257.0
+				[9] =  { name = _("Channel 9"),	 default = 255.0},	-- gelenjik : 126.0, 255.0
+				[10] = { name = _("Channel 10"), default = 262.0},	-- kabuleti : 133.0, 262.0
+				[11] = { name = _("Channel 11"), default = 259.0},	-- gudauta : 130.0, 259.0
+				[12] = { name = _("Channel 12"), default = 268.0},	-- soginlug : 139.0, 268.0
+				[13] = { name = _("Channel 13"), default = 269.0},	-- vaziani : 140.0, 269.0
+				[14] = { name = _("Channel 14"), default = 260.0},	-- batumi : 131.0, 260.0
+				[15] = { name = _("Channel 15"), default = 263.0},	-- kutaisi : 134.0, 263.0
+				[16] = { name = _("Channel 16"), default = 261.0},	-- senaki : 132.0, 261.0
+				[17] = { name = _("Channel 17"), default = 267.0},	-- lochini : 138.0, 267.0
+				[18] = { name = _("Channel 18"), default = 251.0},	-- krasnodar-center : 122.0, 251.0
+				[19] = { name = _("Channel 19"), default = 253.0},	-- krymsk : 124.0, 253.0
+				[20] = { name = _("Channel 20"), default = 266.0},	-- mozdok : 137.0, 266.0
+                [21] = { name = _("Channel 21"), default = 225.0},
+                [22] = { name = _("Channel 22"), default = 258.0},			
+                [23] = { name = _("Channel 23"), default = 131.0},
+                [24] = { name = _("Channel 24"), default = 134.0},
+                [25] = { name = _("Channel 25"), default = 132.0},
+                [26] = { name = _("Channel 26"), default = 127.0},
+                [27] = { name = _("Channel 27"), default = 136.0},
+                [28] = { name = _("Channel 28"), default = 128.0},
+                [29] = { name = _("Channel 29"), default = 122.0},
+                [30] = { name = _("Channel 30"), default = 137.0},				
+				}
+			},
 	},	
 	
 	rotor_animation =

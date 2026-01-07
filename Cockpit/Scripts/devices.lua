@@ -15,4 +15,6 @@ EFM_HELPER 		= 11,
 VIDS	 		= 12,
 FUEL_SYSTEM		= 13,
 Flight_Control	= 14,
+BASERADIO		= 15,
+ARC182			= 16,
 }

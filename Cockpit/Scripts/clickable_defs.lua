@@ -160,14 +160,15 @@ function springloaded_3_pos_tumb(hint_,device_,command1_,command2_,arg_,animatio
 				action			= {command1_,command2_},
 				stop_action		= {command1_,command2_},
 				arg				= {arg_,arg_},
+				stop_value 		= {0,	0},
 				arg_value		= {val1,val3},
 				arg_lim			= {{val1,val2},{val2,val3}},
 				updatable		= true,
-				use_OBB			= true,
+				--use_OBB			= true,
 				use_release_message = {true,true},
-				animated		= {true,true},
-			    animation_speed	= {animation_speed_,animation_speed_},
-				sound			= {{SOUND_SW1}, {SOUND_SW1}}
+				--animated		= {true,true},
+			    --animation_speed	= {animation_speed_,animation_speed_},
+				sound			= {{SWITCH_SOUND_1}, {SWITCH_SOUND_1}}
 			}
 end
 

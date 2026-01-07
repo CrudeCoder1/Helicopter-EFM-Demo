@@ -8,15 +8,15 @@ if make_default_activity then
     make_default_activity(update_time_step)
 end
 
-function update()
-end
+--function update()
+--end
 
-function post_initialize()
-end
+--function post_initialize()
+--end
 
-function SetCommand(command,value)
+--function SetCommand(command,value)
     
-end
+--end
 
 
 need_to_be_closed = false -- close lua state after initialization

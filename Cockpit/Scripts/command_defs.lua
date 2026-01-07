@@ -19,6 +19,8 @@ Keys =
 	TriggerFireOff 	= counter(),
 	MasterArmToggle	= counter(),
 	
+	COM1			= counter(),
+	
 	iCommandPlane_ShowControls = 851;--need this bc show controls is in common_keyboard_binding
 }
 
@@ -80,6 +82,17 @@ device_commands = { -- commands for lua
 	MasterRadioSw	= counter();
 	FQIbrtKnob		= counter();
 	FQIdayNhtSw		= counter();
+	
+	ARC182_freqTens 	= counter(),
+	ARC182_freqOnes 	= counter(),
+	ARC182_freqTenths 	= counter(),
+	ARC182_freqHundredths = counter(),
+	ARC182_AMFM 		= counter(),
+	ARC182_vol 			= counter(),
+	ARC182_mode 		= counter(),
+	ARC182_brightness 	= counter(),
+	ARC182_FreqSelType 	= counter(),
+	ARC182_ChannelSel 	= counter(),
 	
 }
 
