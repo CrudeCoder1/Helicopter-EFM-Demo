@@ -42,15 +42,15 @@ AH6J = {
 	--MOI 				= {12000, 35000, 40000},
 	nose_gear_pos 		= { 1.416,	-1.729,	0}, -- used for starting placement on ground {forward/back,up/down,left/right}
 	main_gear_pos 		= { -0.719,	-1.62,	0.889},
-	lead_stock_main		= -0.1,--something to do with the gear
-	lead_stock_support	= -0.1,--something to do with the gear	
+	lead_stock_main		= -0.1,--something to do with the AI gear
+	lead_stock_support	= -0.1,--something to do with the AI gear	
 	--sound_name 		= "Rotor", -- rotor sound from Sounds/sdef
 	engines_count		= 1, -- number of engines
 	engines_nozzles 	= 
 	{
 		{
 		engine_number   = 1, -- this nozzle is for engine #1
-		pos     	    = {-1.8,-0.565, 0}, -- important for heatblur effect
+		pos     	    = {-1.8,-0.565, 0}, -- important for heatblur and smoke effects
 		diameter        = 0.13, -- [meters]
 		smokiness_level = 0.1,
 		}
@@ -60,16 +60,16 @@ AH6J = {
 	V_max				=	152*knotToKMpH, -- [km/h] max speed for AI
 	V_max_cruise		=	130*knotToKMpH,	-- cruise speed [km/h]
 	Vy_max				=	10.5, --Max climb speed in [m/s]
-	H_stat_max_L		=	15000*ftToM,-- max height hover [m]
+	H_stat_max_L		=	15000*ftToM,-- max height hover (with ground effect) [m]
 	H_stat_max			=	15000*ftToM,-- max height hover [m]
-	H_din_two_eng		=	18000*ftToM,-- max height forward flight [m]
-	H_din_one_eng		=	18000*ftToM,-- max height forward flight [m]
+	H_din_two_eng		=	18000*ftToM,-- max height forward flight (2 engine) [m]
+	H_din_one_eng		=	18000*ftToM,-- max height forward flight (1 engine) [m]
 	range				=	430, -- max range [km], for AI
 	flight_time_typical	=	90,-- minutes
 	flight_time_maximum	=	180,-- minutes
 	Vy_land_max			=	20*knotToMpS, -- landing speed [m/s]
 	Ny_max				=	3.5, --max G for AI
-	scheme				=	0,-- 0 for normal helis, 1 for ka-50 (might be rotor configuration)
+	scheme				=	0,-- 0 for normal rotor configuration, 1 for Coaxial (Ka-50),  2 for tandem (CH-47)
 	----- AI flight model probably (doesnt affect human FM)
 	rotor_height		=	7.67*ftToM,-- height of rotor from ground [meters]
 	rotor_diameter		=	27.35*ftToM,-- [meters]
@@ -79,7 +79,7 @@ AH6J = {
 	fuselage_Cxa0		=	0.4,-- drag coefficient
 	fuselage_Cxa90		=	3,-- side drag coefficient?
 	fuselage_area		=	1.4, -- [m^2]
-	centering			=	0,--???
+	centering			=	0,-- for tandem rotors, differential collective pitch offset in [degrees]. Negative value=lower rear collective compared to front collective
 	tail_pos 			= 	{-4.564,	0.163,	0},
 	tail_fin_area		=	0.467,-- vertical fin area [m^2]
 	tail_stab_area		=	0.66,-- horizontal tail area [m^2]
