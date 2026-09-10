@@ -6,7 +6,10 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 
 ## Change log
 - Added ARC-182 radio functionality (working ATC thanks to Luiz Renault)
+- Added TACAN control
+- Added ARGUS7000 navigation system (WIP)
 - Fixed left seat view in wrong spot
+- Fixed DHI and compass showing true heading and not magnetic heading
 
 0.6.2 7 Jan 2026
 - Added key commands for pitch, roll, yaw, and collective

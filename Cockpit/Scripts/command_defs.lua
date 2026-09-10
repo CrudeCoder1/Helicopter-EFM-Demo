@@ -94,6 +94,17 @@ device_commands = { -- commands for lua
 	ARC182_FreqSelType 	= counter(),
 	ARC182_ChannelSel 	= counter(),
 	
+	ArgusDEPbutton 	= counter(),
+	ArgusENRbutton 	= counter(),
+	ArgusARRbutton 	= counter(),
+	ArgusAUXbutton 	= counter(),
+	ArgusSELbutton	= counter(),
+	ArgusINFObutton	= counter(),
+	ArgusEMERbutton	= counter(),
+	
+	TACAN10s	= counter(),
+	TACAN1s		= counter(),
+	TACANPwrVol	= counter(),
 }
 
 EFM_commands = 	-- commands for use in EFM (make sure to copy to GlobalData.h)

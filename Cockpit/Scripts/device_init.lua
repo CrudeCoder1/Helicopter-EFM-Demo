@@ -17,17 +17,20 @@ creators[devices.VIDS]    			= {"avLuaDevice"            ,LockOn_Options.script_
 creators[devices.FUEL_SYSTEM]    	= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/FuelSystem.lua"}
 creators[devices.BASERADIO]    	 	= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/BaseRadio.lua"}
 creators[devices.ARC182]        	= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/ARC182Controls.lua"}
+creators[devices.ARGUS7000]        	= {"avLuaDevice"            ,LockOn_Options.script_path.."ARGUS7000/device/ARGUS7000_Device.lua"}
+creators[devices.TACAN]        		= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/TACAN.lua"}
 creators[devices.NVGs] 				= {"avNightVisionGoggles"}
 
 indicators = {}
-indicators[#indicators + 1] = {"ccIndicator" ,LockOn_Options.script_path.."FuelIndicator/init.lua",nil,{{"FG_PTR_CENTER",nil,nil}}}
-indicators[#indicators + 1] = {"ccIndicator" ,LockOn_Options.script_path.."DigitalHeadingIndicator/init.lua",nil,{{"DHI_PTR_CENTER",nil,nil}}}
-indicators[#indicators + 1] = {"ccIndicator" ,LockOn_Options.script_path.."RadarAltitude/init.lua",nil,{{"RADALT_PTR_CENTER",nil,nil}}}
-indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."VIDS/RightDisplay/init.lua", nil,{{"VIDS2_PTR_CENTER",nil,nil}}} 
-indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."VIDS/LeftDisplay/init.lua", nil,{{"VIDS_PTR_CENTER",nil,nil}, {nil}}}
-indicators[#indicators + 1] = {"ccIndicator" ,LockOn_Options.script_path.."RWR/Indicator/init.lua",nil,{{"RWR_PTR_CENTER",nil,nil}}}
-indicators[#indicators + 1] = {"ccIndicator" ,LockOn_Options.script_path.."M880A_digitalClock/init.lua",nil,{{"CLOCK_PTR_CENTER",nil,nil}}}
-indicators[#indicators + 1] = {"ccIndicator" ,LockOn_Options.script_path.."ARC182Display/init.lua",nil,{{"ARC182_PTR_CENTER",nil,nil}}}
+indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."FuelIndicator/init.lua",			nil,{{"FG_PTR_CENTER",nil,nil}}}
+indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."DigitalHeadingIndicator/init.lua",nil,{{"DHI_PTR_CENTER",nil,nil}}}
+indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."RadarAltitude/init.lua",			nil,{{"RADALT_PTR_CENTER",nil,nil}}}
+indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."VIDS/RightDisplay/init.lua", 		nil,{{"VIDS2_PTR_CENTER",nil,nil}}} 
+indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."VIDS/LeftDisplay/init.lua", 		nil,{{"VIDS_PTR_CENTER",nil,nil}, {nil}}}
+indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."RWR/Indicator/init.lua",			nil,{{"RWR_PTR_CENTER",nil,nil}}}
+indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."M880A_digitalClock/init.lua",		nil,{{"CLOCK_PTR_CENTER",nil,nil}}}
+indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."ARC182Display/init.lua",			nil,{{"ARC182_PTR_CENTER",nil,nil}}}
+indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."ARGUS7000/indicator/init.lua",	nil,{{"ARGUS_PTR_CENTER","ARGUS_PTR_BOTTOM","ARGUS_PTR_RIGHT"}}}
 indicators[#indicators + 1] = {"ccControlsIndicatorBase", LockOn_Options.script_path.."ControlsIndicator/ControlsIndicator.lua", nil}
 
 

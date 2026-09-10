@@ -77,9 +77,12 @@ getWOW_LeftMainLandingGear()
 getWOW_NoseLandingGear()
 getWOW_RightMainLandingGear()
 
-set_aircraft_draw_argument_value(arg #, value)
-get_aircraft_draw_argument_value(arg)
-get_cockpit_draw_argument_value(arg)
+set_aircraft_draw_argument_value(arg #, value)-- set external arg value
+get_aircraft_draw_argument_value(arg)-- returns external arg value
+get_cockpit_draw_argument_value(arg)-- returns cockpit arg value
+
+local cockpitDev = GetDevice(0)-- mainpanel device
+cockpitDev:set_argument_value(arg, value)-- set cockpit arg value
 
 dispatch_action(device ID, command, value)--Triggers command with value. Similar to device:performClickableAction() but doesn’t move the switch
 

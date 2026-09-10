@@ -43,8 +43,8 @@ local RADALT_BRIGHTNESS = get_param_handle("RADALT_BRIGHTNESS")
 current_Ralt:set(0)
 
 
-local DHI_HEADING = get_param_handle("DHI_HEADING")
-DHI_HEADING:set(0)
+local MAG_HEADING = get_param_handle("MAG_HEADING")
+MAG_HEADING:set(0)
 local DHI_BRIGHTNESS  = get_param_handle("DHI_BRIGHTNESS")
 local current_fuelT  = get_param_handle("CURRENT_FUELT")
 current_fuelT:set(0)
@@ -56,8 +56,7 @@ local AttIndSw = 0
 
 function post_initialize()
 	current_fuelT:set(sensor_data.getTotalFuelWeight()*KG_TO_POUNDS)
-	DHI_HEADING:set(360-(sensor_data.getHeading()*radian_to_degree))
-	COMPASS_HDG:set(360-(sensor_data.getHeading()*radian_to_degree))
+
 	update_altimeter()
 	update()
 
@@ -201,13 +200,15 @@ function update()
 	updateAttInd()
 	current_fuelT:set(sensor_data.getTotalFuelWeight()*KG_TO_POUNDS)
 	
+	local maghdg = sensor_data.getMagneticHeading()*radian_to_degree
+	if maghdg < 0 then maghdg = maghdg + 360 end
 	if DHI_test>0 then
-		DHI_HEADING:set(888)
+		MAG_HEADING:set(888)
 	else
-		DHI_HEADING:set(360-(sensor_data.getHeading()*radian_to_degree))
+		MAG_HEADING:set(maghdg)
 	end
 	
-	COMPASS_HDG:set(360-(sensor_data.getHeading()*radian_to_degree))
+	COMPASS_HDG:set(maghdg)
 		
 	set_aircraft_draw_argument_value(38,0.9)-- to see if this affects ground crew
 end

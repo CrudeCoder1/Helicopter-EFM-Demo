@@ -95,6 +95,21 @@ elements["PNT_99"] = default_axis(_("ARC-182 Brightness"),					devices.ARC182, d
 elements["PNT_96"] = multiposition_switch(_("ARC-182 Frequency Mode Knob"),	 devices.ARC182, device_commands.ARC182_FreqSelType, 96, 4, 0.2, false, 0.2, 3, false)
 elements["PNT_97"] = multiposition_switch(_("ARC-182 Channel Selector Knob"),devices.ARC182, device_commands.ARC182_ChannelSel, 97, 30, 1/30, false, 0, 3, true)
 
+-- ARGUS7000
+elements["PNT_42"]	= default_button(_("DEParture Button"), devices.ARGUS7000, device_commands.ArgusDEPbutton, 42)
+elements["PNT_41"]	= default_button(_("ENRoute Button"), devices.ARGUS7000, device_commands.ArgusENRbutton, 41)
+elements["PNT_40"]	= default_button(_("ARRival Button"), devices.ARGUS7000, device_commands.ArgusARRbutton, 40)
+elements["PNT_39"]	= default_button(_("AUXilary Button"), devices.ARGUS7000, device_commands.ArgusAUXbutton, 39)
+
+-- not buttons but require pushing 2 buttons at the same time. Using clickable on text position instead
+--elements["PNT_70"]	= default_button(_("SELect"), devices.ARGUS7000, device_commands.ArgusSELbutton, 70)
+--elements["PNT_71"]	= default_button(_("INFOrmation"), devices.ARGUS7000, device_commands.ArgusINFObutton, 71)
+--elements["PNT_72"]	= default_button(_("EMERgency"), devices.ARGUS7000, device_commands.ArgusEMERbutton, 72)
+
+-- TACAN
+elements["PNT_121"]	= multiposition_switch(_("TACAN Channel Selector Tens"), devices.TACAN, device_commands.TACAN10s, 121,20,0.05,false,0,3,true)
+elements["PNT_122"]	= multiposition_switch(_("TACAN Channel Selector Ones"), devices.TACAN, device_commands.TACAN1s, 122,10,0.1,false,0,3,true)
+elements["PNT_123"]	= default_axis_limited(_("TACAN Power/Volume Knob"), 	 devices.TACAN, device_commands.TACANPwrVol, 123, 1)
 
 -- non functional
 elements["PNT_11"]	= default_2_position_tumb(_("Pitot Heat Switch, ON/OFF (No function)"),		devices.EFM_HELPER, device_commands.PitotHeatSw,	11)
