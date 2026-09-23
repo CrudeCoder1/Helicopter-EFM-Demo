@@ -115,3 +115,4 @@ function update()
 	
 end
 
+need_to_be_closed = false

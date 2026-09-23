@@ -238,6 +238,48 @@ function default_throttle(hint_,device_,command_,arg_,arg_lim_)
 			}
 end
 
+-- left click momentary, right click between 2 positions
+function switch_button_3pos(hint_,device_,command1_,arg_,animation_speed_) 
+	local	animation_speed_ = animation_speed_ or anim_speed_default
+	return  {
+				class			= {class_type.BTN,class_type.TUMB},--{left click spring button, right click switch}
+				hint			= hint_,
+				device			= device_,
+				action			= {command1_,command1_},
+				stop_action		= {command1_,0},
+				arg				= {arg_,arg_},
+				--stop_value 		= {nil,	0},
+				arg_value		= {-1,nil},--{val on left click, val on right click(for button)}
+				arg_lim			= {{-1,0},{0,1}},--{left click limits, right click limits}
+				updatable		= true,
+				--use_OBB			= true,
+				use_release_message = {true,false},
+				animation_speed	= {animation_speed_,animation_speed_},
+				sound			= {{SWITCH_SOUND_2},{SWITCH_SOUND_2}}
+			}
+end
+
+-- left click between 2 positions, right click momentary 
+function switch_button_3pos_2(hint_,device_,command1_,arg_,animation_speed_) 
+	local	animation_speed_ = animation_speed_ or anim_speed_default
+	return  {
+				class			= {class_type.TUMB,class_type.BTN},--{left click switch, right click spring button}
+				hint			= hint_,
+				device			= device_,
+				action			= {command1_,command1_},
+				stop_action		= {0,command1_},
+				arg				= {arg_,arg_},
+				--stop_value 		= {nil,	0},
+				arg_value		= {nil,1},--{val on left click, val on right click(for button)}
+				arg_lim			= {{-1,0},{0,1}},--{left click limits, right click limits}
+				updatable		= true,
+				--use_OBB			= true,
+				use_release_message = {true,false},
+				animation_speed	= {animation_speed_,animation_speed_},
+				sound			= {{SWITCH_SOUND_2},{SWITCH_SOUND_2}}
+			}
+end
+
 --IFF
 function default_springloaded_switch(hint_, device_, command1_, command2_, value1_, value2_, value3_, arg_)
 	return	{

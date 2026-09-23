@@ -392,13 +392,14 @@ void ed_fm_set_command(int command, float value)
 	case batterySwitch:
 		Electrics.setPowerSw(value);
 			break;
-
 	case generatorSwitch:
 		Electrics.setGeneratorSw(value);
 		break;
-
 	case inverterSwitch:
 		Electrics.setInverterSw(value);
+		break;
+	case MasterRadioSw:
+		Electrics.setMasterRadioSw(value);
 		break;
 
 	case rotorBrake:

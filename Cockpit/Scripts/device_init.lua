@@ -11,15 +11,18 @@ creators[devices.LIGHTING]			= {"avLuaDevice"			,LockOn_Options.script_path.."Sy
 creators[devices.AVIONICS]    		= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/Avionics.lua"}
 creators[devices.DIGITAL_CLOCK]    	= {"avLuaDevice"            ,LockOn_Options.script_path.."M880A_digitalClock/M880A_device.lua"}
 creators[devices.EFM_HELPER]    	= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/EFM_Helper.lua"} 
-creators[devices.INTERCOM]     		= {"avIntercom"             ,LockOn_Options.script_path.."Systems/Intercom.lua", {devices.UHF_RADIO} }
-creators[devices.UHF_RADIO]     	= {"avUHF_ARC_164"          ,LockOn_Options.script_path.."Systems/UHF_radio.lua", {devices.INTERCOM, devices.ELECTRIC_SYSTEM} } 
 creators[devices.VIDS]    			= {"avLuaDevice"            ,LockOn_Options.script_path.."VIDS/VIDS_device.lua"}
 creators[devices.FUEL_SYSTEM]    	= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/FuelSystem.lua"}
-creators[devices.BASERADIO]    	 	= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/BaseRadio.lua"}
-creators[devices.ARC182]        	= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/ARC182Controls.lua"}
 creators[devices.ARGUS7000]        	= {"avLuaDevice"            ,LockOn_Options.script_path.."ARGUS7000/device/ARGUS7000_Device.lua"}
 creators[devices.TACAN]        		= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/TACAN.lua"}
 creators[devices.NVGs] 				= {"avNightVisionGoggles"}
+
+creators[devices.RADIO_1]        	= {"genAvionics::radio1" ,LockOn_Options.script_path.."Radios/Radio1.lua"}
+creators[devices.ARC186]        	= {"avLuaDevice"             ,LockOn_Options.script_path.."Radios/ARC186Control.lua"}
+creators[devices.RADIO_2]        	= {"genAvionics::radio2"     ,LockOn_Options.script_path.."Radios/Radio2.lua"}
+creators[devices.ARC182]        	= {"avLuaDevice"             ,LockOn_Options.script_path.."Radios/ARC182Control.lua"}
+creators[devices.TEST_INTERCOM]     = {"genAvionics::genIntercom",LockOn_Options.script_path.."Radios/Intercom.lua"}
+creators[devices.P_INTERCOM_PANEL]  = {"avLuaDevice"             ,LockOn_Options.script_path.."Radios/IntercomPanel.lua"}
 
 indicators = {}
 indicators[#indicators + 1] = {"ccIndicator",LockOn_Options.script_path.."FuelIndicator/init.lua",			nil,{{"FG_PTR_CENTER",nil,nil}}}

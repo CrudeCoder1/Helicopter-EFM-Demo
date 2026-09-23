@@ -88,6 +88,7 @@ enum AH6InputCommands
 	KeyCyclicBack = 3028,
 	KeyCyclicLeft = 3029,
 	KeyCyclicRight = 3030,
+	MasterRadioSw = 3031,
 
 	cautionTest = 3201,
 

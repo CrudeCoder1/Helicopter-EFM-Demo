@@ -46,10 +46,12 @@ class ElectricSystem
 private:
 	bool generatorSwOn = false;
 	bool inverterSwOn = false;
+	bool masterRadioSwOn = false;
 	float powerSelSw = 0.0;
 	double DCbusVoltage = 28.0;// 28 volts nominal
 	double ACbus115Voltage = 115.0;// 115 volts nominal
 	double ACbus26Voltage = 26.0;// 26 volts nominal
+	double RadioVoltage = 28.0;// 28 volts nominal
 	//double currentDraw = 0.0;
 
 	SLAB_Battery battery;
@@ -65,25 +67,30 @@ public:
 	void* DC_Bus_Voltage = cockpitAPI.getParamHandle("DC_Bus_Voltage");// for use in lua scripts
 	void* AC_115_Bus_Voltage = cockpitAPI.getParamHandle("AC_115_Bus_Voltage");// for use in lua scripts
 	void* AC_26_Bus_Voltage = cockpitAPI.getParamHandle("AC_26_Bus_Voltage");// for use in lua scripts
+	void* Radio_Bus_Voltage = cockpitAPI.getParamHandle("Radio_Bus_Voltage");// for use in lua scripts
 		
 	void initCold()
 	{
 		generatorSwOn = false;
 		inverterSwOn = false;
+		masterRadioSwOn = false;
 		powerSelSw = 0.0;
 		DCbusVoltage = 0.0;
 		ACbus115Voltage = 0.0;
 		ACbus26Voltage = 0.0;
+		RadioVoltage = 0.0;
 		battery.init();
 	}
 	void initHot()
 	{
 		generatorSwOn = true;
 		inverterSwOn = true;
+		masterRadioSwOn = true;
 		powerSelSw = 1.0;
 		DCbusVoltage = 28.0;
 		ACbus115Voltage = 115.0;
 		ACbus26Voltage = 26.0;
+		RadioVoltage = 28.0;
 		battery.init();
 	}
 /*
@@ -115,6 +122,12 @@ public:
 	{
 		inverterSwOn = value == 1.0f;
 	}
+	void setMasterRadioSw(const float value)
+	{
+		masterRadioSwOn = value == 1.0f;
+	}
+
+	
 	
 	void update(const double dt, const double rpm)
 	{
@@ -155,9 +168,19 @@ public:
 			ACbus26Voltage = 0.0;
 		}
 
+		if (masterRadioSwOn)
+		{
+			RadioVoltage = DCbusVoltage;
+		}
+		else
+		{
+			RadioVoltage = 0.0;
+		}
+
 		cockpitAPI.setParamNumber(DC_Bus_Voltage, DCbusVoltage);
 		cockpitAPI.setParamNumber(AC_115_Bus_Voltage, ACbus115Voltage);
 		cockpitAPI.setParamNumber(AC_26_Bus_Voltage, ACbus26Voltage);
+		cockpitAPI.setParamNumber(Radio_Bus_Voltage, RadioVoltage);
 
 		G_Params.cautionLight[CL_GenOut] = generatorVoltage < battery.getBatteryVoltage();
 		
