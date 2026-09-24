@@ -30,7 +30,7 @@ local freqHundredths = 0
 local modeSelected = 0 -- 0:man, 1:guard, 2:preset(display channel), 3:read(display channel freq)
 local channelSelected = 1
 local testOn = false
-local radio1Channels
+local radio2Channels = get_aircraft_mission_data("Radio")[2].channels
 local squelchOn = false
 local switchOn = false
 
@@ -47,16 +47,10 @@ function post_initialize()
     elseif birth=="GROUND_COLD" then
     end
 
-	radio1Channels = get_aircraft_mission_data("Radio")[1].channels
+	--radio2Channels = get_aircraft_mission_data("Radio")[2].channels
 end
 
-dev:listen_command(device_commands.ARC182_freqTens)
-dev:listen_command(device_commands.ARC182_freqOnes)
-dev:listen_command(device_commands.ARC182_freqTenths)
-dev:listen_command(device_commands.ARC182_freqHundredths)
-dev:listen_command(device_commands.ARC182_AMFM)
-dev:listen_command(device_commands.ARC182_mode)
-dev:listen_command(device_commands.ARC182_brightness)
+
 --[[
 dev:listen_command(Keys.COMM1ModeCW)
 dev:listen_command(Keys.COMM1ModeCCW)
@@ -112,6 +106,7 @@ local radioDevice = GetDevice(devices.RADIO_2)
 	end
 
 	frequency = freqTens + freqOnes + freqTenths + freqHundredths
+	local chanFreq = radio2Channels[channelSelected]
 
 	if modeSelected==0 then	-- manual
 		display_frequency:set(frequency)
@@ -124,17 +119,18 @@ local radioDevice = GetDevice(devices.RADIO_2)
 	elseif modeSelected==2 then	-- preset
 		display_frequency:set(channelSelected)
 		ARC182_DECIMAL:set(0)
-		radioDevice:set_frequency(radio1Channels[channelSelected]*1000000)
+		radioDevice:set_frequency(chanFreq*1000000)
 	elseif modeSelected==3 then -- read
-		display_frequency:set(radio1Channels[channelSelected]*1000)
+		display_frequency:set(chanFreq*1000)
 		ARC182_DECIMAL:set(1)
-		radioDevice:set_frequency(radio1Channels[channelSelected]*1000000)
+		radioDevice:set_frequency(chanFreq*1000000)
 	end
 	if testOn then
 		display_frequency:set(888888)
 		ARC182_DECIMAL:set(1)
 	end
 	--print_message_to_user(radioDevice:get_frequency())
+	--print_message_to_user(chanFreq)
 end
 
 function update()

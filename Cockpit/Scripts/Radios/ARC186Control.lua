@@ -20,7 +20,7 @@ local freqHundredths = 0
 
 local modeSelected = 1 -- 0:preset, 1:manual, 2:emergency AM, 3:emergency FM
 local channelSelected = 1
-local radio1Channels
+local radio1Channels = get_aircraft_mission_data("Radio")[1].channels
 local squelchOn = false
 local switchOn = false
 
@@ -40,7 +40,7 @@ function post_initialize()
 	local radioDevice = GetDevice(devices.RADIO_1)
 	radioDevice:set_modulation(0)
 
-	radio1Channels = get_aircraft_mission_data("Radio")[1].channels
+	--radio1Channels = get_aircraft_mission_data("Radio")[1].channels
 end
 
 --dev:listen_command(device_commands.ARC186_10MHz)
@@ -76,7 +76,7 @@ local radioDevice = GetDevice(devices.RADIO_1)
 	frequency = freqTens + freqOnes + freqTenths + freqHundredths
 
 	if modeSelected==0 then	-- preset
-		--radioDevice:set_frequency(radio1Channels[channelSelected]*1000000)
+		radioDevice:set_frequency(radio1Channels[channelSelected]*1000000)
 	elseif modeSelected==1 then	-- manual
 		radioDevice:set_frequency(frequency*1000)
 	elseif modeSelected==2 then	-- AM guard
@@ -85,6 +85,7 @@ local radioDevice = GetDevice(devices.RADIO_1)
 		radioDevice:set_frequency(40500*1000)
 	end
 	--print_message_to_user("radio device: "..radioDevice:get_frequency())
+	--print_message_to_user(radio1Channels[channelSelected])
 end
 
 function update()

@@ -376,6 +376,33 @@ AH6J = {
 
 	panelRadio = {		
 		[1] = {  
+				name = _("VHF AN/ARC-186"),
+				range = {{min = 30.0, max = 87.975, modulation	= MODULATION_FM},
+					 {min = 108.0, max = 151.975, modulation	= MODULATION_AM_AND_FM, modulationDef = MODULATION_AM}},
+				channels = {
+				[1] =  { name = _("Channel 1"),	 default = 131.0, connect = true}, -- default
+				[2] =  { name = _("Channel 2"),	 default = 133.0},
+				[3] =  { name = _("Channel 3"),	 default = 135.0},
+				[4] =  { name = _("Channel 4"),	 default = 136.0},
+				[5] =  { name = _("Channel 5"),	 default = 127.0},
+				[6] =  { name = _("Channel 6"),	 default = 121.0},
+				[7] =  { name = _("Channel 7"),	 default = 141.0},
+				[8] =  { name = _("Channel 8"),	 default = 128.0},
+				[9] =  { name = _("Channel 9"),	 default = 130.0},
+				[10] = { name = _("Channel 10"), default = 139.0},
+				[11] = { name = _("Channel 11"), default = 140.0},
+				[12] = { name = _("Channel 12"), default = 134.0},
+				[13] = { name = _("Channel 13"), default = 132.0},
+				[14] = { name = _("Channel 14"), default = 138.0},
+				[15] = { name = _("Channel 15"), default = 122.0},
+				[16] = { name = _("Channel 16"), default = 124.0},
+				[17] = { name = _("Channel 17"), default = 137.0},
+				[18] = { name = _("Channel 18"), default = 125.0},
+				[19] = { name = _("Channel 19"), default = 126.0},
+				[20] = { name = _("Channel 20"), default = 142.0},
+				}
+			},
+			[2] = {  
 				name = _("VHF/UHF AN/ARC-182"),
 				range = {{min = 30.0, max = 87.975, modulation	= MODULATION_FM},
 					 {min = 108.0, max = 173.975, modulation	= MODULATION_AM_AND_FM, modulationDef = MODULATION_FM},
