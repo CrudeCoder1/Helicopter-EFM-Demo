@@ -149,7 +149,7 @@ end
 
 function update()
 	local hasPower = get_param_handle("DC_Bus_Voltage"):get()>16 and get_param_handle("AC_26_Bus_Voltage"):get()>16 -- and add power knob too
-	ARGUS_Power:set(hasPower)
+	ARGUS_Power:set(hasPower and 1 or 0)
 
 	local Vx, Vy, Vz = sensor_data.getSelfVelocity()--- DCS world axis: x is +north, y is +up, z is +east
 	ARGUS_GndSpd:set(math.sqrt((Vx^2)+(Vz^2))*mps_to_knot)
