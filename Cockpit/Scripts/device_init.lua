@@ -17,11 +17,11 @@ creators[devices.ARGUS7000]        	= {"avLuaDevice"            ,LockOn_Options.
 creators[devices.TACAN]        		= {"avLuaDevice"            ,LockOn_Options.script_path.."Systems/TACAN.lua"}
 creators[devices.NVGs] 				= {"avNightVisionGoggles"}
 
-creators[devices.RADIO_1]        	= {"genAvionics::radio1" ,LockOn_Options.script_path.."Radios/Radio1.lua"}
+creators[devices.RADIO_1]        	= {"genAvionics::radio1"     ,LockOn_Options.script_path.."Radios/Radio1.lua"}
 creators[devices.ARC186]        	= {"avLuaDevice"             ,LockOn_Options.script_path.."Radios/ARC186Control.lua"}
 creators[devices.RADIO_2]        	= {"genAvionics::radio2"     ,LockOn_Options.script_path.."Radios/Radio2.lua"}
 creators[devices.ARC182]        	= {"avLuaDevice"             ,LockOn_Options.script_path.."Radios/ARC182Control.lua"}
-creators[devices.TEST_INTERCOM]     = {"genAvionics::genIntercom",LockOn_Options.script_path.."Radios/Intercom.lua"}
+creators[devices.INTERCOM]          = {"genAvionics::genIntercom",LockOn_Options.script_path.."Radios/Intercom.lua"}
 creators[devices.P_INTERCOM_PANEL]  = {"avLuaDevice"             ,LockOn_Options.script_path.."Radios/IntercomPanel.lua"}
 
 indicators = {}

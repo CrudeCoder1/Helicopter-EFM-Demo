@@ -113,12 +113,6 @@ function multiposition_switch(hint_,device_,command_,arg_,count_,delta_,inversed
 			}
 end
 
-function multiposition_switch3(hint_,device_,command_,arg_,count_,delta_,inversed_,min_,animation_speed_,cycled_)
-    local	element = multiposition_switch(hint_,device_,command_,arg_,count_,delta_,inversed_,min_,animation_speed_,cycled_)
-	element.sound	= {{SOUND_SW4_UP,SOUND_SW4_DOWN}}
-	return  element
-end
-
 function default_button_tumb(hint_,device_,command1_,command2_,arg_,animation_speed_)
 	local	animation_speed_ = animation_speed_ or anim_speed_default
 	return  {
@@ -280,7 +274,6 @@ function switch_button_3pos_2(hint_,device_,command1_,arg_,animation_speed_)
 			}
 end
 
---IFF
 function default_springloaded_switch(hint_, device_, command1_, command2_, value1_, value2_, value3_, arg_)
 	return	{
 				class 		= {class_type.TUMB, class_type.BTN},
@@ -297,109 +290,9 @@ function default_springloaded_switch(hint_, device_, command1_, command2_, value
 			}
 end
 
-function IFF_Code4_multiposition_spring_switch(hint_,device_,command1_, arg_, command2_, arg2_)
-	return  {	
-				class 		= {class_type.BTN,class_type.BTN,class_type.LEV},
-				hint  		= hint_,
-				device 		= device_,
-				action 		= {command1_,	command1_,	command2_},
-				stop_action = {command1_,	nil,		nil},
-				stop_value 	= {0.0,			nil,		nil},
-				arg 	  	= {arg_,arg_,arg2_},
-				arg_value 	= {-1,1,1}, 
-				arg_lim   	= {{ -1, 0},
-							   {0, 1},
-							   {0, 1}},
-				gain		= {1,1,-1},
-				relative	= {false,false,true},
-				cycle		= false,
-				updatable 	= true, 
-				--use_OBB 	= true,
-				use_release_message = {true,true,false},
-				sound		= {{SOUND_SW2}}
-			}
-end
-
-function IFF_Master_multiposition_switch(hint_,device_,command_,arg_,animation_speed_,command2_,arg2_)
-	local	animation_speed_ = animation_speed_ or anim_speed_default
-	return  {
-				class 			= {class_type.TUMB,class_type.TUMB,class_type.LEV},
-				hint  			= hint_,
-				device 			= device_,
-				action 			= {command_,command_, command2_},
-				arg 	  		= {arg_,arg_,arg2_},
-				arg_value 		= {-0.1, 0.1, 1.0},
-				arg_lim   		= {{0, 0.4},
-								   {0, 0.4},
-								   {0, 1.0}},
-				gain			= {1,1,-1},
-				relative		= {false,false,true},
-				updatable 		= true,
-				use_OBB 		= true,
-				cycle			= false,
-				animated		= {true,true,false},
-			    animation_speed	= {animation_speed_,animation_speed_, 0},
-				sound			= {{SOUND_SW2}}
-			}
-end
-
-
---CB
-function default_CB_button(hint_,device_,command_,arg_)
-	local	animation_speed_ = 10
-    local	element = default_2_position_tumb(hint_,device_,command_,arg_,animation_speed_)
-	element.arg_value		= {1, 0}
-	element.animation_speed	= {10, 0}
-	element.sound	= {{SOUND_SW8_ON,SOUND_SW8_OFF}}
-	return	element
-end
-
--- Смена звука дефолтных функций для маленьких переключателей
-function default_button2(hint_,device_,command_,arg_,animation_speed_)
-    local	element = default_button(hint_,device_,command_,arg_,animation_speed_)
-	element.sound	= {{SOUND_SW18_ON,SOUND_SW18_OFF}}
-	return  element
-end
-
-function default_2_position_tumb2(hint_,device_,command_,arg_,animation_speed_)
-    local	element = default_2_position_tumb(hint_,device_,command_,arg_,animation_speed_)
-	element.sound	= {{SOUND_SW12_ON,SOUND_SW12_OFF}}
-	return  element
-end
-
-function default_3_position_tumb2(hint_,device_,command_,arg_,cycled_,animation_speed_,inversed_,arg_value_,arg_limit_)
-    local	element = default_3_position_tumb(hint_,device_,command_,arg_,cycled_,animation_speed_,inversed_,arg_value_,arg_limit_)
-	element.sound	= {{SOUND_SW12_ON,SOUND_SW12_OFF}}
-	return  element
-end
-
-function multiposition_switch2(hint_,device_,command_,arg_,count_,delta_,inversed_,min_,animation_speed_,cycled_)
-    local	element = multiposition_switch(hint_,device_,command_,arg_,count_,delta_,inversed_,min_,animation_speed_,cycled_)
-	element.sound	= {{SOUND_SW12_ON,SOUND_SW12_OFF}}
-	return  element
-end
-
 function multiposition_switch_2_cl(hint_,device_,command_,arg_,count_,delta_,inversed_,min_,animation_speed_,cycled_)
     local	element = multiposition_switch2(hint_,device_,command_,arg_,count_,delta_,inversed_,min_,animation_speed_,cycled_)
 	element.anim_close_ends	= {true, true}
-	return  element
-end
-
-function springloaded_2_pos_tumb2(hint_,device_,command_,arg_,animation_speed_)
-    local	element = springloaded_2_pos_tumb(hint_,device_,command_,arg_,animation_speed_)
-	element.sound	= {{SOUND_SW12_ON,SOUND_SW12_OFF}}
-	return  element
-end
-
-function springloaded_3_pos_tumb2(hint_,device_,command1_,command2_,arg_,animation_speed_,val1_,val2_,val3_)
-    local	element = springloaded_3_pos_tumb(hint_,device_,command1_,command2_,arg_,animation_speed_,val1_,val2_,val3_)
-	element.sound	= {{SOUND_SW12_ON,SOUND_SW12_OFF},{SOUND_SW12_ON,SOUND_SW12_OFF}}
-	return  element
-end
-
-function default_springloaded_switch2(hint_, device_, command1_, command2_, value1_, value2_, value3_, arg_)
-    local	element = default_springloaded_switch(hint_, device_, command1_, command2_, value1_, value2_, value3_, arg_)
-	element.sound	= {{SOUND_SW12_ON,SOUND_SW12_OFF}}
 	return  element
 end
 
@@ -441,19 +334,3 @@ function default_button_axis(hint_,device_,command1_,command2_,arg1_,arg2_,anima
 			}
 end
 
-function default_air_inlet(hint_,device_,command_hor_,command_ver_,arg_hor_,arg_ver_)
-	return  {
-				class				= {class_type.LEV,	class_type.LEV},
-				hint				= hint_,
-				device				= device_,
-				action				= {command_hor_,	command_ver_},
-				arg					= {arg_hor_,		arg_ver_},
-				arg_value			= {1,				-1},
-				arg_lim				= {{-1, 1},			{-1, 1}},
-				updatable			= true,
-				use_OBB				= true,
-				gain				= {1,				1},
-				relative			= {false,			false},
-				cycle 				= false,
-			}
-end
