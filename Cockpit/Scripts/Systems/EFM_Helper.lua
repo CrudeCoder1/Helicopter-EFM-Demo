@@ -21,6 +21,7 @@ function post_initialize()
 		dev:performClickableAction(EFM_commands.generatorSwitch,1)
 		dev:performClickableAction(EFM_commands.inverterSwitch,1)
 		dev:performClickableAction(EFM_commands.MasterRadioSw,1)
+		get_param_handle("DC_Bus_Voltage"):set(28)-- allows electronics to be on before closing briefing window
     elseif birth=="GROUND_COLD" then
 		dev:performClickableAction(EFM_commands.throttleIdleCutoff, 1)
 		dev:performClickableAction(EFM_commands.throttle,-1)
@@ -45,7 +46,7 @@ function post_initialize()
 	elseif option_aimingMark == 4 then
 		set_aircraft_draw_argument_value(511,0.75)
 	end
-	get_param_handle("DC_Bus_Voltage"):set(28)-- allows electronics to be on before closing briefing window
+
 	--show_param_handles_list()--see all param handles in-game
 end
 

@@ -58,18 +58,18 @@ void AH6Aero::InitializeOff()
 {
 	Omega = 0.0;
 	OmegaE = 0.0;
-	LambdaMR = 0.0;
-	CTA = 0.01;
-	DWMR = 0.01;
+	LambdaMR = -0.0008;
+	CTA = 0.00001;
+	DWMR = 0.0008;
 }
 
 void AH6Aero::InitializeOn()
 {
 	Omega = OmegaT;
 	OmegaE = OmegaT;
-	LambdaMR = -0.022;
-	CTA = 0.014;
-	DWMR = 0.022;
+	LambdaMR = 0.022;
+	CTA = -0.0005;
+	DWMR = -0.022;
 }
 
 void AH6Aero::update(double engtorque)
@@ -78,7 +78,10 @@ void AH6Aero::update(double engtorque)
 	FuselageModule();
 	EmpennageModule();
 	TailRotorModule();
-	RotorDegreeOfFreedom(engtorque);
+	if (p_EFMdata.time > 0.25)//delay for initialization
+	{
+		RotorDegreeOfFreedom(engtorque);
+	}
 }
 
 
@@ -388,6 +391,8 @@ void AH6Aero::MainRotorModule()
 		double YB = (FXT[b] * CosPsi[b] + FYT[b] * SinPsi[b]);
 		double ZB = FZT[b];
 
+		if (p_EFMdata.time > 0.25)//p_EFMdata.deltaTime * 2)//delay adding forces for smooth initialization
+		{
 		ForceComponent bladeForce;
 		bladeForce.dir.x = limit(XB * cos(iS) + ZB * sin(iS), -10000.0, 10000.0) * Convert::lbf_to_N;
 		bladeForce.dir.y = limit(-(-XB * sin(iS) + ZB * cos(iS)), -10000.0, 10000.0) * Convert::lbf_to_N;
@@ -396,6 +401,7 @@ void AH6Aero::MainRotorModule()
 		bladeForce.pos.y = -hMR * Convert::feetToMeter;
 		bladeForce.pos.z = (bMR + e * SinPsi[b]) * Convert::feetToMeter;
 		aeroForces.push_back(bladeForce);
+		}
 
 
 
@@ -491,7 +497,7 @@ void AH6Aero::MainRotorModule()
 	cockpitAPI.setExternalDrawArg(EXT_RotorDroop, (float)LinInterp(Omega, 0, OmegaT * 0.1, -1.0f, 0.0f));
 	
 
-	if (p_EFMdata.time > p_EFMdata.deltaTime * 2)//delay adding forces if there is an initialization issue
+	if (p_EFMdata.time > 0.25)//p_EFMdata.deltaTime * 2)//delay adding forces for smooth initialization
 	{
 		//ForceComponent MainRotorForce;
 		//MainRotorForce.dir.x = limit(XMR, -10000.0, 10000.0) * Convert::lbf_to_N;
