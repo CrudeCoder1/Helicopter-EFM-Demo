@@ -15,7 +15,7 @@ ViewSettings = {
 		CockpitLocalPoint      = {0.617,0.12116,0.0},
 		CameraAngleRestriction = {false,90,0.50},
 		CameraAngleLimits      = {200,-90,90},
-		EyePoint               = {0.15,0.10,0.0},
+		EyePoint               = {0.1,0.10,0.0},
 		ShoulderSize		   = 0.25,
 		Allow360rotation	   = false,
 		limits_6DOF            = {x = {0.0,2},y ={-1,1},z = {-1,1},roll = 90.000000},
@@ -64,10 +64,10 @@ end
 SnapViews = {
 [1] = {-- player slot 1 (pilot)
 		[1]  = head_pos_default({
-					viewAngle = 70,
-					vAngle	 = 0,
-					x_trans	 = 0.05,
-					y_trans	 = -0.33,
+					viewAngle = 75,
+					vAngle	 = -2,
+					x_trans	 = -0.05,
+					y_trans	 = -0.38,
 					z_trans	 = 0.0,
 		}),--Num 0
 		[2]  = head_pos_default({}),--LWin + Num1 : Snap View 1 - 
@@ -85,10 +85,10 @@ SnapViews = {
 },
 [2] = {-- player slot 2 (copilot)
 		[1]  = head_pos_default2({
-					viewAngle = 70,
-					vAngle	 = 0,
-					x_trans	 = 0.05,
-					y_trans	 = -0.33,
+					viewAngle = 75,
+					vAngle	 = -2,
+					x_trans	 = -0.1,
+					y_trans	 = -0.38,
 					z_trans	 = 0.0,
 		}),--Num 0
 		[2]  = head_pos_default2({}),--LWin + Num1 : Snap View 1 
