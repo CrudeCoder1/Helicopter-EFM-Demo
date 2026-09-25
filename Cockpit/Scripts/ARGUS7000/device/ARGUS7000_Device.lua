@@ -2,15 +2,27 @@ dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utilityFunctions.lua")
 
+-- TODO add animation for ON knob to control power
+
 update_time_step = 0.1
 make_default_activity(update_time_step) 
 local dev = GetSelf()
 local sensor_data = get_base_data()
 
-local current_groundspeed = get_param_handle("ARGUS_GndSpd")
+local ARGUS_Brightness = get_param_handle("ARGUS_Brightness")
+ARGUS_Brightness:set(1)
+local ARGUS_Power = get_param_handle("ARGUS_Power")
+ARGUS_Power:set(1)
 local ARGUS_Mode = get_param_handle("ARGUS_Mode")
 local ARGUS_Scale = get_param_handle("ARGUS_Scale")
 ARGUS_Scale:set(2)
+
+local ARGUS_GndSpd = get_param_handle("ARGUS_GndSpd")
+local ARGUS_Distance = get_param_handle("ARGUS_Distance")
+local ARGUS_Bearing = get_param_handle("ARGUS_Bearing")
+local ARGUS_TTG_Hour = get_param_handle("ARGUS_TTG_Hour")
+local ARGUS_TTG_Min = get_param_handle("ARGUS_TTG_Min")
+local ARGUS_TTG_Sec = get_param_handle("ARGUS_TTG_Sec")
 
 
 local mps_to_knot = 1.94384
@@ -24,7 +36,8 @@ local currentMode = ENRmode
 ARGUS_Mode:set(currentMode)
 
 function post_initialize()
-	
+	dev:performClickableAction(device_commands.ArgusBrightness, 1)
+
 	local birth = LockOn_Options.init_conditions.birth_place	--"GROUND_COLD","GROUND_HOT","AIR_HOT"
     if birth=="GROUND_HOT" or birth=="AIR_HOT" then   
 	
@@ -76,7 +89,9 @@ function SetCommand(command,value)
 	elseif command == device_commands.ArgusAUXbutton then
 	elseif command == device_commands.ArgusSELbutton then
 	elseif command == device_commands.ArgusINFObutton then
-	elseif command == device_commands.ArgusEMERbutton then	
+	elseif command == device_commands.ArgusEMERbutton then
+	elseif command == device_commands.ArgusBrightness then
+		ARGUS_Brightness:set(value)
 	end
 
 	ARGUS_Mode:set(currentMode)
@@ -133,11 +148,19 @@ end
 
 
 function update()
+	local hasPower = get_param_handle("DC_Bus_Voltage"):get()>16 and get_param_handle("AC_26_Bus_Voltage"):get()>16 -- and add power knob too
+	ARGUS_Power:set(hasPower)
 
 	local Vx, Vy, Vz = sensor_data.getSelfVelocity()--- DCS world axis: x is +north, y is +up, z is +east
-	current_groundspeed:set(math.sqrt((Vx^2)+(Vz^2))*mps_to_knot)
+	ARGUS_GndSpd:set(math.sqrt((Vx^2)+(Vz^2))*mps_to_knot)
 	--groundspeed_track:set(math.atan2(Vz,Vx)+sensor_data.getHeading())
-	--if current_groundspeed:get()<1 then groundspeed_track:set(0) end
+	--if ARGUS_GndSpd:get()<1 then groundspeed_track:set(0) end
+
+	ARGUS_Distance:set(get_param_handle("TACAN_RANGE"):get())
+	ARGUS_Bearing:set(get_param_handle("TACAN_BEARING"):get())
+	ARGUS_TTG_Hour:set(get_param_handle("TACAN_TTG_Hour"):get())
+	ARGUS_TTG_Min:set(get_param_handle("TACAN_TTG_Min"):get())
+	ARGUS_TTG_Sec:set(get_param_handle("TACAN_TTG_Sec"):get())
 
 	
 	if DEPpressed or ENRpressed then

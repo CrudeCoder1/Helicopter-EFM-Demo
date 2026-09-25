@@ -14,7 +14,8 @@ argus7000_symbols_1 = "argus_symbols_1"
 heliSymbol = MakeMaterial("ArgusHeliSymbol",ARGUS_Green)
 tacanSymbol = MakeMaterial("ArgusTacanSymbol",ARGUS_Green)
 
-ARGUS_Green  		= {10,230,10,220}
+
+ARGUS_Green = {10,230,10,220}
 
 symbol_pixels_x =  44.0 * 2
 symbol_pixels_y =  72.0 * 2
@@ -77,6 +78,9 @@ local font_desc = {
 
 Argus_indication_font 	= MakeFont(font_desc,ARGUS_Green,"Argus_indication_font")
 
+stringdefSmall = {0.0031*0.8, 0.0031, 0.00, 0}
+stringdefMedium = {0.004*0.8, 0.004, 0.00, 0}
+
 ----------- Functions -------------
 function vertPos(percent)
 	local pos = (percent/100)*GetHalfHeight()
@@ -87,67 +91,36 @@ function horzPos(percent)
 	return pos
 end
 
-
-argus_scale	= 0.000085
-local texture_size_x = 1024
-local texture_size_y = 1024
-
-function argus_texture_box (UL_X,UL_Y,W,H)
-	local ux = UL_X / texture_size_x
-	local uy = UL_Y / texture_size_y
-	local w  = W / texture_size_x
-	local h  = H / texture_size_y
-	return {
-		{ux	    ,uy},
-		{ux + w ,uy},
-		{ux + w ,uy + h},
-		{ux	 	,uy + h}
-	}
-end
-
-function create_argus_textured_box(UL_X,UL_Y,DR_X,DR_Y,CENTER_X,CENTER_Y)
-	
-	local mils_per_pixel = argus_scale
-	local W 	   		 = DR_X - UL_X
-	local H 	   		 = DR_Y - UL_Y
-	local cx		     = (UL_X + 0.5 * W)
-	local cy		     = (UL_Y + 0.5 * H)
-	
-	local CENTER_X 		 = CENTER_X or cx
-	local CENTER_Y 		 = CENTER_Y or cy
-	local dcx 		 	 = mils_per_pixel * (CENTER_X - cx)
-	local dcy 		     = mils_per_pixel * (CENTER_Y - cy)
-	
-	local half_x 		 = 0.5 * W * mils_per_pixel
-	local half_y 		 = 0.5 * H * mils_per_pixel
-	
-	local object	= CreateElement "ceTexPoly"
-	object.material	= MakeMaterial("Argus7000_Symbols",ARGUS_Green)
-	object.vertices	= {
-						{-half_x - dcx, half_y + dcy},
-						{ half_x - dcx, half_y + dcy},
-						{ half_x - dcx,-half_y + dcy},
-						{-half_x - dcx,-half_y + dcy}
-	}
-	object.tex_coords = argus_texture_box(UL_X,UL_Y,W,H)
-	object.indices	  = {0,1,2,2,3,0}--box_indices
-	
+function Add_Argus_Element(object, elementParams, controllers)
+	elementParams, controllers = addBrightness(elementParams, controllers)
+	object.use_mipfilter    = true
+	object.h_clip_relation  = h_clip_relations.COMPARE
+	object.level			= DEFAULT_LEVEL
+	object.additive_alpha   = true --additive blending
+	object.collimated 		= false
+	object.element_params 	= elementParams
+	object.controllers    	= controllers
+	Add(object)
 	return object
 end
 
-function Add_Argus_Element(object)
-	object.use_mipfilter      = true
-	object.h_clip_relation    = h_clip_relations.COMPARE
-	object.level			  = DEFAULT_LEVEL
-	object.additive_alpha     = true --additive blending
-	object.collimated 		  = false
-	Add(object)
+-- note:"opacity_using_parameter" does not work well with colored ceTexPoly
+function addBrightness(elementParams, controllers)
+	if elementParams and controllers then
+		elementParams[#elementParams+1]="ARGUS_Brightness"
+		controllers[#controllers+1]={"opacity_using_parameter",#elementParams-1}
+	else
+		elementParams = {"ARGUS_Brightness"}
+		controllers = {{"opacity_using_parameter",0}}
+	end
+	return elementParams, controllers
 end
 
 -- line
 -- rot (CCW in degrees from up)
 -- pos (position of beginning of the line)
 function addLine(name, length, pos, rot, parent, controllers, material, _thickness, _fuzziness)
+	elementParams, controllers = addBrightness(elementParams, controllers)
 	local line      	= CreateElement "ceSMultiLine"
 	line.name           = name
 	line.material       = material or MakeMaterial(nil,ARGUS_Green)
@@ -156,12 +129,8 @@ function addLine(name, length, pos, rot, parent, controllers, material, _thickne
 	line.parent_element = parent
 	line.h_clip_relation= h_clip_relations.COMPARE
 	line.level 		    = DEFAULT_LEVEL
-	
-	if controllers ~= nil then
-		if type(controllers) == "table" then
-			line.controllers = controllers
-		end
-	end	
+	line.element_params = elementParams
+	line.controllers    = controllers
 	pos = pos or {0, 0}
 	line.init_pos       	  = {pos[1], pos[2], 0}
 	if rot ~= nil then
@@ -177,7 +146,7 @@ function addLine(name, length, pos, rot, parent, controllers, material, _thickne
 end
 
 function addTexPoly(name, pos, size, material, parent, elementParams, controllers)
-	--elementParams, controllers = addBrightness(elementParams, controllers)
+	elementParams, controllers = addBrightness(elementParams, controllers)
 	local tex          = CreateElement "ceTexPoly"
 	tex.name           = name
 	tex.material       = material
@@ -199,4 +168,24 @@ function addTexPoly(name, pos, size, material, parent, elementParams, controller
 	tex.level			= DEFAULT_LEVEL 
 	Add(tex)
 	return tex
+end
+
+function addText(name, parent, pos, format, elementParams, controllers, level, alignment, stringdef, value)
+	elementParams, controllers = addBrightness(elementParams, controllers)
+	pos = pos or {0, 0}
+	local txt           = CreateElement "ceStringPoly"
+	txt.name            = name
+	txt.material        = Argus_indication_font	
+	txt.parent_element  = parent
+	txt.alignment       = alignment or "CenterCenter"
+	txt.init_pos		= pos
+	txt.stringdefs      = stringdef or stringdefMedium  -- {size vertical, size horizontal, horizontal spacing, 0}
+	txt.formats         = format
+	txt.controllers     = controllers
+	txt.element_params  = elementParams
+	txt.h_clip_relation = h_clip_relations.COMPARE
+	txt.level			= level or DEFAULT_LEVEL
+	txt.value			= value
+	Add(txt)
+	return txt
 end

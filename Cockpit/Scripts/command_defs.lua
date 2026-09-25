@@ -101,6 +101,7 @@ device_commands = { -- commands for lua
 	ArgusSELbutton	= counter(),
 	ArgusINFObutton	= counter(),
 	ArgusEMERbutton	= counter(),
+	ArgusBrightness	= counter(),
 	
 	TACAN10s	= counter(),
 	TACAN1s		= counter(),

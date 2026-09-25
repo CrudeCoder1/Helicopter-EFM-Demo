@@ -1,25 +1,12 @@
 
 local DEPorigin          = CreateElement "ceSimple"
 DEPorigin.name			  = "DEPorigin"
-DEPorigin.element_params = {"ARGUS_Mode"}
-DEPorigin.controllers 	  = {{"parameter_in_range",0,0}}
+DEPorigin.element_params = {"ARGUS_Mode","ARGUS_Power","ARGUS_Brightness"}
+DEPorigin.controllers 	  = {{"parameter_in_range",0,0},{"parameter_in_range",1,1},{"parameter_in_range",2,0.1,1.1}}
 Add(DEPorigin)	
 
 
-local txtModeScale          = CreateElement "ceStringPoly"
-txtModeScale.name           = "txtModeScale"
-txtModeScale.material       = Argus_indication_font	
-txtModeScale.parent_element = "DEPorigin"
-txtModeScale.alignment      = "RightCenter"
-txtModeScale.init_pos		= {horzPos(91), vertPos(-93), 0}
-txtModeScale.stringdefs     = {0.0035,0.0035, 0.00, 0}  -- {size vertical, size horizontal, horizontal spacing, 0}
-txtModeScale.formats        = {"DEP/%.0f"} 
-txtModeScale.element_params = {"ARGUS_Scale"}
-txtModeScale.controllers    = {{"text_using_parameter",0,0}}
-txtModeScale.h_clip_relation    = h_clip_relations.COMPARE
-txtModeScale.level			  = WINDOW_LEVEL
-Add(txtModeScale)
-
+addText("txtModeScale", DEPorigin.name, {horzPos(91), vertPos(-93)}, {"DEP/%.0f"}, {"ARGUS_Scale"}, {{"text_using_parameter",0,0}}, WINDOW_LEVEL, "RightCenter")
 
 addTexPoly("heli", {0,0}, horzPos(13), heliSymbol, "DEPorigin", nil, nil)
 
@@ -42,18 +29,7 @@ for i = 0, 35 do
 	if i % 3 == 0 then -- every 30 deg has longer line
 		if i % 9 == 0 then
 			if i==0 then i="N" elseif i==9 then i="E" elseif i==18 then i="S" elseif i==27 then i="W" end
-			local CardinalDir           = CreateElement "ceStringPoly"
-			CardinalDir.name            = "CardinalDir"
-			CardinalDir.material        = Argus_indication_font	
-			CardinalDir.parent_element  = "DEP_ringOrigin"
-			CardinalDir.alignment       = "CenterCenter"
-			CardinalDir.init_pos		= {xpos,ypos,0}
-			CardinalDir.stringdefs      = {0.0035,0.0035, 0.00, 0}  -- {size vertical, size horizontal, horizontal spacing, 0}
-			CardinalDir.formats         = {"%.0f"} 
-			CardinalDir.value			= i
-			CardinalDir.element_params = {"MAG_HEADING"}
-			CardinalDir.controllers     = {{"rotate_using_parameter", 0, -degreeToRadian}}
-			Add_Argus_Element(CardinalDir)
+			addText("CardinalDir", "DEP_ringOrigin", {xpos,ypos}, {"%.0f"}, {"MAG_HEADING"}, {{"rotate_using_parameter", 0, -degreeToRadian}}, nil, nil, nil, i)
 		else
 			addLine("long_compass_dash_"..heading, -horzPos(7), {xpos, ypos}, -heading, "DEP_ringOrigin",nil,nil,0.4,0.35)
 		end

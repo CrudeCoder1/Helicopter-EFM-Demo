@@ -128,6 +128,8 @@ elements["PNT_42"]	= default_button(_("DEParture Button"), devices.ARGUS7000, de
 elements["PNT_41"]	= default_button(_("ENRoute Button"), devices.ARGUS7000, device_commands.ArgusENRbutton, 41)
 elements["PNT_40"]	= default_button(_("ARRival Button"), devices.ARGUS7000, device_commands.ArgusARRbutton, 40)
 elements["PNT_39"]	= default_button(_("AUXilary Button"), devices.ARGUS7000, device_commands.ArgusAUXbutton, 39)
+elements["PNT_38"]	= default_axis_limited(_("ARGUS Brightness Knob"), 	 devices.ARGUS7000, device_commands.ArgusBrightness, 38, 1)
+
 
 -- not buttons but require pushing 2 buttons at the same time. Using clickable on text position instead
 --elements["PNT_70"]	= default_button(_("SELect"), devices.ARGUS7000, device_commands.ArgusSELbutton, 70)

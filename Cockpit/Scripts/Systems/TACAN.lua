@@ -1,5 +1,6 @@
 dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
+dofile(LockOn_Options.script_path.."utilityFunctions.lua")
 
 update_time_step = 0.1
 make_default_activity(update_time_step) 
@@ -14,6 +15,10 @@ local tacanRange = get_param_handle("TACAN_RANGE")
 tacanRange:set(0)
 local tacanBearing = get_param_handle("TACAN_BEARING")
 tacanBearing:set(0)
+local TACAN_IDENT = get_param_handle("TACAN_IDENT")
+local TACAN_TTG_Hour = get_param_handle("TACAN_TTG_Hour")
+local TACAN_TTG_Min = get_param_handle("TACAN_TTG_Min")
+local TACAN_TTG_Sec = get_param_handle("TACAN_TTG_Sec")
 
 local channelOnes = 1
 local channelTens = 0
@@ -79,15 +84,53 @@ function getTACAN_BearingRange()
 					if beaconBearing < 0 then beaconBearing = beaconBearing + 360 end--fix wrap-around from magVar
 					if beaconBearing > 360 then beaconBearing = beaconBearing - 360 end
 					
-                    return beaconBearing, beaconRange/nm2meter
+                    return beaconBearing, beaconRange/nm2meter, bcn.callsign
 				else
-					return -1, -1
+					return -1, -1, " "
                 end
             end           
         end
     end
 
-    return -1, -1
+    return -1, -1, " "
+end
+
+local function calculateTTG(range, bearing)
+	if range<0 then range=0 end
+	local Vx, Vy, Vz = sensor_data.getSelfVelocity()--- DCS world axis: x is +north, y is +up, z is +east
+	
+	local groundDir = math.deg(math.atan2(Vz,Vx))
+	if groundDir < 0 then
+		groundDir = groundDir +360
+	end
+	
+	local groundSpeed = math.sqrt((Vx^2)+(Vz^2))*mps_to_knot
+	if groundSpeed<5 then 
+		--groundSpeed = 5
+		groundDir = bearing
+		return 0,0,0
+	end
+			
+	local directVelocity = groundSpeed*math.cos(math.rad(groundDir-bearing))	--speed toward nav mark 
+	if directVelocity<0.1 then 
+		directVelocity=0.1 
+		return 0,0,0	
+	end
+	
+	local hoursToGo = (range/directVelocity)		
+    local HrInt,frac = math.modf(hoursToGo)
+    local minutesTG = math.floor(frac*60)
+	local int1,frac1 = math.modf(frac*60)
+	local secondsTG = frac1*60
+	
+	HrInt = limit(HrInt, 0, 99)
+	if hoursToGo>99 then
+		HrInt = 99
+		minutesTG = 0
+		secondsTG = 0
+	end
+
+	return HrInt, minutesTG, secondsTG
 end
 
 function update()
@@ -96,23 +139,28 @@ function update()
 	mainPanelDev:set_argument_value(324,channelOnes/10)
 	if channelTens >= 100 then
 		mainPanelDev:set_argument_value(326,0.1)
-		mainPanelDev:set_argument_value(325,(channelTens-100)/100)		
+		mainPanelDev:set_argument_value(325,(channelTens-100)/100)
 	else
 		mainPanelDev:set_argument_value(326,0)
 		mainPanelDev:set_argument_value(325,channelTens/100)
 	end
-	
-	
 
 	if TACANvolume>0.1 then -- must be ON
-		local TCNbearing, TCNrange = getTACAN_BearingRange()
-		tacanRange:set(TCNrange)				
+		local TCNbearing, TCNrange, ID = getTACAN_BearingRange()
+		TACAN_IDENT:set(ID)
+		tacanRange:set(TCNrange)
 		tacanBearing:set(TCNbearing)
 	else
-		tacanRange:set(-1)				
+		TACAN_IDENT:set(" ")
+		tacanRange:set(-1)
 		tacanBearing:set(-1)
 	end
-	
+
+	local TCNHour, TCNMin, TCNSec = calculateTTG(tacanRange:get(), tacanBearing:get())
+	TACAN_TTG_Hour:set(TCNHour)
+	TACAN_TTG_Min:set(TCNMin)
+	TACAN_TTG_Sec:set(TCNSec)
+
 end
 
 need_to_be_closed = false
