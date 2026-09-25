@@ -41,5 +41,5 @@ AH6Aero Aero(EFMdata, damageModel, flightControls);
 
 
 //This will store a parameter that can be read in LUA. Useful for transferring data between the dll and lua code
-void* TEST_mass = cockpitAPI.getParamHandle("TEST_mass");
+//void* TEST_mass = cockpitAPI.getParamHandle("TEST_mass");
 
