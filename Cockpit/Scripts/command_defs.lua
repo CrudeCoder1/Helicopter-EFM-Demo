@@ -79,7 +79,6 @@ device_commands = { -- commands for lua
 	PitotHeatSw		= counter();
 	AntiIceSw		= counter();
 	ScavAirSw		= counter();
-	MasterRadioSw	= counter();
 	FQIbrtKnob		= counter();
 	FQIdayNhtSw		= counter();
 	
@@ -93,7 +92,40 @@ device_commands = { -- commands for lua
 	ARC182_brightness 	= counter(),
 	ARC182_FreqSelType 	= counter(),
 	ARC182_ChannelSel 	= counter(),
+	ARC182_squelch		= counter(),
 	
+	ArgusDEPbutton 	= counter(),
+	ArgusENRbutton 	= counter(),
+	ArgusARRbutton 	= counter(),
+	ArgusAUXbutton 	= counter(),
+	ArgusSELbutton	= counter(),
+	ArgusINFObutton	= counter(),
+	ArgusEMERbutton	= counter(),
+	ArgusBrightness	= counter(),
+	
+	TACAN10s	= counter(),
+	TACAN1s		= counter(),
+	TACANPwrVol	= counter(),
+
+	P_ICS_MastVol = counter(),
+	P_ICS_MON1 = counter(),
+	P_ICS_MON2 = counter(),
+	P_ICS_MON3 = counter(),
+	P_ICS_MON5 = counter(),
+	P_ICS_MONA = counter(),
+	P_ICS_Function = counter(),
+	P_ICS_Mode = counter(),
+
+	ARC186_10MHz = counter(),
+	ARC186_1MHz = counter(),
+	ARC186_tenthMHz = counter(),
+	ARC186_quartMHz = counter(),
+	ARC186_mode = counter(),
+	ARC186_FreqMode = counter(),
+	ARC186_vol = counter(),
+	ARC186_chan = counter(),
+	ARC186_load = counter(),
+	ARC186_SquelchToneSw = counter(),
 }
 
 EFM_commands = 	-- commands for use in EFM (make sure to copy to GlobalData.h)
@@ -120,6 +152,7 @@ EFM_commands = 	-- commands for use in EFM (make sure to copy to GlobalData.h)
 	KeyCyclicBack		= 3028,
 	KeyCyclicLeft		= 3029,
 	KeyCyclicRight		= 3030,
+	MasterRadioSw		= 3031,
 }
 
 

@@ -20,12 +20,14 @@ function post_initialize()
 		dev:performClickableAction(EFM_commands.batterySwitch,1) 
 		dev:performClickableAction(EFM_commands.generatorSwitch,1)
 		dev:performClickableAction(EFM_commands.inverterSwitch,1)
+		dev:performClickableAction(EFM_commands.MasterRadioSw,1)
     elseif birth=="GROUND_COLD" then
 		dev:performClickableAction(EFM_commands.throttleIdleCutoff, 1)
 		dev:performClickableAction(EFM_commands.throttle,-1)
 		dev:performClickableAction(EFM_commands.batterySwitch,0) 
 		dev:performClickableAction(EFM_commands.generatorSwitch,0)
 		dev:performClickableAction(EFM_commands.inverterSwitch,0)
+		dev:performClickableAction(EFM_commands.MasterRadioSw,0)
     end
 	
 	if option_aimingMark == 0 then

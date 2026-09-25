@@ -25,4 +25,7 @@ end
 
 function isnan(x) return x ~= x end
 
-
+function round(num, NumDeciPnt)
+    local mult = 10^(NumDeciPnt or 0)
+    return math.floor(num * mult + 0.5) / mult
+end

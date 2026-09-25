@@ -12,6 +12,7 @@ encyclopedia_path = current_mod_path..'/Encyclopedia',
 binaries =
 { 
 'AH6J',
+'genAvi',
 },
 Skins =
 {
