@@ -143,6 +143,8 @@ local tmp_type
 	end
 end
 
+need_to_be_closed = false
+
 --[[
 		RWR_CONTACT_01_ELEVATION:-0.000844
 		RWR_CONTACT_01_SOURCE:16778240		16777472

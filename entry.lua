@@ -53,7 +53,7 @@ Options =
 -------------------------------------------------------------------------------
 mount_vfs_model_path(current_mod_path.."/Shapes")
 mount_vfs_model_path(current_mod_path.."/Cockpit/Shapes")
---mount_vfs_liveries_path (current_mod_path.."/Liveries")
+mount_vfs_liveries_path (current_mod_path.."/Liveries")
 mount_vfs_texture_path(current_mod_path.."/Textures")
 mount_vfs_texture_path(current_mod_path.."/Textures/AH6J_ExternalTextures")
 mount_vfs_texture_path(current_mod_path.."/Cockpit/Textures/AH6J_CockpitTextures")

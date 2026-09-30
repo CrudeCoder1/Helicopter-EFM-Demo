@@ -8,6 +8,7 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 v0.7.1
 - Fixed crash on mission exit if re-arming menu was opened during mission
 - Fixed error preventing intercom volume control
+- Simplified radio setup (transparent to player, for modders only)
 
 0.7.0 25 Sep 2026
 - Added ATC radio functionality
