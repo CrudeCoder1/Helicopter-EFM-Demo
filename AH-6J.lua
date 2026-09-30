@@ -376,7 +376,7 @@ AH6J = {
 
 	panelRadio = {		
 		[1] = {  
-				name = _("VHF AN/ARC-186"),
+				name = _("VHF Radio AN/ARC-186"),
 				range = {{min = 30.0, max = 87.975, modulation	= MODULATION_FM},
 					 {min = 108.0, max = 151.975, modulation	= MODULATION_AM_AND_FM, modulationDef = MODULATION_AM}},
 				channels = {
@@ -403,7 +403,7 @@ AH6J = {
 				}
 			},
 			[2] = {  
-				name = _("VHF/UHF AN/ARC-182"),
+				name = _("V/UHF Radio AN/ARC-182"),
 				range = {{min = 30.0, max = 87.975, modulation	= MODULATION_FM},
 					 {min = 108.0, max = 173.975, modulation	= MODULATION_AM_AND_FM, modulationDef = MODULATION_FM},
 					 {min = 225.0, max = 399.975, modulation	= MODULATION_AM_AND_FM, modulationDef = MODULATION_AM}},
