@@ -1,7 +1,21 @@
+dofile(LockOn_Options.common_script_path..'Radio.lua')
+dofile(LockOn_Options.common_script_path.."mission_prepare.lua")
+
+local gettext = require("i_18n")
+_ = gettext.translate
+
+GUI = {
+	range = {min = 108E6, max = 399.975E6, step = 25E3}, --Hz
+	displayName = _('V/UHF Radio AN/ARC-182'),
+	AM = true,
+	FM = true,
+}
+
+
 dofile(LockOn_Options.script_path.."devices.lua")
 dofile(LockOn_Options.script_path.."command_defs.lua")
 dofile(LockOn_Options.script_path.."utilityFunctions.lua")
-dofile(LockOn_Options.common_script_path..'Radio.lua')
+
 
 --TODO: add LOAD mode to change presets in game
 
@@ -60,7 +74,6 @@ dev:listen_command(Keys.COMM1ChanCW)
 dev:listen_command(Keys.COMM1ChanCCW)
 --]]
 function SetCommand(command,value)
-local radioDevice = GetDevice(devices.RADIO_2)
 	if command == device_commands.ARC182_freqTens then
 		freqTens = freqTens + 10000*value
 		freqTens = limit(freqTens, 0, 400000)
@@ -75,7 +88,7 @@ local radioDevice = GetDevice(devices.RADIO_2)
 		freqHundredths = freqHundredths + 25*value
 		freqHundredths = limit(freqHundredths, 0, 75)
 	elseif command == device_commands.ARC182_AMFM then
-		radioDevice:set_modulation(1- value) 
+		dev:set_modulation(1- value) 
 	elseif command == device_commands.ARC182_mode then
 		switchOn = value > 0
 		testOn = value == 1
@@ -87,9 +100,9 @@ local radioDevice = GetDevice(devices.RADIO_2)
 		channelSelected = math.floor(value*30+1.01)
 	elseif command == device_commands.ARC182_squelch then
 		squelchOn = value == 1
-		radioDevice:set_squelch(squelchOn)
+		dev:set_squelch(squelchOn)
 	elseif command == device_commands.ARC182_vol then
-		radioDevice:set_volume(value)
+		dev:set_volume(value)
 	--[[elseif command == Keys.COMM1ModeCW then
 		dev:performClickableAction(device_commands.ARC182_mode, 0.5)--TODO step through all options
 	elseif command == Keys.COMM1ModeCCW then
@@ -111,37 +124,54 @@ local radioDevice = GetDevice(devices.RADIO_2)
 	if modeSelected==0 then	-- manual
 		display_frequency:set(frequency)
 		ARC182_DECIMAL:set(1)
-		radioDevice:set_frequency(frequency*1000)
+		dev:set_frequency(frequency*1000)
 	elseif modeSelected==1 then	-- guard
 		display_frequency:set(243000)
 		ARC182_DECIMAL:set(1)
-		radioDevice:set_frequency(243000*1000)
+		dev:set_frequency(243000*1000)
 	elseif modeSelected==2 then	-- preset
 		display_frequency:set(channelSelected)
 		ARC182_DECIMAL:set(0)
-		radioDevice:set_frequency(chanFreq*1000000)
+		dev:set_frequency(chanFreq*1000000)
 	elseif modeSelected==3 then -- read
 		display_frequency:set(chanFreq*1000)
 		ARC182_DECIMAL:set(1)
-		radioDevice:set_frequency(chanFreq*1000000)
+		dev:set_frequency(chanFreq*1000000)
 	end
 	if testOn then
 		display_frequency:set(888888)
 		ARC182_DECIMAL:set(1)
 	end
-	--print_message_to_user(radioDevice:get_frequency())
+	--print_message_to_user(dev:get_frequency())
 	--print_message_to_user(chanFreq)
 end
 
 function update()
-	local radioDevice = GetDevice(devices.RADIO_2)
 	if RadioBusVoltage:get() > 20 and switchOn then
-		radioDevice:set_on(true)
+		dev:set_on(true)
 		display_on:set(1)
 	else
-		radioDevice:set_on(false)
+		dev:set_on(false)
 		display_on:set(0)
 	end
 end
 
 need_to_be_closed = false
+
+
+--[[
+available functions:
+
+set_frequency() in hz
+get_frequency() returns freq in hz
+set_modulation() AM:0, FM:1
+is_frequency_in_range() returns boolean
+set_squelch() boolean
+set_volume() 0-1
+set_on() boolean
+
+use like this: 
+dev = GetSelf()
+dev:set_frequency(freq_in_hz)
+
+]]
