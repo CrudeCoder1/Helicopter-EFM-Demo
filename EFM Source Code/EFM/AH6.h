@@ -28,7 +28,7 @@ EFM_Globals G_Params;
 EDPARAM cockpitAPI;
 
 EFMData EFMdata;
-FuelSystem Fuel;
+FuelSystem Fuel(EFMdata);
 AH6JDamage damageModel;
 ElectricSystem Electrics;
 FlightControls flightControls;

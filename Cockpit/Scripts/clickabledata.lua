@@ -15,11 +15,12 @@ elements["PNT_21"]	= default_2_position_tumb(_("Master Radio Switch, ON/OFF"),		
 
 
 -- Fuel System
---elements["PNT-018"]	= multiposition_switch(_("Fuel Selector Switch, OFF/MAIN/BOTH/AUX"),	devices.FUEL_SYSTEM,	device_commands.FuelShutoffSw,	18, 4, 0.25, true)
+elements["PNT_152"] = default_3_position_tumb(_("Aux Fuel Valve Handle, AFT/OFF/FWD"),			devices.FUEL_SYSTEM, EFM_commands.AuxHandle,	152)
 elements["PNT_12"]	= default_2_position_tumb(_("Start Pump Switch, ON/OFF"),		devices.FUEL_SYSTEM,	device_commands.FuelPumpSw,		12)
 --elements["PNT_150"]	= default_2_position_tumb(_("Fuel Cutoff Valve, PULL TO CLOSE"),	devices.EFM_HELPER,	device_commands.FuelCutoffSw,		150)
 elements["PNT_31"]	= default_axis_limited(_("Fuel Qty Brightness Knob"), 		devices.FUEL_SYSTEM, device_commands.FQIbrtKnob, 31, 1)
 elements["PNT_34"]	= default_2_position_tumb(_("FQI Day/Night Switch, DAY/NIGHT"),		devices.FUEL_SYSTEM,	device_commands.FQIdayNhtSw,		34)
+elements["PNT_16"] = multiposition_switch(_("FQI Selector, MAIN/AFT/BIT/FTI"),devices.FUEL_SYSTEM, device_commands.FQIselectSw, 16, 4, 1/4, true, 0, nil, true)
 
 
 -- Engines
@@ -107,7 +108,7 @@ elements["PNT_102"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Tenths"),	dev
 elements["PNT_101"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Hundredths"),	devices.RADIO_2, device_commands.ARC182_freqHundredths,	device_commands.ARC182_freqHundredths, 101)
 elements["PNT_100"] = default_2_position_tumb(_("ARC-182 AM/FM Mode Switch, AM/FM"),	devices.RADIO_2, device_commands.ARC182_AMFM,		100)
 elements["PNT_95"] = default_axis(_("ARC-182 Volume"),						devices.RADIO_2, device_commands.ARC182_vol,		95)
-elements["PNT_98"] = multiposition_switch(_("ARC-182 Mode Control Selector, OFF/T+R/T+R&G/DF/TEST"),	devices.ARC182, device_commands.ARC182_mode,	98, 5, 0.25, false, 0, 3, false)
+elements["PNT_98"] = multiposition_switch(_("ARC-182 Mode Control Selector, OFF/T+R/T+R&G/DF/TEST"),	devices.RADIO_2, device_commands.ARC182_mode,	98, 5, 0.25, false, 0, 3, false)
 elements["PNT_99"] = default_axis(_("ARC-182 Brightness"),					devices.RADIO_2, device_commands.ARC182_brightness,		99)
 elements["PNT_96"] = multiposition_switch(_("ARC-182 Frequency Mode Knob"),	 devices.RADIO_2, device_commands.ARC182_FreqSelType, 96, 4, 0.2, false, 0.2, 3, false)
 elements["PNT_97"] = multiposition_switch(_("ARC-182 Channel Selector Knob"),devices.RADIO_2, device_commands.ARC182_ChannelSel, 97, 30, 1/30, false, 0, 3, true)

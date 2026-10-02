@@ -1,7 +1,8 @@
 #pragma once
  
-
-// TODO: transfer of fuel between tanks (need handle added in 3d model)
+ // using JP-8 fuel @6.7lb/gallon
+ // 
+// TODO: add 2nd aux tank logic
 
 class FuelTank
 {
@@ -46,20 +47,30 @@ public:
 class FuelSystem
 {
 private:
+	EDPARAM cockpitAPI;
+
 	bool isUnlimitedFuel = false;
 	bool isIdleCutoff = false; // true means no fuel flow
+	float auxValvePos = 0;
 
 	FuelTank MainTank{ 401 / Convert::kg_to_lb };
-	FuelTank AuxTank{ 412 / Convert::kg_to_lb };
+	FuelTank AftTank{ 412 / Convert::kg_to_lb };// aux tank #1
 
 	const double fuelCautionAmt = 80.0 * Convert::lb_to_kg;// caution light threshold
-	//const double Fuel_transferRate_kgh = 195.0;//manual says 55 minutes or about 430lb/hr=195kg/h
+	const double Fuel_transferRate_kgs = 197.0/3600.0;//manual says 65gal/hr == 435lb/hr == 197kg/hr
+
+	EFMData& p_EFMdata;
+
+	void* MainFuelTank_lb = cockpitAPI.getParamHandle("MainFuelTank_lb");
+	void* AftFuelTank_lb = cockpitAPI.getParamHandle("AftFuelTank_lb");
 
 public:
 	bool isFuelFlow = false;
 	std::vector<double> fuelMassDelta{};
 
-	FuelSystem() {}
+	FuelSystem(EFMData& ptr_EFMdata)
+		: p_EFMdata(ptr_EFMdata) 
+		{}
 	~FuelSystem() {}
 
 	void initCold()
@@ -67,14 +78,14 @@ public:
 		isIdleCutoff = true;
 		isFuelFlow = false;
 		fuelMassDelta.push_back(MainTank.currentFuel);
-		fuelMassDelta.push_back(AuxTank.currentFuel);
+		fuelMassDelta.push_back(AftTank.currentFuel);
 	}
 	void initHot()
 	{
 		isIdleCutoff = false;
 		isFuelFlow = true;
 		fuelMassDelta.push_back(MainTank.currentFuel);
-		fuelMassDelta.push_back(AuxTank.currentFuel);
+		fuelMassDelta.push_back(AftTank.currentFuel);
 	}
 
 
@@ -88,21 +99,39 @@ public:
 	void setInternalFuel(const double fuel_kg) // <- in kg
 	{
 		MainTank.currentFuel = 0;
-		AuxTank.currentFuel = 0;
+		AftTank.currentFuel = 0;
 		refuelAdd(fuel_kg);
+	}
+
+	void setExternalFuel(int station, double fuel, double x, double y, double z)
+	{
+		if (station == 2)
+		{
+			if (fuel < AftTank.currentFuel)
+			{
+				fuelMassDelta.push_back(-(AftTank.currentFuel - fuel));
+			}
+			AftTank.currentFuel = fuel;
+		}
 	}
 
 	// total internal fuel in kg
 	double getInternalFuel() const
 	{
-		return MainTank.currentFuel + AuxTank.currentFuel;
+		return MainTank.currentFuel;
+	}
+
+	// total external fuel in kg
+	double getExternalFuel() const
+	{
+		return AftTank.currentFuel;
 	}
 
 	void refuelAdd(const double fuel_kg) // <- in kg
 	{	// distribute fuel to each tank
 		double addition = fuel_kg;
 		addition = MainTank.addFuel(addition);
-		addition = AuxTank.addFuel(addition);
+		//addition = AftTank.addFuel(addition);
 	}
 
 	void setThrottle(float value)
@@ -115,6 +144,27 @@ public:
 		isUnlimitedFuel = status;
 	}
 
+	void transferFuel()
+	{
+		double transferAmt = Fuel_transferRate_kgs * p_EFMdata.deltaTime;
+		if (AftTank.currentFuel > transferAmt)
+		{
+			double excessFuel = MainTank.addFuel(transferAmt);
+			AftTank.decFuel(transferAmt);// - excessFuel); in the AH6, if the main tank if full, extra fuel from the aux transfer is vented overboard
+		}		
+	}
+
+	void setCommand(int command, const float value)
+	{
+		switch (command)
+		{
+			case AuxHandle:
+				auxValvePos = value;
+			break;
+		}
+	}
+
+
 	void update(const double FF_kgHr, const double dt)
 	{
 		double fuelFlow_KgS = FF_kgHr / 3600.0;//fuel flow [Kg/s]
@@ -126,7 +176,11 @@ public:
 
 		fuelMassDelta.push_back(-fuelBurnPerFrame_kg);
 
-		fuelBurnPerFrame_kg = AuxTank.decFuel(fuelBurnPerFrame_kg);
+		if (auxValvePos > 0)
+		{
+			transferFuel();
+		}
+		//fuelBurnPerFrame_kg = AuxTank.decFuel(fuelBurnPerFrame_kg);
 		fuelBurnPerFrame_kg = MainTank.decFuel(fuelBurnPerFrame_kg);
 
 		if (getInternalFuel() > 0 && !isIdleCutoff)
@@ -139,6 +193,9 @@ public:
 		}
 
 		G_Params.cautionLight[CL_FuelLow] = isLowFuel();
+
+		cockpitAPI.setParamNumber(AftFuelTank_lb, AftTank.currentFuel * Convert::kg_to_lb);
+		cockpitAPI.setParamNumber(MainFuelTank_lb, MainTank.currentFuel * Convert::kg_to_lb);
 	}
 
 };

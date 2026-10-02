@@ -89,6 +89,7 @@ enum AH6InputCommands
 	KeyCyclicLeft = 3029,
 	KeyCyclicRight = 3030,
 	MasterRadioSw = 3031,
+	AuxHandle = 3032,
 
 	cautionTest = 3201,
 
@@ -123,9 +124,7 @@ enum Devices
 	INTERCOM_DEVICE = 15,
 	RADIO_1_DEVICE = 16,
 	RADIO_2_DEVICE = 17,
-	ARC182_DEVICE = 18,
-	ARC186_DEVICE = 19,
-	P_INTERCOM_PANEL_DEVICE = 20,
+	P_INTERCOM_PANEL_DEVICE = 18,
 };
 
 // from Scripts\Aircrafts\_Common\Damage.lua

@@ -247,6 +247,7 @@ void ed_fm_set_internal_fuel(double fuel)
 //set external fuel volume for each payload station, called for weapon init and on reload
 void ed_fm_set_external_fuel(int station, double fuel, double x, double y, double z)
 {
+	Fuel.setExternalFuel(station,fuel,x,y,z);
 }
 
 // inform about invulnerability settings
@@ -312,6 +313,9 @@ void ed_fm_set_command(int command, float value)
 	//case Flight_Control_DEVICE:
 		//flightControls.setCommand(command, value);
 		//break;
+	case FUEL_SYSTEM_DEVICE:
+		Fuel.setCommand(command, value);
+		break;
 	default:
 		break;
 	}
@@ -470,7 +474,7 @@ double ed_fm_get_internal_fuel()
 // send DCS external fuel volume 
 double ed_fm_get_external_fuel()
 {
-	return 0;
+	return Fuel.getExternalFuel();
 }
 
 // shake level amplitude for head simulation  

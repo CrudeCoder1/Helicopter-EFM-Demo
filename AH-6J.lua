@@ -165,6 +165,17 @@ AH6J = {
         ),
 		pylon(3, 0, 0.0, 0.0, 0.0,
             {
+				DisplayName = "Aux",
+				arg			= 1005,
+				arg_value	= 0,
+			},
+            {
+				{CLSID = "{AH6_T_Tank}", arg_value = 1.0},
+				{CLSID = "{AH6_Goliath}", arg_value = 0.5},
+            }
+        ),
+		pylon(4, 0, 0.0, 0.0, 0.0,
+            {
 			arg				= 310,
 			arg_value		= 0,
 			DisplayName = "Plank",
@@ -176,28 +187,28 @@ AH6J = {
 				{station = 1, loadout = {"{4F977A2A-CD25-44df-90EF-164BFA2AE72F}"}},
 				{station = 1, loadout = {"{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}"}},
 				{station = 2, loadout = {"{M134 Minigun}"}},
-				{station = 4, loadout = {"{M134 Minigun}"}},
-				{station = 5, loadout = {"{AH6_GAU-19}"}},
-				{station = 5, loadout = {"{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}"}},
-				{station = 5, loadout = {"{4F977A2A-CD25-44df-90EF-164BFA2AE72F}"}},
-				{station = 5, loadout = {"{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}"}},
+				{station = 5, loadout = {"{M134 Minigun}"}},
+				{station = 6, loadout = {"{AH6_GAU-19}"}},
+				{station = 6, loadout = {"{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}"}},
+				{station = 6, loadout = {"{4F977A2A-CD25-44df-90EF-164BFA2AE72F}"}},
+				{station = 6, loadout = {"{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}"}},
 				}},
             }
         ),
-        pylon(4, 0, 0.241, -0.926, 0.945,
+        pylon(5, 0, 0.241, -0.926, 0.945,
             {use_full_connector_position = true, connector = "Pylon3",DisplayName = "3",},
             {
 				{CLSID = "{M134 Minigun}", arg_value = 0.0}, -- .308 cal gun
             }
         ),
-        pylon(5, 0, 0.241, -0.926, 1.55,
+        pylon(6, 0, 0.241, -0.926, 1.55,
             {use_full_connector_position = true, connector = "Pylon4",DisplayName = "4",},
             {
                 {CLSID = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}", arg_value = 0.0},	-- LAU-68-M151 High Explosive *7
 				{CLSID = "{4F977A2A-CD25-44df-90EF-164BFA2AE72F}", arg_value = 0.0},	-- LAU-68-MK156 White Phosphorus *7
 				{CLSID = "{FD90A1DC-9147-49FA-BF56-CB83EF0BD32B}", arg_value = 0.0},	-- LAU-61 2.75" rockets MK151 HE *19
 				{CLSID = "{AH6_GAU-19}", arg_value = 0.0,								-- .50 cal gun
-					forbidden = {{station = 4, loadout = {"{M134 Minigun}"}},}}, 
+					forbidden = {{station = 5, loadout = {"{M134 Minigun}"}},}}, 
             }
         ),
     },

@@ -46,8 +46,6 @@ current_Ralt:set(0)
 local MAG_HEADING = get_param_handle("MAG_HEADING")
 MAG_HEADING:set(0)
 local DHI_BRIGHTNESS  = get_param_handle("DHI_BRIGHTNESS")
-local current_fuelT  = get_param_handle("CURRENT_FUELT")
-current_fuelT:set(0)
 
 local alt_setting = ALT_PRESSURE_STD
 local DHI_test = 0
@@ -55,7 +53,6 @@ local AttIndSw = 0
 
 
 function post_initialize()
-	current_fuelT:set(sensor_data.getTotalFuelWeight()*KG_TO_POUNDS)
 
 	update_altimeter()
 	update()
@@ -198,7 +195,6 @@ function update()
 	update_altimeter()
 	update_radar_altitude()
 	updateAttInd()
-	current_fuelT:set(sensor_data.getTotalFuelWeight()*KG_TO_POUNDS)
 	
 	local maghdg = sensor_data.getMagneticHeading()*radian_to_degree
 	if maghdg < 0 then maghdg = maghdg + 360 end

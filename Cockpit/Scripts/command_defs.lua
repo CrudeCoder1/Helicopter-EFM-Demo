@@ -31,6 +31,7 @@ device_commands = { -- commands for lua
 	
 	FuelShutoffSw	= counter();
 	FuelPumpSw 		= counter();
+
 	
 	AMSPwrSw		= counter();
 	AMSbuttonBrght  = counter();
@@ -81,6 +82,7 @@ device_commands = { -- commands for lua
 	ScavAirSw		= counter();
 	FQIbrtKnob		= counter();
 	FQIdayNhtSw		= counter();
+	FQIselectSw		= counter();
 	
 	ARC182_freqTens 	= counter(),
 	ARC182_freqOnes 	= counter(),
@@ -153,6 +155,7 @@ EFM_commands = 	-- commands for use in EFM (make sure to copy to GlobalData.h)
 	KeyCyclicLeft		= 3029,
 	KeyCyclicRight		= 3030,
 	MasterRadioSw		= 3031,
+	AuxHandle 			= 3032,
 }
 
 
