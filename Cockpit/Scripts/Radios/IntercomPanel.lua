@@ -29,7 +29,7 @@ end
 --dev:listen_command(Keys.COMM1Chan)
 
 function SetCommand(command,value)
-local ICSDevice = GetDevice(devices.TEST_INTERCOM)
+local ICSDevice = GetDevice(devices.INTERCOM)
 	if command == device_commands.P_ICS_MastVol then
 		ICSDevice:set_master_volume(value)
 	elseif command == device_commands.P_ICS_MON1 then

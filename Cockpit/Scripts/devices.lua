@@ -18,7 +18,5 @@ TACAN			= 14,
 INTERCOM		= 15,
 RADIO_1         = 16,
 RADIO_2         = 17,
-ARC182			= 18,
-ARC186          = 19,
-P_INTERCOM_PANEL= 20,
+P_INTERCOM_PANEL= 19,
 }

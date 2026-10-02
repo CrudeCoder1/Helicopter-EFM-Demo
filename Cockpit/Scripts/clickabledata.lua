@@ -86,31 +86,31 @@ elements["PNT_151"]	= default_2_position_tumb(_("Rotor Brake Handle, ON/OFF"),		
 
 
 --- VHF AN/ARC-186 control panel
-elements["PNT_90"] = default_2_position_tumb(_("ARC-186 Mode Switch, TR/OFF"),	devices.ARC186, device_commands.ARC186_mode,		90)
-elements["PNT_87"] = multiposition_switch(_("ARC-186 Frequency Mode Switch, PRE/MAN/EMER AM/EMER FM"),devices.ARC186, device_commands.ARC186_FreqMode, 87, 4, 1/3, true, 0, 3, false)
-elements["PNT_91"] = multiposition_switch(_("ARC-186 10MHz Selector Knob"),devices.ARC186, device_commands.ARC186_10MHz, 91, 13, 1/13, false, 0, 1, true)
-elements["PNT_92"] = multiposition_switch(_("ARC-186 1MHz Selector Knob"),devices.ARC186, device_commands.ARC186_1MHz, 92, 10, 1/10, false, 0, nil, true)
-elements["PNT_93"] = multiposition_switch(_("ARC-186 0.1MHz Selector Knob"),devices.ARC186, device_commands.ARC186_tenthMHz, 93, 10, 1/10, false, 0, 1, true)
-elements["PNT_94"] = multiposition_switch(_("ARC-186 0.025MHz Selector Knob"),devices.ARC186, device_commands.ARC186_quartMHz, 94, 4, 1/4, false, 0, 1, true)
-elements["PNT_89"] = multiposition_switch(_("ARC-186 Channel Selector Knob"),devices.ARC186, device_commands.ARC186_chan, 89, 20, 1/20, false, 0, 1, true)
-elements["PNT_85"] = default_axis(_("ARC-186 Volume"),						devices.ARC186, device_commands.ARC186_vol,		85)
---elements["PNT_88"] = default_button(_("ARC-186 Load Button"), devices.ARC186, device_commands.ARC186_load, 88)
-elements["PNT_86"] = switch_button_3pos_2(_("ARC-186 Squelch/Tone Switch, SQ DIS/NORM/TONE"), devices.ARC186, device_commands.ARC186_SquelchToneSw, 86)
+elements["PNT_90"] = default_2_position_tumb(_("ARC-186 Mode Switch, TR/OFF"),	devices.RADIO_1, device_commands.ARC186_mode,		90)
+elements["PNT_87"] = multiposition_switch(_("ARC-186 Frequency Mode Switch, PRE/MAN/EMER AM/EMER FM"),devices.RADIO_1, device_commands.ARC186_FreqMode, 87, 4, 1/3, true, 0, 3, false)
+elements["PNT_91"] = multiposition_switch(_("ARC-186 10MHz Selector Knob"),devices.RADIO_1, device_commands.ARC186_10MHz, 91, 13, 1/13, false, 0, 1, true)
+elements["PNT_92"] = multiposition_switch(_("ARC-186 1MHz Selector Knob"),devices.RADIO_1, device_commands.ARC186_1MHz, 92, 10, 1/10, false, 0, nil, true)
+elements["PNT_93"] = multiposition_switch(_("ARC-186 0.1MHz Selector Knob"),devices.RADIO_1, device_commands.ARC186_tenthMHz, 93, 10, 1/10, false, 0, 1, true)
+elements["PNT_94"] = multiposition_switch(_("ARC-186 0.025MHz Selector Knob"),devices.RADIO_1, device_commands.ARC186_quartMHz, 94, 4, 1/4, false, 0, 1, true)
+elements["PNT_89"] = multiposition_switch(_("ARC-186 Channel Selector Knob"),devices.RADIO_1, device_commands.ARC186_chan, 89, 20, 1/20, false, 0, 1, true)
+elements["PNT_85"] = default_axis(_("ARC-186 Volume"),						devices.RADIO_1, device_commands.ARC186_vol,		85)
+--elements["PNT_88"] = default_button(_("ARC-186 Load Button"), devices.RADIO_1, device_commands.ARC186_load, 88)
+elements["PNT_86"] = switch_button_3pos_2(_("ARC-186 Squelch/Tone Switch, SQ DIS/NORM/TONE"), devices.RADIO_1, device_commands.ARC186_SquelchToneSw, 86)
 
 
 
 --- V/UHF AN/ARC-182 control panel
-elements["PNT_105"] = default_2_position_tumb(_("ARC-182 Squelch Switch, SQUELCH/OFF"),	devices.ARC182, device_commands.ARC182_squelch,		105)
-elements["PNT_104"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Tens"),	devices.ARC182,	device_commands.ARC182_freqTens, device_commands.ARC182_freqTens, 104)
-elements["PNT_103"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Ones"),	devices.ARC182, device_commands.ARC182_freqOnes,	device_commands.ARC182_freqOnes, 103)
-elements["PNT_102"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Tenths"),	devices.ARC182, device_commands.ARC182_freqTenths,	device_commands.ARC182_freqTenths,  102)
-elements["PNT_101"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Hundredths"),	devices.ARC182, device_commands.ARC182_freqHundredths,	device_commands.ARC182_freqHundredths, 101)
-elements["PNT_100"] = default_2_position_tumb(_("ARC-182 AM/FM Mode Switch, AM/FM"),	devices.ARC182, device_commands.ARC182_AMFM,		100)
-elements["PNT_95"] = default_axis(_("ARC-182 Volume"),						devices.ARC182, device_commands.ARC182_vol,		95)
+elements["PNT_105"] = default_2_position_tumb(_("ARC-182 Squelch Switch, SQUELCH/OFF"),	devices.RADIO_2, device_commands.ARC182_squelch,		105)
+elements["PNT_104"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Tens"),	devices.RADIO_2,	device_commands.ARC182_freqTens, device_commands.ARC182_freqTens, 104)
+elements["PNT_103"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Ones"),	devices.RADIO_2, device_commands.ARC182_freqOnes,	device_commands.ARC182_freqOnes, 103)
+elements["PNT_102"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Tenths"),	devices.RADIO_2, device_commands.ARC182_freqTenths,	device_commands.ARC182_freqTenths,  102)
+elements["PNT_101"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Hundredths"),	devices.RADIO_2, device_commands.ARC182_freqHundredths,	device_commands.ARC182_freqHundredths, 101)
+elements["PNT_100"] = default_2_position_tumb(_("ARC-182 AM/FM Mode Switch, AM/FM"),	devices.RADIO_2, device_commands.ARC182_AMFM,		100)
+elements["PNT_95"] = default_axis(_("ARC-182 Volume"),						devices.RADIO_2, device_commands.ARC182_vol,		95)
 elements["PNT_98"] = multiposition_switch(_("ARC-182 Mode Control Selector, OFF/T+R/T+R&G/DF/TEST"),	devices.ARC182, device_commands.ARC182_mode,	98, 5, 0.25, false, 0, 3, false)
-elements["PNT_99"] = default_axis(_("ARC-182 Brightness"),					devices.ARC182, device_commands.ARC182_brightness,		99)
-elements["PNT_96"] = multiposition_switch(_("ARC-182 Frequency Mode Knob"),	 devices.ARC182, device_commands.ARC182_FreqSelType, 96, 4, 0.2, false, 0.2, 3, false)
-elements["PNT_97"] = multiposition_switch(_("ARC-182 Channel Selector Knob"),devices.ARC182, device_commands.ARC182_ChannelSel, 97, 30, 1/30, false, 0, 3, true)
+elements["PNT_99"] = default_axis(_("ARC-182 Brightness"),					devices.RADIO_2, device_commands.ARC182_brightness,		99)
+elements["PNT_96"] = multiposition_switch(_("ARC-182 Frequency Mode Knob"),	 devices.RADIO_2, device_commands.ARC182_FreqSelType, 96, 4, 0.2, false, 0.2, 3, false)
+elements["PNT_97"] = multiposition_switch(_("ARC-182 Channel Selector Knob"),devices.RADIO_2, device_commands.ARC182_ChannelSel, 97, 30, 1/30, false, 0, 3, true)
 
 -- Pilot ICS Panel
 elements["PNT_128"] = default_axis(_("Pilot ICS Master Volume"),		    devices.P_INTERCOM_PANEL, device_commands.P_ICS_MastVol,	128)
