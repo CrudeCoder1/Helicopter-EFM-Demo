@@ -11,42 +11,38 @@ materials["RWR_GREEN"]			= {0,255,0,255}
 
 -------TEXTURES-------
 textures = {}
-
 --textures["Clock_line_material"]	= {nil, materials["DIGIT_GREEN"]}
-
-textures["argus_symbols_1"]	= {LockOn_Options.script_path.."../Textures/Avionics/Argus7000_Symbols.tga", 	materials["DIGIT_GREEN"]}
-
+--textures["argus_symbols_1"]	= {LockOn_Options.script_path.."../Textures/Avionics/Argus7000_Symbols.tga", 	materials["DIGIT_GREEN"]}
 textures["RWR_Material"]	= {nil, materials["RWR_GREEN"]}
 
 
 -------FONTS----------
 fontdescription = {}
-fontdescription["font_general_loc"]	= fontdescription_cmn["font_general_loc"]
---[[
+--fontdescription["font_general_loc"]	= fontdescription_cmn["font_general_loc"]
+--[[ not using this font method, because it creates artifacts at the edges of the digits
 local segmentDigit_x = 144--#pixels wide
 local segmentDigit_y = 248
 fontdescription["font_7seg"] = {
-	texture		= LockOn_Options.script_path.."IndicationTextures/font7segment.dds",
+	texture		= LockOn_Options.script_path.."../Textures/Avionics/font7segment.tga",
 	size      = {4, 4},--# of items across and down
-	resolution = {1024, 1024}	,
+	resolution = {1024, 1024},
 	default    = {segmentDigit_x, segmentDigit_y},
 	chars	   = {
-		{32, segmentDigit_x, segmentDigit_y}, -- SPACE
-		{48, segmentDigit_x, segmentDigit_y}, -- 0
-		{49, segmentDigit_x, segmentDigit_y}, -- 1
-		{50, segmentDigit_x, segmentDigit_y}, -- 2
-		{51, segmentDigit_x, segmentDigit_y}, -- 3
-		{52, segmentDigit_x, segmentDigit_y}, -- 4
-		{53, segmentDigit_x, segmentDigit_y}, -- 5
-		{54, segmentDigit_x, segmentDigit_y}, -- 6
-		{55, segmentDigit_x, segmentDigit_y}, -- 7
-		{56, segmentDigit_x, segmentDigit_y}, -- 8
-		{57, segmentDigit_x, segmentDigit_y}, -- 9 
-		{58, segmentDigit_x, segmentDigit_y}, -- :
-		
+		[1] = {symbol[' '], segmentDigit_x, segmentDigit_y}, -- SPACE
+		[2] = {symbol['0'], segmentDigit_x, segmentDigit_y}, -- 0
+		[3] = {symbol['1'], segmentDigit_x, segmentDigit_y}, -- 1
+		[4] = {symbol['2'], segmentDigit_x, segmentDigit_y}, -- 2
+		[5] = {symbol['3'], segmentDigit_x, segmentDigit_y}, -- 3
+		[6] = {symbol['4'], segmentDigit_x, segmentDigit_y}, -- 4
+		[7] = {symbol['5'], segmentDigit_x, segmentDigit_y}, -- 5
+		[8] = {symbol['6'], segmentDigit_x, segmentDigit_y}, -- 6
+		[9] = {symbol['7'], segmentDigit_x, segmentDigit_y}, -- 7
+		[10] = {symbol['8'], segmentDigit_x, segmentDigit_y}, -- 8
+		[11] = {symbol['9'], segmentDigit_x, segmentDigit_y}, -- 9 
+		[12] = {symbol[':'], segmentDigit_x, segmentDigit_y}, -- :		
 	} 
 }
-
+--[[
 local symbol_pixels_x =   88 
 local symbol_pixels_y =  144
 fontdescription["font_RWR"]  = {
@@ -104,13 +100,14 @@ fontdescription["font_RWR"]  = {
 
 fonts = {}
 -- GENERAL FONTS
-fonts["font_general_keys"]		= {fontdescription["font_general_loc"], 10, {255,75,75,255}}
-fonts["font_hints_kneeboard"]	= {fontdescription["font_general_loc"], 10, {100,0,100,255}}
+--fonts["font_general_keys"]		= {fontdescription["font_general_loc"], 10, {255,75,75,255}}
+--fonts["font_hints_kneeboard"]	= {fontdescription["font_general_loc"], 10, {100,0,100,255}}
 
+font_DHI = MakeFont(fontdescription["font_7seg"],materials["DIGIT_GREEN"],"font_DHI")
 
 
 fonts["font_Clock"]				= {fontdescription["font_7seg"], 10, materials["DIGIT_GREEN"]}
-fonts["font_DHI"]				= {fontdescription["font_7seg"], 10, materials["DIGIT_GREEN"]}
+--fonts["font_DHI"]				= {fontdescription["font_7seg"], 10, materials["DIGIT_GREEN"]}
 fonts["font_VID"]				= {fontdescription["font_7seg"], 10, materials["DIGIT_GREEN"]}
 fonts["font_7segment_orange"]	= {fontdescription["font_7seg"], 10, materials["DIGIT_ORANGE"]}
 

@@ -17,6 +17,7 @@ AftFuelTank_lb = get_param_handle("AftFuelTank_lb")
 FQI_Brightness  = get_param_handle("FQI_Brightness")
 FQI_Quantity  = get_param_handle("FQI_Quantity")
 FQI_FTI  = get_param_handle("FQI_FTI")
+FQI_AftSel  = get_param_handle("FQI_AftSel")
 
 local FQIbrt = 1
 local DayNightVal = 1
@@ -42,6 +43,7 @@ function SetCommand(command,value)
 		DayNightVal = value/2+0.5
 	elseif command == device_commands.FQIselectSw then
 		selectSw = value
+		FQI_AftSel:set(value==0.25 and 1 or 0)
 	end
 	FQI_Brightness:set(FQIbrt*DayNightVal)
 end

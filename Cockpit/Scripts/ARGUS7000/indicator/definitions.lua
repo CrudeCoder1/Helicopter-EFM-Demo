@@ -10,7 +10,7 @@ box_indices = { 0,1,2; 0,2,3 }
 degreeToRadian = 0.0174533
 
 --------- Materials ------------
-argus7000_symbols_1 = "argus_symbols_1"
+--argus7000_symbols_1 = "argus_symbols_1"
 heliSymbol = MakeMaterial("ArgusHeliSymbol",ARGUS_Green)
 tacanSymbol = MakeMaterial("ArgusTacanSymbol",ARGUS_Green)
 

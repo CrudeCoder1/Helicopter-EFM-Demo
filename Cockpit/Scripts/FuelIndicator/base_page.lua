@@ -2,7 +2,7 @@ dofile(LockOn_Options.common_script_path.."elements_defs.lua")
 
 SetScale(METERS) 
 local orangeColor = {255,40,20,220}
-local font7segment = MakeFont({used_DXUnicodeFontData = "font7segment"}, orangeColor)
+local font7segment = MakeFont({used_DXUnicodeFontData = "AH6J_font7segment"}, orangeColor)
 
 verts = {}
 dx=.0145
@@ -51,6 +51,20 @@ decimal.level			 = 6
 set_circle(decimal, 0.0007, 0, nil, 16)  -- name, outer R, inner R, arc, sides
 Add(decimal)
 
+local AftLetter           = CreateElement "ceStringPoly"
+AftLetter.name            = create_guid_string()
+AftLetter.material        = font7segment
+AftLetter.alignment       = "CenterCenter"
+AftLetter.init_pos 	   	  = {0.004, -0.0115}
+AftLetter.stringdefs      = {0.006,0.7 * 0.006, 0.0007, 0}  -- {size vertical, horizontal, 0, 0}
+--AftLetter.formats         = {"%03.0f"}
+AftLetter.value			  = "A"
+AftLetter.element_params  = {"FQI_AftSel","FQI_Brightness"}
+AftLetter.controllers     = {{"parameter_in_range",0,1},{"opacity_using_parameter",1}}  
+AftLetter.h_clip_relation  = h_clip_relations.compare
+AftLetter.level			= 6
+AftLetter.parent_element  = base.name
+Add(AftLetter)
 
 
 local Xsize = 0.0025
@@ -70,11 +84,12 @@ function addSegment(element)
 	Add(element)
 end
 
+local radius = 0.0195
 local numSegments = 19 -- actually 20
 for i = 0,numSegments do
 	local segment1			= CreateElement "ceMeshPoly"
 	segment1.name		   	= "segment_"..i
-	segment1.init_pos	   	= { -0.021*math.cos((i/numSegments)*math.pi), -0.002 - .019*math.sin((i/numSegments)*math.pi), 0.0001}
+	segment1.init_pos	   	= { -radius*math.cos((i/numSegments)*math.pi), -radius*math.sin((i/numSegments)*math.pi)-0.0020, -0.0001}
 	segment1.init_rot		= {(i/numSegments)*180}
 	segment1.controllers  = {{"parameter_in_range",0,i*20,401},{"opacity_using_parameter",1}} 
 	addSegment(segment1)

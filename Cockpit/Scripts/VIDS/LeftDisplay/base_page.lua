@@ -2,7 +2,7 @@ dofile(LockOn_Options.common_script_path.."elements_defs.lua")
 
 SetScale(METERS) 
 
-local font7segment = MakeFont({used_DXUnicodeFontData = "font7segment"},{0,255,0,215}) --(R,G,B,opacity)
+local font7segment = MakeFont({used_DXUnicodeFontData = "AH6J_font7segment"},{0,255,0,215}) --(R,G,B,opacity)
 
 
 verts = {}
