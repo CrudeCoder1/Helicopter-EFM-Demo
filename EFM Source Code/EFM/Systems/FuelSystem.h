@@ -59,7 +59,7 @@ private:
 	const double fuelCautionAmt = 80.0 * Convert::lb_to_kg;// caution light threshold
 	const double Fuel_transferRate_kgs = 197.0/3600.0;//manual says 65gal/hr == 435lb/hr == 197kg/hr
 
-	EFMData& p_EFMdata;
+	EFMData* p_EFMdata;
 
 	void* MainFuelTank_lb = cockpitAPI.getParamHandle("MainFuelTank_lb");
 	void* AftFuelTank_lb = cockpitAPI.getParamHandle("AftFuelTank_lb");
@@ -69,7 +69,7 @@ public:
 	std::vector<double> fuelMassDelta{};
 
 	FuelSystem(EFMData& ptr_EFMdata)
-		: p_EFMdata(ptr_EFMdata) 
+		: p_EFMdata(&ptr_EFMdata) 
 		{}
 	~FuelSystem() {}
 
@@ -146,7 +146,7 @@ public:
 
 	void transferFuel()
 	{
-		double transferAmt = Fuel_transferRate_kgs * p_EFMdata.deltaTime;
+		double transferAmt = Fuel_transferRate_kgs * p_EFMdata->deltaTime;
 		if (AftTank.currentFuel > transferAmt)
 		{
 			double excessFuel = MainTank.addFuel(transferAmt);

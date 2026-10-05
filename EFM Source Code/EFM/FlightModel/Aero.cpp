@@ -22,9 +22,9 @@ includes tangential, radial, and perpendicular components.
 */
 
 AH6Aero::AH6Aero(EFMData& ptr_EFMdata, AH6JDamage& ptr_Damage, FlightControls& ptr_fltCntrl)
-	: p_EFMdata(ptr_EFMdata)
-	, p_Damage(ptr_Damage)
-	, p_flightControl(ptr_fltCntrl)
+	: p_EFMdata(&ptr_EFMdata)
+	, p_Damage(&ptr_Damage)
+	, p_flightControl(&ptr_fltCntrl)
 {
 	Initialize();
 }
@@ -78,7 +78,7 @@ void AH6Aero::update(double engtorque)
 	FuselageModule();
 	EmpennageModule();
 	TailRotorModule();
-	if (p_EFMdata.time > 0.25)//delay for initialization
+	if (p_EFMdata->time > 0.25)//delay for initialization
 	{
 		RotorDegreeOfFreedom(engtorque);
 	}
@@ -90,12 +90,12 @@ void AH6Aero::update(double engtorque)
 // check control input pitch amounts
 void AH6Aero::MainRotorModule()
 {
-	double ThetaCUFF = p_flightControl.CollectiveInput * 19.0 + 2.0;//impressed MR collective pitch, [deg]
-	double A1S = p_flightControl.rollOutput * 8.0;//total lat cyclic input, -8 to 8 [deg]
-	double B1S = p_flightControl.pitchOutput * 12.0;//total long cyclic input, -11 to 15 [deg]
+	double ThetaCUFF = p_flightControl->CollectiveInput * 19.0 + 2.0;//impressed MR collective pitch, [deg]
+	double A1S = p_flightControl->rollOutput * 8.0;//total lat cyclic input, -8 to 8 [deg]
+	double B1S = p_flightControl->pitchOutput * 12.0;//total long cyclic input, -11 to 15 [deg]
 
 
-	double Weight = p_EFMdata.mass_kg * Convert::kg_to_lb;
+	double Weight = p_EFMdata->mass_kg * Convert::kg_to_lb;
 	double Wbd = Weight - NUM_BLADES * Wb;//aircraft weight without rotor blades, [lb]
 	double FSCGB = (FSCG * Weight - NUM_BLADES * FSMR * Wb) / Wbd;//COG FS without blades, [in]
 	double WLCGB = (WLCG * Weight - NUM_BLADES * WLMR * Wb) / Wbd;//COG WL without blades, [in]
@@ -134,13 +134,13 @@ void AH6Aero::MainRotorModule()
 	double K1Y = KGL * (MuYS / MuTOT);//sin component of 1st harmonic 
 
 	// Downwash and inflow calculation
-	double Klambda = KlambdaPrime / p_EFMdata.deltaTime;//downwash filter constant
+	double Klambda = KlambdaPrime / p_EFMdata->deltaTime;//downwash filter constant
 	DWMR = ((Klambda - 1.0) / Klambda) * DWMR + (1.0 / Klambda) * (CTA / MuTOT);// downwash normalized (ie 1==OmegaT * RMR)
 	LambdaMR = MuZS - DWMR;//inflow
 
 	// Main Rotor rotational position
 	//Omega = OmegaT;// uncomment to disable rotor degree of freedom (ie make rotor speed constant)
-	double DeltaPsi = Omega * p_EFMdata.deltaTime;//MR advance angle, [rad]
+	double DeltaPsi = Omega * p_EFMdata->deltaTime;//MR advance angle, [rad]
 	PsiMR += DeltaPsi;//MR rotational position
 	if (PsiMR > M_PI)
 	{
@@ -159,7 +159,7 @@ void AH6Aero::MainRotorModule()
 		}
 	}
 
-	double Z_rotor = limit(p_EFMdata.altitudeAGL_ft  + (WLMR - WLCG) / 12.0, 1.0, 1000.0);//rotor height above ground, [ft] 	(limit to avoid divide by zero)
+	double Z_rotor = limit(p_EFMdata->altitudeAGL_ft  + (WLMR - WLCG) / 12.0, 1.0, 1000.0);//rotor height above ground, [ft] 	(limit to avoid divide by zero)
 	double Kge = limit(pow(1.0 + 0.13 * pow(RMR / Z_rotor, 2) * LambdaMR / sqrt(pow(MuXS, 2) + pow(MuYS, 2) + pow(LambdaMR, 2)), -2.0 / 3.0), 1.0, 1.5);//ground effect gain factor
 
 	//---------------------------
@@ -308,9 +308,9 @@ void AH6Aero::MainRotorModule()
 			CDY[b][s] = CDfinal;// _CD_NACA0015(limit(abs(alphaY), 0.0, 180.0)) + DeltaCD;
 
 			// Blade segment forces (blade span axis)
-			FP[b][s] = 0.5 * p_EFMdata.rho_SlgFt3 * pow(OmegaT, 2) * pow(RMR, 3) * (CR * DeltaY[s]) * UYAW * (CLY[b][s] * (UT[b][s] / cosGamma) + CDY[b][s] * UP[b][s]);// main source of lift
-			FT[b][s] = 0.5 * p_EFMdata.rho_SlgFt3 * pow(OmegaT, 2) * pow(RMR, 3) * (CR * DeltaY[s]) * UYAW * (CDY[b][s] * UT[b][s] - CLY[b][s] * UP[b][s] * cosGamma);
-			FR[b][s] = 0.5 * p_EFMdata.rho_SlgFt3 * pow(OmegaT, 2) * pow(RMR, 3) * (CR * DeltaY[s]) * UYAW * (CDY[b][s] - CLY[b][s] * (UP[b][s] / UT[b][s]) * cosGamma) * UR[b][s];
+			FP[b][s] = 0.5 * p_EFMdata->rho_SlgFt3 * pow(OmegaT, 2) * pow(RMR, 3) * (CR * DeltaY[s]) * UYAW * (CLY[b][s] * (UT[b][s] / cosGamma) + CDY[b][s] * UP[b][s]);// main source of lift
+			FT[b][s] = 0.5 * p_EFMdata->rho_SlgFt3 * pow(OmegaT, 2) * pow(RMR, 3) * (CR * DeltaY[s]) * UYAW * (CDY[b][s] * UT[b][s] - CLY[b][s] * UP[b][s] * cosGamma);
+			FR[b][s] = 0.5 * p_EFMdata->rho_SlgFt3 * pow(OmegaT, 2) * pow(RMR, 3) * (CR * DeltaY[s]) * UYAW * (CDY[b][s] - CLY[b][s] * (UP[b][s] / UT[b][s]) * cosGamma) * UR[b][s];
 
 		}// end of blade segment calculations
 
@@ -381,7 +381,7 @@ void AH6Aero::MainRotorModule()
 		FYT[b] = FYA[b] + FYI;
 		FZT[b] = (FZA[b] + FZI) * Kge;
 
-		double bladeHealth = p_Damage.elementIntegrity[BLADE_1_CENTER + b * 3];
+		double bladeHealth = p_Damage->elementIntegrity[BLADE_1_CENTER + b * 3];
 		FXT[b] *= bladeHealth;
 		FYT[b] *= bladeHealth;
 		FZT[b] *= bladeHealth;
@@ -391,7 +391,7 @@ void AH6Aero::MainRotorModule()
 		double YB = (FXT[b] * CosPsi[b] + FYT[b] * SinPsi[b]);
 		double ZB = FZT[b];
 
-		if (p_EFMdata.time > 0.25)//p_EFMdata.deltaTime * 2)//delay adding forces for smooth initialization
+		if (p_EFMdata->time > 0.25)//p_EFMdata.deltaTime * 2)//delay adding forces for smooth initialization
 		{
 		ForceComponent bladeForce;
 		bladeForce.dir.x = limit(XB * cos(iS) + ZB * sin(iS), -10000.0, 10000.0) * Convert::lbf_to_N;
@@ -432,11 +432,11 @@ void AH6Aero::MainRotorModule()
 	double TA = 0.0;//aerodynamic thrust for downwash calc, [lb]
 	for (int b = 0; b < NUM_BLADES; b++)
 	{
-		TA += FZA[b] * p_Damage.elementIntegrity[BLADE_1_CENTER + b * 3];
+		TA += FZA[b] * p_Damage->elementIntegrity[BLADE_1_CENTER + b * 3];
 	}
 	TA = -TA;
 
-	CTA = TA / (2.0 * p_EFMdata.rho_SlgFt3 * pow(OmegaT, 2) * pow(RMR, 4) * M_PI);// MR thrust coef used for downwash calc
+	CTA = TA / (2.0 * p_EFMdata->rho_SlgFt3 * pow(OmegaT, 2) * pow(RMR, 4) * M_PI);// MR thrust coef used for downwash calc
 
 
 	double LH = 0.0;//MR rolling moment shaft axis, [ft-lb]
@@ -455,7 +455,7 @@ void AH6Aero::MainRotorModule()
 	for (int b = 0; b < NUM_BLADES; b++)
 	{
 		//Q += (e* FXT[b] + MLD[b] * CosBeta[b]);//note: if lag DOF enabled
-		Q += (e * FXT[b] - MLA[b] * CosBeta[b])* p_Damage.elementIntegrity[BLADE_1_CENTER + b * 3];// if no lag DOF
+		Q += (e * FXT[b] - MLA[b] * CosBeta[b])* p_Damage->elementIntegrity[BLADE_1_CENTER + b * 3];// if no lag DOF
 	}
 	Q = -Q;
 	QMR = Q;
@@ -464,12 +464,12 @@ void AH6Aero::MainRotorModule()
 	for (int b = 0; b < NUM_BLADES; b++)
 	{
 		//Q += (e* FXT[b] + MLD[b] * CosBeta[b]);//note: if lag DOF enabled
-		Q2 += (- MLA[b] * CosBeta[b])* p_Damage.elementIntegrity[BLADE_1_CENTER + b * 3];// if no lag DOF
+		Q2 += (- MLA[b] * CosBeta[b])* p_Damage->elementIntegrity[BLADE_1_CENTER + b * 3];// if no lag DOF
 	}
 	Q2 = -Q2*0.5;
 
 	//shaft axis to body axis transformation & filter
-	double Kforce = KfPrime / p_EFMdata.deltaTime;// filter constant
+	double Kforce = KfPrime / p_EFMdata->deltaTime;// filter constant
 	//XMR = ((Kforce - 1.0) / Kforce) * XMR + (1.0 / Kforce) * (H * cos(iS));
 	//YMR = ((Kforce - 1.0) / Kforce) * YMR + (1.0 / Kforce) * (J);
 	//ZMR = ((Kforce - 1.0) / Kforce) * ZMR + (1.0 / Kforce) * (-H * sin(iS));
@@ -482,7 +482,7 @@ void AH6Aero::MainRotorModule()
 	double a1SF = 0.0;//fourier series coef, flapping, [deg]
 	for (int b = 0; b < NUM_BLADES; b++)
 	{
-		a1SF += Beta[b] * CosPsi[b] * p_Damage.elementIntegrity[BLADE_1_CENTER + b * 3];
+		a1SF += Beta[b] * CosPsi[b] * p_Damage->elementIntegrity[BLADE_1_CENTER + b * 3];
 	}
 	a1SF *= -2.0 / NUM_BLADES * Convert::radToDeg;
 
@@ -497,7 +497,7 @@ void AH6Aero::MainRotorModule()
 	cockpitAPI.setExternalDrawArg(EXT_RotorDroop, (float)LinInterp(Omega, 0, OmegaT * 0.1, -1.0f, 0.0f));
 	
 
-	if (p_EFMdata.time > 0.25)//p_EFMdata.deltaTime * 2)//delay adding forces for smooth initialization
+	if (p_EFMdata->time > 0.25)//p_EFMdata.deltaTime * 2)//delay adding forces for smooth initialization
 	{
 		//ForceComponent MainRotorForce;
 		//MainRotorForce.dir.x = limit(XMR, -10000.0, 10000.0) * Convert::lbf_to_N;
@@ -526,7 +526,7 @@ void AH6Aero::FuselageModule()
 	double VXF = VXB + EKFX * (DWMR * OmegaT * RMR);//fuselage x body axis velocity, [ft/s]
 	double VYF = VYB;								//fuselage y body axis velocity, [ft/s]
 	double VZF = VZB - EKFZ * (DWMR * OmegaT * RMR);//fuselage z body axis velocity, [ft/s]
-	double qF = 0.5 * p_EFMdata.rho_SlgFt3 * (VXF * VXF + VYF * VYF + VZF * VZF);//dynamic pressure at fuselage, [lb/ft^2]
+	double qF = 0.5 * p_EFMdata->rho_SlgFt3 * (VXF * VXF + VYF * VYF + VZF * VZF);//dynamic pressure at fuselage, [lb/ft^2]
 
 	double alphaF = atan2(VZF, VXF);//AoA of fuselage, [rad]
 	alphaF_deg = alphaF * Convert::radToDeg;
@@ -601,14 +601,14 @@ void AH6Aero::EmpennageModule()
 	double VYHT = VYB - r * lHT + p * hHT;// - VYIW* TauTU;//HT y body axis velocity, [ft/s]
 	double VZHT = VZB + q * lHT;// -VZIWU * TauTU - EKTZU * (DWMR * OmegaT * RMR);//HT z body axis velocity, [ft/s]
 	double VHT2 = VXHT * VXHT + VYHT * VYHT + VZHT * VZHT;
-	double qHT = 0.5 * p_EFMdata.rho_SlgFt3 * VHT2;//dynamic pressure at HT, [lb/ft^2]
+	double qHT = 0.5 * p_EFMdata->rho_SlgFt3 * VHT2;//dynamic pressure at HT, [lb/ft^2]
 
 	double alphaHT = atan2(VZHT, VXHT);//Horiz Tail AoA, [rad]
 	double alphaHTT = alphaHT * Convert::radToDeg + iHT;//total AoA of HT, [deg]
 
 	double CL_HT = 0.0;// fn_CL_NACA0015.interpnf1(abs(alphaHTT));
 	double CD_HT = 0.0;// fn_CD_NACA0015.interpnf1(abs(alphaHTT));
-	double machHT = sqrt(VHT2) / p_EFMdata.speedOfSound_fts;
+	double machHT = sqrt(VHT2) / p_EFMdata->speedOfSound_fts;
 	//if (abs(alphaHTT) <= 30.0)
 	//{
 	//	CL_HT = _CL_NACA0015_30(abs(alphaHTT),machHT);
@@ -665,14 +665,14 @@ void AH6Aero::EmpennageModule()
 	double VYVT = VYB - r * lVT + p * hVT;// -VYIW * TauTU + EKTR * (DWMR * OmegaT * RMR);//VT y axis velocity, [ft/sec]
 	double VZVT = VZB + q * lVT;// -VZIWU * TauTU - EKTZU * (DWMR * OmegaT * RMR);//VT z axis velocity, [ft/sec]
 	double VVT2 = VXVT * VXVT + VYVT * VYVT + VZVT * VZVT;
-	double qVT = 0.5 * p_EFMdata.rho_SlgFt3 * VVT2;// dynamic presure at VT
+	double qVT = 0.5 * p_EFMdata->rho_SlgFt3 * VVT2;// dynamic presure at VT
 
 	alphaVT = asin(VYVT / sqrt(VVT2));//[rad]
 	double alphaVTT = alphaVT * Convert::radToDeg;//AoA VT, [deg]
 
 	double CL_VT = 0.0;// fn_CL_NACA0015.interpnf1(abs(alphaVTT));
 	double CD_VT = 0.0;// fn_CD_NACA0015.interpnf1(abs(alphaVTT));
-	double machVT = sqrt(VVT2) / p_EFMdata.speedOfSound_fts;
+	double machVT = sqrt(VVT2) / p_EFMdata->speedOfSound_fts;
 	//if (abs(alphaVTT) <= 30.0)
 	//{
 	//	CL_VT = _CL_NACA0015_30(abs(alphaVTT), machVT);
@@ -705,9 +705,9 @@ void AH6Aero::EmpennageModule()
 
 void AH6Aero::TailRotorModule()
 {
-	double ThetaCTR = p_flightControl.PedalInput * 16.0 + 9.0;//TR collective pitch, 14.0 + 4.0
+	double ThetaCTR = p_flightControl->PedalInput * 16.0 + 9.0;//TR collective pitch, 14.0 + 4.0
 
-	double DeltaPsi = OmegaTR * p_EFMdata.deltaTime;//MR advance angle, [rad]
+	double DeltaPsi = OmegaTR * p_EFMdata->deltaTime;//MR advance angle, [rad]
 	PsiTR += DeltaPsi;//MR rotational position
 	if (PsiTR > M_PI)
 	{
@@ -744,14 +744,14 @@ void AH6Aero::TailRotorModule()
 	double t33 = pow(BTR, 4) / 4.0 + (pow(BTR, 2) / 4.0) * MuTR2;//bailey coef
 
 	double GTR = (aTR / 2.0) * TRSolidity;
-	double Klambda = KlambdaPrimeTR / p_EFMdata.deltaTime;//downwash filter constant
+	double Klambda = KlambdaPrimeTR / p_EFMdata->deltaTime;//downwash filter constant
 	DWTR = ((Klambda - 1.0) / Klambda) * DWTR + (1.0 / Klambda) * (GTR * (MuZTR * t31 + ThetaTR * t32 + t33 * Theta1TR / 57.3) / (2.0 * sqrt(MuTR2 + pow(LambdaTR, 2)) + GTR * t31));// TR downwash
 	LambdaTR = MuZTR - DWTR;
 
 	double CTHTR = 2.0 * DWTR * sqrt(MuTR2 + pow(LambdaTR, 2));//TR thrust coef
-	TTR = CTHTR * pow(Omega / OmegaT, 2) * p_EFMdata.rho_SlgFt3 * M_PI * pow(RTR, 4) * pow(OmegaTR_T, 2) * KTRBLK;//Thrust TR, [lb]
+	TTR = CTHTR * pow(Omega / OmegaT, 2) * p_EFMdata->rho_SlgFt3 * M_PI * pow(RTR, 4) * pow(OmegaTR_T, 2) * KTRBLK;//Thrust TR, [lb]
 
-	double XTR = -DragTR * 0.5 * p_EFMdata.rho_SlgFt3 * pow(VXTR, 2);
+	double XTR = -DragTR * 0.5 * p_EFMdata->rho_SlgFt3 * pow(VXTR, 2);
 	double YTR = TTR * sin(GammaTR);
 	double ZTR = -TTR * cos(GammaTR);
 
@@ -810,12 +810,12 @@ void AH6Aero::RotorDegreeOfFreedom(double engtorque)
 	}
 
 	double OmegaEdot = netEngTorque / JE;//engine shaft acceleration, [rad/sec^2]
-	OmegaE += OmegaEdot * p_EFMdata.deltaTime;
+	OmegaE += OmegaEdot * p_EFMdata->deltaTime;
 	OmegaE = limit(OmegaE, 0.0, OmegaT * 1.2);
 
 
 	double OmegaMRDot = netMRTorque / JMR;//MR acceleration, [rad/s^2].   to disable rotor DOF set to 0
-	Omega += OmegaMRDot * p_EFMdata.deltaTime;
+	Omega += OmegaMRDot * p_EFMdata->deltaTime;
 	Omega = limit(Omega, 0.0, OmegaT * 1.2);//limit rotor speed to 120% to avoid FM anomalies, it should probably break at that point anyways
 	OmegaTR = OmegaTR_T * Omega / OmegaT;
 

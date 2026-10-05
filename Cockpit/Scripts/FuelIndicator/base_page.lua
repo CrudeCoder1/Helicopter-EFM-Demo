@@ -91,7 +91,7 @@ for i = 0,numSegments do
 	segment1.name		   	= "segment_"..i
 	segment1.init_pos	   	= { -radius*math.cos((i/numSegments)*math.pi), -radius*math.sin((i/numSegments)*math.pi)-0.0020, -0.0001}
 	segment1.init_rot		= {(i/numSegments)*180}
-	segment1.controllers  = {{"parameter_in_range",0,i*20,401},{"opacity_using_parameter",1}} 
+	segment1.controllers  = {{"parameter_in_range",0,i*20,402},{"opacity_using_parameter",1}} 
 	addSegment(segment1)
 end
 
