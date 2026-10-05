@@ -1,5 +1,5 @@
 dofile(LockOn_Options.common_script_path.."elements_defs.lua")
-dofile(LockOn_Options.script_path.."materials.lua")
+--dofile(LockOn_Options.script_path.."materials.lua")
 
 SetScale(METERS) 
 

@@ -42,7 +42,7 @@ fontdescription["font_7seg"] = {
 		[12] = {symbol[':'], segmentDigit_x, segmentDigit_y}, -- :		
 	} 
 }
---[[
+
 local symbol_pixels_x =   88 
 local symbol_pixels_y =  144
 fontdescription["font_RWR"]  = {
