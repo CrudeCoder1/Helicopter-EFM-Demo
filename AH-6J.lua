@@ -45,7 +45,7 @@ AH6J = {
 	lead_stock_main		= -0.1,--something to do with the AI gear
 	lead_stock_support	= -0.1,--something to do with the AI gear	
 	sound_name          = "NONE", -- blank sound to mute awful default engine sound
-	-- sounderName 		= "Aircraft/Planes/AH-6J", -- TODO proper sounders
+	sounderName         = "Aircraft/Planes/AH-6J",
 	engines_count		= 1, -- number of engines
 	engines_nozzles 	= 
 	{
@@ -103,7 +103,7 @@ AH6J = {
 		power_RPM_k = 	{-0.08639,	0.24277,	0.84175},-- power vs RPM (probably polynomial coefs.)
 		power_RPM_min	=	9.1384,
 		--sound_name	= "EngineTV3117", -- engine sound from Sounds/sdef
-		sound_name          = "NONE", -- blank sound to mute awful default engine sound (TODO proper sounders)
+		sound_name          = "NONE", -- blank sound to mute awful default engine sound
 	},
 	
 	Sensors = {	-- defines what the AI can use in terms of sensors

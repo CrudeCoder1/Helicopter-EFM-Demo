@@ -1,4 +1,4 @@
-wave = "Effects/Aircrafts/NONE"
+wave = "Effects/NONE"
 inner_radius = 100
 outer_radius = 5500
 cone_inner_angle = 60
