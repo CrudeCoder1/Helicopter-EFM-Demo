@@ -1,5 +1,6 @@
 #pragma once
 #include "../FlightModel/aero.h"
+#include "Systems/ElectricSystem.h"
 
 
 // N1 gas producer rpm will be main measure of engine power
@@ -22,6 +23,7 @@ private:
 
     EFMData* p_EFMdata;
     FlightControls* p_flightControl;
+    ElectricSystem* p_ElectricSystem;
 
     enum engineStates
     {
@@ -60,11 +62,11 @@ private:
 
 public:
     double throttleInput = 0.0;	// Throttle input command
-    bool starterButtonOn = false;
 
-    TurboshaftEngine(EFMData& ptr_EFMdata, FlightControls& ptr_fltCntrl)
+    TurboshaftEngine(EFMData& ptr_EFMdata, FlightControls& ptr_fltCntrl, ElectricSystem& ptr_elec)
         : p_EFMdata(&ptr_EFMdata)
         , p_flightControl(&ptr_fltCntrl)
+        , p_ElectricSystem(&ptr_elec)
     {}
     ~TurboshaftEngine() {}
 
@@ -73,7 +75,6 @@ public:
         engineState = ENG_Off;
         TargetN2 = 98.0;
         throttleInput = 0;
-        starterButtonOn = false;
         N1_PCT = 0.0;
         N1Cmd = 0.0;
         N1rate = 15.0;
@@ -90,7 +91,6 @@ public:
         engineState = ENG_Running;
         TargetN2 = 98.0;
         throttleInput = 1;
-        starterButtonOn = false;
         N1_PCT = 75.0;
         N1Cmd = 75.0;
         N1rate = 15.0;
@@ -155,7 +155,7 @@ public:
         {
         case ENG_Off:
         {
-            if (starterButtonOn && N1_PCT < ENG_RPM_SUSTAIN_PCT)//TODO add req. electric power
+            if (p_ElectricSystem->isStarterEngaged() && N1_PCT < ENG_RPM_SUSTAIN_PCT)//TODO add req. electric power
             {
                 engineState = ENG_Motor;
             }
@@ -169,7 +169,7 @@ public:
         }
         case ENG_Motor: //engine turning due to electrical starter. No fuel or ignition
         {
-            if (starterButtonOn)
+            if (p_ElectricSystem->isStarterEngaged())
             {
                 N1Cmd = ENG_RPM_MOTOR_PCT;
                 double engineAccelFactor = 1.0 - limit(pow(N1_PCT / N1Cmd, 2.0), 0.0, 0.9);
@@ -195,7 +195,7 @@ public:
         }
         case ENG_Ignition://20-40 sec from 19 to 58
         {
-            if (starterButtonOn && hasFuel)
+            if (p_ElectricSystem->isStarterEngaged() && hasFuel)
             {
                 N1Cmd = ENG_RPM_IDLE_PCT;
                 N1rate = 2.0;

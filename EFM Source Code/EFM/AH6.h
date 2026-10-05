@@ -44,7 +44,7 @@ void createHeli()
 	Electrics = new ElectricSystem;
 	flightControls = new FlightControls;
 	Lighting = new LightSystem;
-	Engine = new TurboshaftEngine(*EFMdata, *flightControls);
+	Engine = new TurboshaftEngine(*EFMdata, *flightControls, *Electrics);
 	Aero = new AH6Aero(*EFMdata, *damageModel, *flightControls);
 }
 void releaseHeli()

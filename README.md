@@ -11,6 +11,8 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
   - Fuel Quantity indicator (FQI) now displays aft or main tank quantity depending on FQI switch
 - Fixed ARC182 mode knob not working
 - Sound setup improvement (thanks Hayds_93)
+- Added basic amp gauge functionality
+- EFM now deallocates memory
 
 v0.7.1 2 Oct 2026
 - Fixed crash on mission exit if re-arming menu was opened during mission

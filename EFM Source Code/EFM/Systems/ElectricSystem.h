@@ -1,7 +1,6 @@
 #pragma once
 
-//TODO: ammeter current
-
+// Note: ammeter current is very basic. A good EFM would account for current draw of each electrical item
 // Note: Battery drain is only linear and not based on current draw.
 
 // Note: in the A/MH-6J, the NiCad battery was initially installed, but eventually replaced with a Sealed Lead Acid Battery (SLAB).
@@ -47,17 +46,16 @@ private:
 	bool generatorSwOn = false;
 	bool inverterSwOn = false;
 	bool masterRadioSwOn = false;
+	bool starterPressed = false;
 	float powerSelSw = 0.0;
 	double DCbusVoltage = 28.0;// 28 volts nominal
 	double ACbus115Voltage = 115.0;// 115 volts nominal
 	double ACbus26Voltage = 26.0;// 26 volts nominal
 	double RadioVoltage = 28.0;// 28 volts nominal
-	//double currentDraw = 0.0;
+	double ammeter = 0;// the ammeter doesn't show all electrical current, but only current demand of starter/generator
 
 	SLAB_Battery battery;
-
 	EDPARAM cockpitAPI;
-
 
 public:
 	ElectricSystem() {}
@@ -126,8 +124,15 @@ public:
 	{
 		masterRadioSwOn = value == 1.0f;
 	}
-
+	void setStarterButton(const float value)
+	{
+		starterPressed = value > 0.0;
+	}
 	
+	bool isStarterEngaged()
+	{
+		return starterPressed && DCbusVoltage>12.0;
+	}
 	
 	void update(const double dt, const double rpm)
 	{
@@ -176,11 +181,29 @@ public:
 		{
 			RadioVoltage = 0.0;
 		}
+		
+		// this shit is ass
+		double ampCmd = 0;
+		if (isStarterEngaged())
+		{
+			ampCmd = LinInterp(rpm,0, 0.15, -150, -69);// more current at low rpm
+		}
+		else if (generatorVoltage > battery.getBatteryVoltage())
+		{
+			ampCmd = LinInterp(generatorVoltage, 0, 28, 110, 40);
+		}
+		else
+		{
+			ampCmd = 0;
+		}
+		ammeter = lagFilter(ammeter, ampCmd, dt, 0.3);
+		ammeter = limit(ammeter, -200, 200);
 
 		cockpitAPI.setParamNumber(DC_Bus_Voltage, DCbusVoltage);
 		cockpitAPI.setParamNumber(AC_115_Bus_Voltage, ACbus115Voltage);
 		cockpitAPI.setParamNumber(AC_26_Bus_Voltage, ACbus26Voltage);
 		cockpitAPI.setParamNumber(Radio_Bus_Voltage, RadioVoltage);
+		cockpitAPI.setCockpitDrawArg(INT_DCAmpsNeedle, (float)(ammeter / 200.0));
 
 		G_Params.cautionLight[CL_GenOut] = generatorVoltage < battery.getBatteryVoltage();
 		

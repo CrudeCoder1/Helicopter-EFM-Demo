@@ -381,7 +381,7 @@ void ed_fm_set_command(int command, float value)
 		break;
 	
 	case starterButton:
-		Engine->starterButtonOn = value > 0.0;
+		Electrics->setStarterButton(value);
 		break;
 	
 
