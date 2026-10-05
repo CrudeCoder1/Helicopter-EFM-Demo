@@ -29,14 +29,14 @@ end
 
 function engine:createSounds(host)
     self.exterior.rotor = ED_AudioAPI.createSource(host, self.rotor_name)
-    self.exterior.engine = ED_AudioAPI.createSource(host, self.engine_name)
-    self.exterior.engine_r = ED_AudioAPI.createSource(host, self.engine_r_name)
-    self.exterior.start = ED_AudioAPI.createSource(host, self.start_name)
+    -- self.exterior.engine = ED_AudioAPI.createSource(host, self.engine_name)
+    -- self.exterior.engine_r = ED_AudioAPI.createSource(host, self.engine_r_name)
+    -- self.exterior.start = ED_AudioAPI.createSource(host, self.start_name)
 end
 
 function engine:createSoundsCpt(hostCpt)
-    self.cockpit.engine_l = ED_AudioAPI.createSource(hostCpt, self.engine_l_cpt_name)
-    self.cockpit.engine_r = ED_AudioAPI.createSource(hostCpt, self.engine_r_cpt_name)
+    -- self.cockpit.engine_l = ED_AudioAPI.createSource(hostCpt, self.engine_l_cpt_name)
+    -- self.cockpit.engine_r = ED_AudioAPI.createSource(hostCpt, self.engine_r_cpt_name)
     self.cockpit.rotor = ED_AudioAPI.createSource(hostCpt, self.rotor_name)
 end
 
@@ -79,10 +79,10 @@ function engine:update(coreRPM, fanRPM, turbPower, thrust, flame, vTrue)
     local startGain = math.min(1, core / 0.25) * (1 - running)
 
     self:controlSound(self.exterior.rotor, rotor, rotorGain)
-    self:controlSound(self.exterior.engine, core, engineGain * 0.5)
-    self:controlSound(self.exterior.engine_r, core, engineGain * 0.5)
-    self:controlSound(self.exterior.start, 0.5 + 0.5 * core, startGain)
-    self:controlSound(self.cockpit.engine_l, core, math.min(1, core) * 0.4)
-    self:controlSound(self.cockpit.engine_r, core, math.min(1, core) * 0.4)
+    -- self:controlSound(self.exterior.engine, core, engineGain * 0.5)
+    -- self:controlSound(self.exterior.engine_r, core, engineGain * 0.5)
+    -- self:controlSound(self.exterior.start, 0.5 + 0.5 * core, startGain)
+    -- self:controlSound(self.cockpit.engine_l, core, math.min(1, core) * 0.4)
+    -- self:controlSound(self.cockpit.engine_r, core, math.min(1, core) * 0.4)
     self:controlSound(self.cockpit.rotor, rotor, rotorGain * self.EXT_ROTOR_IN_CPT)
 end
