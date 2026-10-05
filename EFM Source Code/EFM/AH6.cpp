@@ -509,7 +509,7 @@ double ed_fm_get_param(unsigned param_enum)
 	case ED_FM_ENGINE_1_RPM:
 		return Aero.getN2omega() * 6016.0;
 	case ED_FM_ENGINE_1_RELATED_RPM:
-		return Aero.getN2omega();	
+		return Aero.getN2PCT() / 100.0; // DCS expects a ratio, not shaft rad/sec.
 	case ED_FM_ENGINE_1_CORE_RPM:
 		return Engine.getN1RPM() * 6016.0;
 	case ED_FM_ENGINE_1_CORE_RELATED_RPM:		// This is important to use for engine sounds, heatblur, and for other internal functions like a functioning RWR
