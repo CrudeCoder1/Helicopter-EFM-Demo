@@ -48,7 +48,16 @@ function SetCommand(command,value)
 	elseif command == device_commands.M880Control and value >0 then
 		if CLOCK_MODE:get()==2 then
 			ETisCounting = not ETisCounting
-		end		
+		end
+	 -- TODO: if laser/clock toggle is implemented, check switch condition here (Clock position allows function with battery off?)
+	elseif command == device_commands.P_CLKreset and value >0 then
+		if CLOCK_MODE:get()==2 then
+			ETisCounting = not ETisCounting
+		end
+	elseif command == device_commands.CP_CLKreset and value >0 then
+		if CLOCK_MODE:get()==2 then
+			ETisCounting = not ETisCounting
+		end
 	elseif command == device_commands.M880Brightness then
 		CLOCK_BRIGHTNESS:set(value)
 	end

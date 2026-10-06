@@ -53,7 +53,8 @@ elements["PNT_47"]	= default_axis_limited(_("RWR Display Brightness Knob"), 		de
 elements["PNT_23"] = default_3_position_tumb(_("Position Light Switch, POS CVRT/OFF/NORM"),			devices.LIGHTING, device_commands.PositionLights,	23)
 --elements["PNT-027"] = default_3_position_tumb(_("Anti-Collision Light Switch, BOTTOM/OFF/TOP"),	devices.LIGHTING, device_commands.AntiCollision,27)
 --elements["PNT-010"] = default_2_position_tumb(_("Covert Light Switch, NORM/OFF"),			devices.LIGHTING, device_commands.CovertLight,	10)
-elements["PNT_159"]	= default_2_position_tumb(_("Landing Light Switch, ON/OFF"),			devices.LIGHTING, device_commands.LandingLightSw,	159)
+elements["PNT_159"]	= default_2_position_tumb(_("Landing Light Switch, ON/OFF"),			devices.LIGHTING, device_commands.P_LandingLightSw,	159)
+elements["PNT_165"]	= default_2_position_tumb(_("Landing Light Switch, ON/OFF"),			devices.LIGHTING, device_commands.CP_LandingLightSw,	165)
 elements["PNT_167"]	= default_button(_("Lighting Kill Switch"),	devices.LIGHTING,device_commands.LightKillSw,167)
 
 -- Internal Lights
@@ -77,6 +78,8 @@ elements["PNT_20"]	= default_2_position_tumb(_("Attitude Indicator Power Switch,
 elements["PNT_50"]	= default_button(_("Clock Select Button"),devices.DIGITAL_CLOCK,device_commands.M880Select,50)
 elements["PNT_49"]	= default_button(_("Clock Control Button"),devices.DIGITAL_CLOCK,device_commands.M880Control,49)
 elements["PNT_48"]	= default_axis_limited(_("Clock Brightness Knob"), devices.DIGITAL_CLOCK, device_commands.M880Brightness, 48, 1)
+elements["PNT_157"]	= default_button(_("Clock Reset Button"),devices.DIGITAL_CLOCK,device_commands.P_CLKreset,157)
+elements["PNT_163"]	= default_button(_("Clock Reset Button"),devices.DIGITAL_CLOCK,device_commands.CP_CLKreset,163)
 
 -- VIDS
 elements["PNT_26"] = switch_button_3pos_2(_("VIDS Digit Switch, OFF/NORM/TST"),	devices.VIDS, device_commands.VIDSdigitSw,	26)

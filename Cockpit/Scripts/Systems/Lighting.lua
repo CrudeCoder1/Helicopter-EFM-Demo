@@ -10,7 +10,8 @@ local cockpitDev = GetDevice(0)
 
 DCbusVoltage  = get_param_handle("DC_Bus_Voltage")
 
-local LdgingLghtSw = 0
+local P_LdgingLghtSw = 0
+local CP_LdgingLghtSw = 0
 local posLightSw = 0
 --local formationBrightness = 0
 local radioBrght = 0
@@ -33,14 +34,16 @@ end
 
 dev:listen_command(Keys.LandingLight)
 function SetCommand(command,value)
-    if command == device_commands.LandingLightSw then
-        LdgingLghtSw = value
+    if command == device_commands.P_LandingLightSw then
+        P_LdgingLghtSw = value
+	elseif command == device_commands.CP_LandingLightSw then
+        CP_LdgingLghtSw = value
     elseif command == device_commands.PositionLights then
         posLightSw=value
    -- elseif command == device_commands.Formation then
 		--formationBrightness = value
 	elseif command == Keys.LandingLight then
-		dev:performClickableAction(device_commands.LandingLightSw, 1-LdgingLghtSw)
+		dev:performClickableAction(device_commands.P_LandingLightSw, 1-P_LdgingLghtSw)
 	elseif command == device_commands.RadioLightKnob then
 		radioBrght = value
 	elseif command == device_commands.PanelLightKnob then
@@ -56,7 +59,8 @@ end
 local function updateExternalLights()
 	if DCbusVoltage:get()>=15 then
 	--	set_aircraft_draw_argument_value(51,extlight_taxi) -- 51 is animation to move landing lights open, 208 for actual light beam
-		set_aircraft_draw_argument_value(208,LdgingLghtSw) 
+		set_aircraft_draw_argument_value(208,math.max(P_LdgingLghtSw, CP_LdgingLghtSw))
+		print_message_to_user(math.max(P_LdgingLghtSw, CP_LdgingLghtSw))
 		
 		if posLightSw<=0 then
 			set_aircraft_draw_argument_value(190,-posLightSw)
