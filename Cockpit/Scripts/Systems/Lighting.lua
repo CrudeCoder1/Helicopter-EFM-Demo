@@ -60,7 +60,6 @@ local function updateExternalLights()
 	if DCbusVoltage:get()>=15 then
 	--	set_aircraft_draw_argument_value(51,extlight_taxi) -- 51 is animation to move landing lights open, 208 for actual light beam
 		set_aircraft_draw_argument_value(208,math.max(P_LdgingLghtSw, CP_LdgingLghtSw))
-		print_message_to_user(math.max(P_LdgingLghtSw, CP_LdgingLghtSw))
 		
 		if posLightSw<=0 then
 			set_aircraft_draw_argument_value(190,-posLightSw)

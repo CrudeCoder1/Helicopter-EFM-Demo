@@ -120,7 +120,23 @@ function CockpitEvent(event,val)
 end
 
 function update()
---print_message_to_user(FMtest:get())
+	-- Update connector positions on collectives
+	get_clickable_element_reference("PNT_159"):update()-- Pilot LL
+	get_clickable_element_reference("PNT_157"):update()-- Pilot Clk Reset
+	--get_clickable_element_reference("PNT_158"):update()-- Pilot N2 gov
+	--get_clickable_element_reference("PNT_156"):update()-- Pilot VAW reset
+	get_clickable_element_reference("PNT_155"):update()-- Pilot Idle stop
+	--get_clickable_element_reference("PNT_160"):update()-- Pilot starter button
+	get_clickable_element_reference("PNT_154"):update()-- Pilot throttle
+
+	get_clickable_element_reference("PNT_165"):update()-- CoPilot LL
+	get_clickable_element_reference("PNT_163"):update()-- CoPilot Clk Reset
+	--get_clickable_element_reference("PNT_164"):update()-- CoPilot N2 gov
+	--get_clickable_element_reference("PNT_162"):update()-- CoPilot VAW reset
+	--get_clickable_element_reference("PNT_161"):update()-- CoPilot throttle
+	--get_clickable_element_reference("PNT_166"):update()-- CoPilot starter button
+
+	--print_message_to_user(FMtest:get())
 end
 
 
