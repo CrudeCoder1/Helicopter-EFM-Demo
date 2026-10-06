@@ -12,6 +12,8 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 - Fixed ARC182 mode knob not working
 - Sound setup improvement (thanks Hayds_93)
 - Added basic amp gauge functionality
+- Clock reset button added
+- Collective button connectors now stay with collective as it moves
 - EFM now deallocates memory
 
 v0.7.1 2 Oct 2026
