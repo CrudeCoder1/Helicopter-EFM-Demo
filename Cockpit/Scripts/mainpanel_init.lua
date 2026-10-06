@@ -58,7 +58,7 @@ Compass								= CreateGauge("parameter")
 Compass.arg_number					= 327
 Compass.input						= {0,360}
 Compass.output						= {0,1}
-Compass.parameter_name				= "COMPASS_HDG"
+Compass.parameter_name				= "MAG_HEADING"
 
 Alt100								= CreateGauge("parameter")
 Alt100.arg_number					= 305

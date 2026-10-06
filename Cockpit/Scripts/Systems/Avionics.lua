@@ -21,7 +21,7 @@ local ALT_PRESSURE_MIN = 28.10 -- in Hg
 local ALT_PRESSURE_STD = 29.92 -- in Hg
 local alt_setting = ALT_PRESSURE_STD
 
-local COMPASS_HDG = get_param_handle("COMPASS_HDG")
+local MAG_HEADING = get_param_handle("MAG_HEADING")
 
 local alt_10k = get_param_handle("ALT_10000") -- 0 to 100,000
 local alt_1k = get_param_handle("ALT_1000") -- 0 to 10,000
@@ -43,8 +43,8 @@ local RADALT_BRIGHTNESS = get_param_handle("RADALT_BRIGHTNESS")
 current_Ralt:set(0)
 
 
-local MAG_HEADING = get_param_handle("MAG_HEADING")
-MAG_HEADING:set(0)
+local DHI_HEADING = get_param_handle("DHI_HEADING")
+DHI_HEADING:set(0)
 local DHI_BRIGHTNESS  = get_param_handle("DHI_BRIGHTNESS")
 
 local alt_setting = ALT_PRESSURE_STD
@@ -199,12 +199,12 @@ function update()
 	local maghdg = sensor_data.getMagneticHeading()*radian_to_degree
 	if maghdg < 0 then maghdg = maghdg + 360 end
 	if DHI_test>0 then
-		MAG_HEADING:set(888)
+		DHI_HEADING:set(888)
 	else
-		MAG_HEADING:set(maghdg)
+		DHI_HEADING:set(maghdg)
 	end
 	
-	COMPASS_HDG:set(maghdg)
+	MAG_HEADING:set(maghdg)
 		
 	set_aircraft_draw_argument_value(38,0.9)-- to see if this affects ground crew
 end
