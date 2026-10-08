@@ -26,7 +26,8 @@ function default_button(hint_,device_,command_,arg_,animation_speed_)
 				use_release_message	= {true},
 				animated			= {true},
 			    animation_speed		= {animation_speed_},
-				sound				= {{SOUND_SW1}}
+				sound				= {{SOUND_SW1}},
+				updatable 			= true,
 			}
 end
 

@@ -27,17 +27,45 @@
 EFM_Globals G_Params;
 EDPARAM cockpitAPI;
 
-EFMData EFMdata;
-FuelSystem Fuel;
-AH6JDamage damageModel;
-ElectricSystem Electrics;
-FlightControls flightControls;
-LightSystem Lighting;
-TurboshaftEngine Engine(EFMdata, flightControls);
-AH6Aero Aero(EFMdata, damageModel, flightControls);
+static EFMData* EFMdata = NULL;
+static FuelSystem* Fuel = NULL;
+static AH6JDamage* damageModel = NULL;
+static ElectricSystem* Electrics = NULL;
+static FlightControls* flightControls = NULL;
+static LightSystem* Lighting = NULL;
+static TurboshaftEngine* Engine = NULL;
+static AH6Aero* Aero = NULL;
 
-
-
+void createHeli()
+{
+	EFMdata = new EFMData;
+	Fuel = new FuelSystem(*EFMdata);
+	damageModel = new AH6JDamage;
+	Electrics = new ElectricSystem;
+	flightControls = new FlightControls;
+	Lighting = new LightSystem;
+	Engine = new TurboshaftEngine(*EFMdata, *flightControls, *Electrics);
+	Aero = new AH6Aero(*EFMdata, *damageModel, *flightControls);
+}
+void releaseHeli()
+{
+	delete EFMdata;
+	delete Fuel;
+	delete damageModel;
+	delete Electrics;
+	delete flightControls;
+	delete Lighting;
+	delete Engine;
+	delete Aero;
+	EFMdata = NULL;
+	Fuel = NULL;
+	damageModel = NULL;
+	Electrics = NULL;
+	flightControls = NULL;
+	Lighting = NULL;
+	Engine = NULL;
+	Aero = NULL;
+}
 
 
 //This will store a parameter that can be read in LUA. Useful for transferring data between the dll and lua code

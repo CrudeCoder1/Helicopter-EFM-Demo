@@ -5,7 +5,7 @@ SetScale(METERS)
 DEFAULT_LEVEL = 6
 NOCLIP_LEVEL  = DEFAULT_LEVEL - 1
 green_color = {0,255,0,215}
-local FONT    = MakeFont({used_DXUnicodeFontData = "font7segment"},green_color)
+local FONT    = MakeFont({used_DXUnicodeFontData = "AH6J_font7segment"},green_color)
 center={0,-0.005,0}  --- {L/R,U/D,forward/back}
 
 

@@ -1,8 +1,9 @@
 dofile(LockOn_Options.common_script_path.."elements_defs.lua")
+--dofile(LockOn_Options.script_path.."materials.lua")
 
 SetScale(METERS) 
 
-local font7segment = MakeFont({used_DXUnicodeFontData = "font7segment"},{0,255,0,215}) --(R,G,B,opacity)
+local font7segment = MakeFont({used_DXUnicodeFontData = "AH6J_font7segment"},{0,255,0,215}) --(R,G,B,opacity)
 local center = {0.031,-0.348,0.366}  --- {L/R,U/D,forward/back}
 
 verts = {}
@@ -34,7 +35,7 @@ bearing.material        = font7segment
 bearing.alignment       = "CenterCenter"
 bearing.stringdefs      = {0.01,0.75*0.01, 0, 0}  -- {size vertical, horizontal, 0, 0}
 bearing.formats         = {"%03.0f"} 
-bearing.element_params  = {"MAG_HEADING","DHI_BRIGHTNESS"}
+bearing.element_params  = {"DHI_HEADING","DHI_BRIGHTNESS"}
 bearing.controllers     = {{"text_using_parameter",0,0},{"opacity_using_parameter",1}}
 bearing.h_clip_relation = h_clip_relations.compare
 bearing.level			= 6

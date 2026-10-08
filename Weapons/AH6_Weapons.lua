@@ -215,7 +215,7 @@ declare_loadout({
 	CLSID	 		=  "{AH6_GAU-19}",
 	attribute		=   {wsType_Weapon,wsType_GContainer,wsType_Cannon_Cont,WSTYPE_PLACEHOLDER},
 	wsTypeOfWeapon	= 	{wsType_Weapon,wsType_Shell,wsType_Shell,WSTYPE_PLACEHOLDER},
-	Picture			=	"gau19.png",
+	Picture			=	"AH6_gau19.png",
 	displayName		=	_("GAU-19 Gattling Gun"),-- loadout editor name
 	Weight			=	63, --loaded	63kg empty gun + ???50kg ammo???  ammo is stored over center of mass. adding ammo weight here will cause bigger imbalance. need to find way to add ammo weight at center of gravity
 	Cx_pil			=	0.00024,
@@ -229,3 +229,65 @@ declare_loadout({
 	},	
 	shape_table_data = {{file  	 = 'AH6_GAU19';	username = 'GAU-19_gun'; index = WSTYPE_PLACEHOLDER;}}
 })
+
+
+--===== Fuel Tanks =======
+
+declare_loadout(
+    {
+        category         = CAT_FUEL_TANKS,
+        CLSID            = "{AH6_T_Tank}",
+        attribute        =  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
+        Picture          = "AH6_Ttank.png",
+        displayName      = _("Aux Fuel Tank 'T-Tank' 27 gallons"),
+        Weight_Empty     = 35.5*POUNDS_TO_KG,
+        Weight           = 35.5*POUNDS_TO_KG + 178*POUNDS_TO_KG, -- 26.5 gal usable
+        Cx_pil           = 0.0,
+        shape_table_data =
+        {
+            {
+                name     = "AH-6_empty",
+                file     = "AH-6_empty";
+                life     = 1;
+                fire     = { 0, 1};
+                username = "AH-6_empty";
+                index    = WSTYPE_PLACEHOLDER;
+            },
+        },
+        Elements    =
+        {
+            {
+                ShapeName    = "AH-6_empty",
+            },
+        },
+    }
+)
+declare_loadout(
+    {
+        category         = CAT_FUEL_TANKS,
+        CLSID            = "{AH6_Goliath}",
+        attribute        =  {wsType_Air,wsType_Free_Fall,wsType_FuelTank,WSTYPE_PLACEHOLDER},
+        Picture          = "AH6_Gtank.png",
+        displayName      = _("Aux Fuel Tank 'Goliath' 62 gallons"),
+        Weight_Empty     = 60*POUNDS_TO_KG,
+        Weight           = 60*POUNDS_TO_KG + 412*POUNDS_TO_KG, -- 61.5 gallons usable
+        Cx_pil           = 0.0,
+        shape_table_data =
+        {
+            {
+                name     = "AH-6_empty",
+                file     = "AH-6_empty";
+                life     = 1;
+                fire     = { 0, 1};
+                username = "AH-6_empty";
+                index    = WSTYPE_PLACEHOLDER;
+            },
+        },
+        Elements    =
+        {
+            {
+                ShapeName    = "AH-6_empty",
+            },
+        },
+    }
+)

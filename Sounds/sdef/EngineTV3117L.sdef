@@ -5,7 +5,7 @@ cone_inner_angle = 100
 cone_outer_angle = 180
 cone_outer_gain = 0.8
 direction = {-1, 0, 0}
-pitch = 4
+pitch = 1
 gain = 1.2
 
 

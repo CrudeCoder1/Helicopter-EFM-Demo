@@ -7,7 +7,7 @@ local res = external_profile("Config/Input/Aircrafts/common_joystick_binding.lua
 join(res.keyCommands,{
 
 -- Systems
-	{down = EFM_commands.starterButton, up = EFM_commands.starterButton, value_down = 1.0, value_up = 0.0, name = _('Starter Button'), category = _('Systems')},
+	{down = device_commands.starterButton, up = device_commands.starterButton, value_down = 1.0, value_up = 0.0, name = _('Starter Button'), category = _('Systems')},
     {down = Keys.ThrottleCutoff, name = _('Throttle Idle Cutoff'), category = _('Systems')},
 	{pressed = Keys.ThrottleIncrease, up = Keys.ThrottleStop,  name = _('Throttle Up'), category = _('Systems')},
     {pressed = Keys.ThrottleDecrease, up = Keys.ThrottleStop,  name = _('Throttle Down'), category = _('Systems')},
@@ -40,20 +40,20 @@ join(res.keyCommands,{
 	--{combos = {{key = 'P', reformers = {'RShift'}}}, down = iCommandCockpitShowPilotOnOff, name = _('Show Pilot Body'), category = _('General')},
 	
 -- Flight Controls
-	{pressed = EFM_commands.KeyRudderLeft,	up = EFM_commands.KeyRudderStop, name = _('Aircraft Yaw Left'),	category = _('Flight Control')},
-	{pressed = EFM_commands.KeyRudderRight,	up = EFM_commands.KeyRudderStop, name = _('Aircraft Yaw Right'),category = _('Flight Control')},
-	{pressed = EFM_commands.KeyCollectiveUp, name = _('Collective up'), category = _('Flight Control')},
-	{pressed = EFM_commands.KeyCollectiveDown, name = _('Collective down'), category = _('Flight Control')},
+	{pressed = Keys.KeyRudderLeft,	up = Keys.KeyRudderStop, name = _('Aircraft Yaw Left'),	category = _('Flight Control')},
+	{pressed = Keys.KeyRudderRight,	up = Keys.KeyRudderStop, name = _('Aircraft Yaw Right'),category = _('Flight Control')},
+	{pressed = Keys.KeyCollectiveUp, name = _('Collective up'), category = _('Flight Control')},
+	{pressed = Keys.KeyCollectiveDown, name = _('Collective down'), category = _('Flight Control')},
 	
-	{pressed = EFM_commands.KeyCyclicBack,	name = _('Aircraft Pitch Up'),category = _('Flight Control')},
-	{pressed = EFM_commands.KeyCyclicForward,	name = _('Aircraft Pitch Down'),category = _('Flight Control')},
-	{pressed = EFM_commands.KeyCyclicLeft,	name = _('Aircraft Roll Left'),category = _('Flight Control')},
-	{pressed = EFM_commands.KeyCyclicRight,	name = _('Aircraft Roll Right'),category = _('Flight Control')},
+	{pressed = Keys.KeyCyclicBack,	name = _('Aircraft Pitch Up'),category = _('Flight Control')},
+	{pressed = Keys.KeyCyclicForward,	name = _('Aircraft Pitch Down'),category = _('Flight Control')},
+	{pressed = Keys.KeyCyclicLeft,	name = _('Aircraft Roll Left'),category = _('Flight Control')},
+	{pressed = Keys.KeyCyclicRight,	name = _('Aircraft Roll Right'),category = _('Flight Control')},
 
-    {pressed = EFM_commands.trimUp, name = _('Cyclic Trim Up'), category = _('Flight Control')},
-	{pressed = EFM_commands.trimDown, name = _('Cyclic Trim Down'), category = _('Flight Control')},
-	{pressed = EFM_commands.trimLeft, name = _('Cyclic Trim Left'), category = _('Flight Control')},
-	{pressed = EFM_commands.trimRight, name = _('Cyclic Trim Right'), category = _('Flight Control')},
+    {pressed = Keys.trimUp, name = _('Cyclic Trim Up'), category = _('Flight Control')},
+	{pressed = Keys.trimDown, name = _('Cyclic Trim Down'), category = _('Flight Control')},
+	{pressed = Keys.trimLeft, name = _('Cyclic Trim Left'), category = _('Flight Control')},
+	{pressed = Keys.trimRight, name = _('Cyclic Trim Right'), category = _('Flight Control')},
 })
 
 -- joystick axis 
@@ -70,7 +70,7 @@ join(res.axisCommands,{
 {combos = defaultDeviceAssignmentFor("pitch")	, action = iCommandPlanePitch,			name = _('Pitch Cyclic')},
 {combos = defaultDeviceAssignmentFor("rudder")	, action = iCommandPlaneRudder, 		name = _('Pedals')},
 {combos = defaultDeviceAssignmentFor("thrust")	, action = iCommandPlaneThrustCommon,	name = _('Collective')},
-{action = EFM_commands.throttleAxis,	name = _('Throttle')},
+{action = Keys.throttleAxis,	name = _('Throttle')},
 
 })
 return res

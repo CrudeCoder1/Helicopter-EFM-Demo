@@ -28,9 +28,9 @@ public:
 	AH6Aero(EFMData &ptr_EFMdata, AH6JDamage& ptr_Damage, FlightControls& ptr_fltCntrl);
 	~AH6Aero() {}
 
-    EFMData& p_EFMdata;
-    AH6JDamage& p_Damage;
-    FlightControls& p_flightControl;
+    EFMData* p_EFMdata;
+    AH6JDamage* p_Damage;
+    FlightControls* p_flightControl;
 
 	std::vector<ForceComponent> aeroForces{};
     std::vector<Vec3> aeroMoments{};

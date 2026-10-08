@@ -18,19 +18,45 @@ Keys =
 	TriggerFireOn	= counter(),
 	TriggerFireOff 	= counter(),
 	MasterArmToggle	= counter(),
-	
-	COM1			= counter(),
-	
+
+	KeyRudderLeft		= counter(),
+	KeyRudderRight		= counter(),
+	KeyRudderStop		= counter(),
+	KeyCollectiveUp		= counter(),
+	KeyCollectiveDown	= counter(),
+	KeyCyclicForward	= counter(),
+	KeyCyclicBack		= counter(),
+	KeyCyclicLeft		= counter(),
+	KeyCyclicRight		= counter(),
+	throttleAxis		= counter(),
+
+	trimUp				= counter(),
+	trimDown			= counter(),
+	trimLeft			= counter(),
+	trimRight			= counter(),
+
 	iCommandPlane_ShowControls = 851;--need this bc show controls is in common_keyboard_binding
 }
 
-count = 3200
+count = 3020
 device_commands = { -- commands for lua
+	starterButton 		= counter(),
+	throttleIdleCutoff	= counter(),
+	throttle			= counter(),
+	batterySwitch 		= counter(),
+	generatorSwitch 	= counter(),
+	inverterSwitch 		= counter(),
+	MasterRadioSw		= counter(),
+
+	rotorBrake			= counter(),
+	AuxHandle 			= counter(),
+	
 	CautionTest		= counter();
 	AuxPowerSw  	= counter();
 	
 	FuelShutoffSw	= counter();
 	FuelPumpSw 		= counter();
+
 	
 	AMSPwrSw		= counter();
 	AMSbuttonBrght  = counter();
@@ -53,7 +79,8 @@ device_commands = { -- commands for lua
 	PositionLights	= counter();
 	CovertLight		= counter();
 	AntiCollision	= counter();
-	LandingLightSw	= counter();
+	P_LandingLightSw= counter();
+	CP_LandingLightSw= counter();
 	RadioLightKnob  = counter();
 	PanelLightKnob  = counter();
 	AMSBacklightKnob= counter();
@@ -75,12 +102,15 @@ device_commands = { -- commands for lua
 	M880Select		= counter();
 	M880Control		= counter();
 	M880Brightness	= counter();
+	P_CLKreset		= counter();
+	CP_CLKreset		= counter();
 	AttIndPwrSw		= counter();
 	PitotHeatSw		= counter();
 	AntiIceSw		= counter();
 	ScavAirSw		= counter();
 	FQIbrtKnob		= counter();
 	FQIdayNhtSw		= counter();
+	FQIselectSw		= counter();
 	
 	ARC182_freqTens 	= counter(),
 	ARC182_freqOnes 	= counter(),
@@ -126,33 +156,8 @@ device_commands = { -- commands for lua
 	ARC186_chan = counter(),
 	ARC186_load = counter(),
 	ARC186_SquelchToneSw = counter(),
-}
 
-EFM_commands = 	-- commands for use in EFM (make sure to copy to GlobalData.h)
-{
-	starterButton 		= 3010,
-	throttleIdleCutoff	= 3011,
-	throttle			= 3012,
-	batterySwitch 		= 3013,
-	generatorSwitch 	= 3014,
-	inverterSwitch 		= 3015,
-	throttleAxis		= 3016,
-	trimUp				= 3017,
-	trimDown			= 3018,
-	trimLeft			= 3019,
-	trimRight			= 3020,
-	
-	rotorBrake			= 3021,
-	KeyRudderLeft		= 3022,
-	KeyRudderRight		= 3023,
-	KeyRudderStop		= 3024,
-	KeyCollectiveUp		= 3025,
-	KeyCollectiveDown	= 3026,
-	KeyCyclicForward	= 3027,
-	KeyCyclicBack		= 3028,
-	KeyCyclicLeft		= 3029,
-	KeyCyclicRight		= 3030,
-	MasterRadioSw		= 3031,
+
 }
 
 

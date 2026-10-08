@@ -8,23 +8,24 @@ _ = gettext.translate
 
 elements = {}
 -- Electric system
-elements["PNT_17"]	= default_3_position_tumb(_("Power Selector Switch, BATT/OFF/EXT"),	devices.EFM_HELPER, EFM_commands.batterySwitch,		17)
-elements["PNT_18"]	= default_2_position_tumb(_("Generator Switch, ON/OFF"),			devices.EFM_HELPER, EFM_commands.generatorSwitch,	18)
-elements["PNT_19"]	= default_2_position_tumb(_("Inverter Switch, ON/OFF"),				devices.EFM_HELPER, EFM_commands.inverterSwitch,	19)
-elements["PNT_21"]	= default_2_position_tumb(_("Master Radio Switch, ON/OFF"),		    devices.EFM_HELPER, EFM_commands.MasterRadioSw,	21)
+elements["PNT_17"]	= default_3_position_tumb(_("Power Selector Switch, BATT/OFF/EXT"),	devices.EFM_HELPER, device_commands.batterySwitch,		17)
+elements["PNT_18"]	= default_2_position_tumb(_("Generator Switch, ON/OFF"),			devices.EFM_HELPER, device_commands.generatorSwitch,	18)
+elements["PNT_19"]	= default_2_position_tumb(_("Inverter Switch, ON/OFF"),				devices.EFM_HELPER, device_commands.inverterSwitch,	19)
+elements["PNT_21"]	= default_2_position_tumb(_("Master Radio Switch, ON/OFF"),		    devices.EFM_HELPER, device_commands.MasterRadioSw,	21)
 
 
 -- Fuel System
---elements["PNT-018"]	= multiposition_switch(_("Fuel Selector Switch, OFF/MAIN/BOTH/AUX"),	devices.FUEL_SYSTEM,	device_commands.FuelShutoffSw,	18, 4, 0.25, true)
+elements["PNT_152"] = default_3_position_tumb(_("Aux Fuel Valve Handle, AFT/OFF/FWD"),			devices.FUEL_SYSTEM, device_commands.AuxHandle,	152)
 elements["PNT_12"]	= default_2_position_tumb(_("Start Pump Switch, ON/OFF"),		devices.FUEL_SYSTEM,	device_commands.FuelPumpSw,		12)
---elements["PNT_150"]	= default_2_position_tumb(_("Fuel Cutoff Valve, PULL TO CLOSE"),	devices.EFM_HELPER,	device_commands.FuelCutoffSw,		150)
+elements["PNT_150"]	= default_2_position_tumb(_("Fuel Shutoff Valve, PULL TO CLOSE"),	devices.FUEL_SYSTEM,	device_commands.FuelShutoffSw,		150)
 elements["PNT_31"]	= default_axis_limited(_("Fuel Qty Brightness Knob"), 		devices.FUEL_SYSTEM, device_commands.FQIbrtKnob, 31, 1)
 elements["PNT_34"]	= default_2_position_tumb(_("FQI Day/Night Switch, DAY/NIGHT"),		devices.FUEL_SYSTEM,	device_commands.FQIdayNhtSw,		34)
+elements["PNT_16"] = multiposition_switch(_("FQI Selector, MAIN/AFT/BIT/FTI"),devices.FUEL_SYSTEM, device_commands.FQIselectSw, 16, 4, 1/4, true, 0, nil, true)
 
 
 -- Engines
-elements["PNT_154"]	= default_axis_limited(_("Throttle"),devices.EFM_HELPER,EFM_commands.throttle,154,nil,0.1,true,false,{-1,1})
-elements["PNT_155"]	= default_2_position_tumb(_("Throttle Cutoff"),	devices.EFM_HELPER, EFM_commands.throttleIdleCutoff, 155)
+elements["PNT_154"]	= default_axis_limited(_("Throttle"),devices.EFM_HELPER,device_commands.throttle,154,nil,0.1,true,false,{-1,1})
+elements["PNT_155"]	= default_2_position_tumb(_("Throttle Cutoff"),	devices.EFM_HELPER, device_commands.throttleIdleCutoff, 155)
 
 -- Weapons panel
 elements["PNT_59"]	= default_2_position_tumb(_("AMS Power Switch, OFF/ON"),			devices.WEAPON_SYSTEM,	device_commands.AMSPwrSw,	59)
@@ -52,7 +53,8 @@ elements["PNT_47"]	= default_axis_limited(_("RWR Display Brightness Knob"), 		de
 elements["PNT_23"] = default_3_position_tumb(_("Position Light Switch, POS CVRT/OFF/NORM"),			devices.LIGHTING, device_commands.PositionLights,	23)
 --elements["PNT-027"] = default_3_position_tumb(_("Anti-Collision Light Switch, BOTTOM/OFF/TOP"),	devices.LIGHTING, device_commands.AntiCollision,27)
 --elements["PNT-010"] = default_2_position_tumb(_("Covert Light Switch, NORM/OFF"),			devices.LIGHTING, device_commands.CovertLight,	10)
-elements["PNT_159"]	= default_2_position_tumb(_("Landing Light Switch, ON/OFF"),			devices.LIGHTING, device_commands.LandingLightSw,	159)
+elements["PNT_159"]	= default_2_position_tumb(_("Landing Light Switch, ON/OFF"),			devices.LIGHTING, device_commands.P_LandingLightSw,	159)
+elements["PNT_165"]	= default_2_position_tumb(_("Landing Light Switch, ON/OFF"),			devices.LIGHTING, device_commands.CP_LandingLightSw,	165)
 elements["PNT_167"]	= default_button(_("Lighting Kill Switch"),	devices.LIGHTING,device_commands.LightKillSw,167)
 
 -- Internal Lights
@@ -76,13 +78,15 @@ elements["PNT_20"]	= default_2_position_tumb(_("Attitude Indicator Power Switch,
 elements["PNT_50"]	= default_button(_("Clock Select Button"),devices.DIGITAL_CLOCK,device_commands.M880Select,50)
 elements["PNT_49"]	= default_button(_("Clock Control Button"),devices.DIGITAL_CLOCK,device_commands.M880Control,49)
 elements["PNT_48"]	= default_axis_limited(_("Clock Brightness Knob"), devices.DIGITAL_CLOCK, device_commands.M880Brightness, 48, 1)
+elements["PNT_157"]	= default_button(_("Clock Reset Button"),devices.DIGITAL_CLOCK,device_commands.P_CLKreset,157)
+elements["PNT_163"]	= default_button(_("Clock Reset Button"),devices.DIGITAL_CLOCK,device_commands.CP_CLKreset,163)
 
 -- VIDS
 elements["PNT_26"] = switch_button_3pos_2(_("VIDS Digit Switch, OFF/NORM/TST"),	devices.VIDS, device_commands.VIDSdigitSw,	26)
 elements["PNT_27"] = default_axis_limited(_("VIDS Brightness Knob"), 		 		devices.VIDS, device_commands.VIDSbrtKnob, 27, 1)
 
 
-elements["PNT_151"]	= default_2_position_tumb(_("Rotor Brake Handle, ON/OFF"),			devices.EFM_HELPER, EFM_commands.rotorBrake,	151)
+elements["PNT_151"]	= default_2_position_tumb(_("Rotor Brake Handle, ON/OFF"),			devices.EFM_HELPER, device_commands.rotorBrake,	151)
 
 
 --- VHF AN/ARC-186 control panel
@@ -107,7 +111,7 @@ elements["PNT_102"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Tenths"),	dev
 elements["PNT_101"] = springloaded_3_pos_tumb(_("ARC-182 Frequency Hundredths"),	devices.RADIO_2, device_commands.ARC182_freqHundredths,	device_commands.ARC182_freqHundredths, 101)
 elements["PNT_100"] = default_2_position_tumb(_("ARC-182 AM/FM Mode Switch, AM/FM"),	devices.RADIO_2, device_commands.ARC182_AMFM,		100)
 elements["PNT_95"] = default_axis(_("ARC-182 Volume"),						devices.RADIO_2, device_commands.ARC182_vol,		95)
-elements["PNT_98"] = multiposition_switch(_("ARC-182 Mode Control Selector, OFF/T+R/T+R&G/DF/TEST"),	devices.ARC182, device_commands.ARC182_mode,	98, 5, 0.25, false, 0, 3, false)
+elements["PNT_98"] = multiposition_switch(_("ARC-182 Mode Control Selector, OFF/T+R/T+R&G/DF/TEST"),	devices.RADIO_2, device_commands.ARC182_mode,	98, 5, 0.25, false, 0, 3, false)
 elements["PNT_99"] = default_axis(_("ARC-182 Brightness"),					devices.RADIO_2, device_commands.ARC182_brightness,		99)
 elements["PNT_96"] = multiposition_switch(_("ARC-182 Frequency Mode Knob"),	 devices.RADIO_2, device_commands.ARC182_FreqSelType, 96, 4, 0.2, false, 0.2, 3, false)
 elements["PNT_97"] = multiposition_switch(_("ARC-182 Channel Selector Knob"),devices.RADIO_2, device_commands.ARC182_ChannelSel, 97, 30, 1/30, false, 0, 3, true)

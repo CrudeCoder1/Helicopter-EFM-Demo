@@ -65,3 +65,15 @@ inline double LinInterp(double inputA, double lowerA, double upperA, double lowe
 
 	return output;
 }
+
+//http://my.execpc.com/~steidl/robotics/first_order_lag_filter.html
+//Ts : Time Step / Sampling period
+// Tr : Max response time
+// Frac : % accuracy desired
+inline double lagFilter(double oldValue, double newValue, double Ts, double Tr)
+{
+	double Frac = 0.95;
+	double K = 1 - exp(log(1 - Frac) * Ts / Tr);
+	double output = K * newValue + (1 - K) * oldValue;
+	return output;
+}

@@ -15,20 +15,20 @@ function post_initialize()
 	SHOW_CONTROLS:set(1)
     local birth = LockOn_Options.init_conditions.birth_place
     if birth=="AIR_HOT" or birth=="GROUND_HOT" then
-		dev:performClickableAction(EFM_commands.throttleIdleCutoff,0)
-		dev:performClickableAction(EFM_commands.throttle,1)
-		dev:performClickableAction(EFM_commands.batterySwitch,1) 
-		dev:performClickableAction(EFM_commands.generatorSwitch,1)
-		dev:performClickableAction(EFM_commands.inverterSwitch,1)
-		dev:performClickableAction(EFM_commands.MasterRadioSw,1)
+		dev:performClickableAction(device_commands.throttleIdleCutoff,0)
+		dev:performClickableAction(device_commands.throttle,1)
+		dev:performClickableAction(device_commands.batterySwitch,1) 
+		dev:performClickableAction(device_commands.generatorSwitch,1)
+		dev:performClickableAction(device_commands.inverterSwitch,1)
+		dev:performClickableAction(device_commands.MasterRadioSw,1)
 		get_param_handle("DC_Bus_Voltage"):set(28)-- allows electronics to be on before closing briefing window
     elseif birth=="GROUND_COLD" then
-		dev:performClickableAction(EFM_commands.throttleIdleCutoff, 1)
-		dev:performClickableAction(EFM_commands.throttle,-1)
-		dev:performClickableAction(EFM_commands.batterySwitch,0) 
-		dev:performClickableAction(EFM_commands.generatorSwitch,0)
-		dev:performClickableAction(EFM_commands.inverterSwitch,0)
-		dev:performClickableAction(EFM_commands.MasterRadioSw,0)
+		dev:performClickableAction(device_commands.throttleIdleCutoff, 1)
+		dev:performClickableAction(device_commands.throttle,-1)
+		dev:performClickableAction(device_commands.batterySwitch,0) 
+		dev:performClickableAction(device_commands.generatorSwitch,0)
+		dev:performClickableAction(device_commands.inverterSwitch,0)
+		dev:performClickableAction(device_commands.MasterRadioSw,0)
     end
 	
 	if option_aimingMark == 0 then
@@ -65,42 +65,42 @@ function SetCommand(command,value)
 	CutOffpos = get_cockpit_draw_argument_value(155)
 	if command == Keys.BattSwitch then
 		if PwrSwpos == 1 then
-			dev:performClickableAction(EFM_commands.batterySwitch,0)
-			dispatch_action(nil,EFM_commands.batterySwitch,0)
+			dev:performClickableAction(device_commands.batterySwitch,0)
+			dispatch_action(nil,device_commands.batterySwitch,0)
 		elseif PwrSwpos < 1 then
-			dev:performClickableAction(EFM_commands.batterySwitch,1)
-			dispatch_action(nil,EFM_commands.batterySwitch,1)
+			dev:performClickableAction(device_commands.batterySwitch,1)
+			dispatch_action(nil,device_commands.batterySwitch,1)
 		end
 	elseif command == Keys.ExtPwrSwitch then
 		if PwrSwpos == -1 then
-			dev:performClickableAction(EFM_commands.batterySwitch,0)
-			dispatch_action(nil,EFM_commands.batterySwitch,0)
+			dev:performClickableAction(device_commands.batterySwitch,0)
+			dispatch_action(nil,device_commands.batterySwitch,0)
 		elseif PwrSwpos > -1 then
-			dev:performClickableAction(EFM_commands.batterySwitch,-1)
-			dispatch_action(nil,EFM_commands.batterySwitch,-1)
+			dev:performClickableAction(device_commands.batterySwitch,-1)
+			dispatch_action(nil,device_commands.batterySwitch,-1)
 		end
 	elseif command==Keys.ThrottleIncrease then
 		local amount = Throtpos + 0.005
 		if amount > 0.998 then
 			amount = 0.998
 		end
-		dev:performClickableAction(EFM_commands.throttle,amount)
-		dispatch_action(nil,EFM_commands.throttle,amount)
+		dev:performClickableAction(device_commands.throttle,amount)
+		dispatch_action(nil,device_commands.throttle,amount)
 	elseif command==Keys.ThrottleDecrease then
-		dev:performClickableAction(EFM_commands.throttle,Throtpos - 0.005)
-		dispatch_action(nil,EFM_commands.throttle,Throtpos - 0.005)
+		dev:performClickableAction(device_commands.throttle,Throtpos - 0.005)
+		dispatch_action(nil,device_commands.throttle,Throtpos - 0.005)
 	elseif command==Keys.ThrottleCutoff then
-		dev:performClickableAction(EFM_commands.throttleIdleCutoff,1-CutOffpos)
-		dispatch_action(nil,EFM_commands.throttleIdleCutoff,1-CutOffpos)
+		dev:performClickableAction(device_commands.throttleIdleCutoff,1-CutOffpos)
+		dispatch_action(nil,device_commands.throttleIdleCutoff,1-CutOffpos)
 	elseif command == Keys.iCommandPlane_ShowControls then
 		SHOW_CONTROLS:set(1-SHOW_CONTROLS:get())
 		
 		
-	elseif command == EFM_commands.throttle then
+	elseif command == device_commands.throttle then
 		if CutOffpos==0 and value<0 then
-			dev:performClickableAction(EFM_commands.throttle,0)--stop throttle from moving past idle stop
+			dev:performClickableAction(device_commands.throttle,0)--stop throttle from moving past idle stop
 		elseif CutOffpos==1 and value>0 then
-			dev:performClickableAction(EFM_commands.throttleIdleCutoff,0)--cutoff snaps into locked position
+			dev:performClickableAction(device_commands.throttleIdleCutoff,0)--cutoff snaps into locked position
 		end
 
 	end
@@ -120,7 +120,23 @@ function CockpitEvent(event,val)
 end
 
 function update()
---print_message_to_user(FMtest:get())
+	-- Update connector positions on collectives
+	get_clickable_element_reference("PNT_159"):update()-- Pilot LL
+	get_clickable_element_reference("PNT_157"):update()-- Pilot Clk Reset
+	--get_clickable_element_reference("PNT_158"):update()-- Pilot N2 gov
+	--get_clickable_element_reference("PNT_156"):update()-- Pilot VAW reset
+	get_clickable_element_reference("PNT_155"):update()-- Pilot Idle stop
+	--get_clickable_element_reference("PNT_160"):update()-- Pilot starter button
+	get_clickable_element_reference("PNT_154"):update()-- Pilot throttle
+
+	get_clickable_element_reference("PNT_165"):update()-- CoPilot LL
+	get_clickable_element_reference("PNT_163"):update()-- CoPilot Clk Reset
+	--get_clickable_element_reference("PNT_164"):update()-- CoPilot N2 gov
+	--get_clickable_element_reference("PNT_162"):update()-- CoPilot VAW reset
+	--get_clickable_element_reference("PNT_161"):update()-- CoPilot throttle
+	--get_clickable_element_reference("PNT_166"):update()-- CoPilot starter button
+
+	--print_message_to_user(FMtest:get())
 end
 
 

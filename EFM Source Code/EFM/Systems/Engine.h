@@ -1,5 +1,6 @@
 #pragma once
 #include "../FlightModel/aero.h"
+#include "Systems/ElectricSystem.h"
 
 
 // N1 gas producer rpm will be main measure of engine power
@@ -20,8 +21,9 @@ class TurboshaftEngine
 {
 private:
 
-    EFMData& p_EFMdata;
-    FlightControls& p_flightControl;
+    EFMData* p_EFMdata;
+    FlightControls* p_flightControl;
+    ElectricSystem* p_ElectricSystem;
 
     enum engineStates
     {
@@ -60,11 +62,11 @@ private:
 
 public:
     double throttleInput = 0.0;	// Throttle input command
-    bool starterButtonOn = false;
 
-    TurboshaftEngine(EFMData& ptr_EFMdata, FlightControls& ptr_fltCntrl)
-        : p_EFMdata(ptr_EFMdata)
-        , p_flightControl(ptr_fltCntrl)
+    TurboshaftEngine(EFMData& ptr_EFMdata, FlightControls& ptr_fltCntrl, ElectricSystem& ptr_elec)
+        : p_EFMdata(&ptr_EFMdata)
+        , p_flightControl(&ptr_fltCntrl)
+        , p_ElectricSystem(&ptr_elec)
     {}
     ~TurboshaftEngine() {}
 
@@ -73,7 +75,6 @@ public:
         engineState = ENG_Off;
         TargetN2 = 98.0;
         throttleInput = 0;
-        starterButtonOn = false;
         N1_PCT = 0.0;
         N1Cmd = 0.0;
         N1rate = 15.0;
@@ -90,7 +91,6 @@ public:
         engineState = ENG_Running;
         TargetN2 = 98.0;
         throttleInput = 1;
-        starterButtonOn = false;
         N1_PCT = 75.0;
         N1Cmd = 75.0;
         N1rate = 15.0;
@@ -155,13 +155,13 @@ public:
         {
         case ENG_Off:
         {
-            if (starterButtonOn && N1_PCT < ENG_RPM_SUSTAIN_PCT)//TODO add req. electric power
+            if (p_ElectricSystem->isStarterEngaged() && N1_PCT < ENG_RPM_SUSTAIN_PCT)//TODO add req. electric power
             {
                 engineState = ENG_Motor;
             }
             N1Cmd = 0.0;
             N1rate = limit(0.025 * pow(N1_PCT, 1.5), 0.75, 12);
-            TOTcmd = p_EFMdata.ambientTemp_C;
+            TOTcmd = p_EFMdata->ambientTemp_C;
             TOTrate = LinInterp(N1_PCT, 60.0, 5.0, 25.0, 1.5);
             fuelFlow = 0.0;
 
@@ -169,7 +169,7 @@ public:
         }
         case ENG_Motor: //engine turning due to electrical starter. No fuel or ignition
         {
-            if (starterButtonOn)
+            if (p_ElectricSystem->isStarterEngaged())
             {
                 N1Cmd = ENG_RPM_MOTOR_PCT;
                 double engineAccelFactor = 1.0 - limit(pow(N1_PCT / N1Cmd, 2.0), 0.0, 0.9);
@@ -187,7 +187,7 @@ public:
                 TOTwhenIgnited = turbineOutletTemp;
                 addTemp = LinInterp(N1_PCT, 5.0, 11.0, 250.0, 0.0);// additional TOT rise due to early light off (creating a hot start if RPM too low)
             }
-            TOTcmd = p_EFMdata.ambientTemp_C;
+            TOTcmd = p_EFMdata->ambientTemp_C;
             TOTrate = LinInterp(N1_PCT, 5.0, 60.0, 1.5, 25.0);
             fuelFlow = 0.0;
 
@@ -195,7 +195,7 @@ public:
         }
         case ENG_Ignition://20-40 sec from 19 to 58
         {
-            if (starterButtonOn && hasFuel)
+            if (p_ElectricSystem->isStarterEngaged() && hasFuel)
             {
                 N1Cmd = ENG_RPM_IDLE_PCT;
                 N1rate = 2.0;
@@ -230,13 +230,13 @@ public:
             //---------- Engine governor ------------------------------------------------------------
             // modulates engine speed based on torque needed to keep rotor speed constant
 
-            double N1Target = LinInterp(p_flightControl.CollectiveInput, 0.0, 1.0, 75.0, 102.0); ;// not the best way for base N1 target, but works for now
+            double N1Target = LinInterp(p_flightControl->CollectiveInput, 0.0, 1.0, 75.0, 102.0); ;// not the best way for base N1 target, but works for now
 
             //TargetN2 += 0.02 * N2Adjustment;
             //TargetN2 = limit(TargetN2, 96.0, 103.0);
 
             //An increase in collective from idle collective causes 1-1.5% increase N2
-            double TargetN2Final = TargetN2 + LinInterp(p_flightControl.CollectiveInput, 0.0, 0.4, 0.0, 2.0);
+            double TargetN2Final = TargetN2 + LinInterp(p_flightControl->CollectiveInput, 0.0, 0.4, 0.0, 2.0);
             double N2error = TargetN2Final - currentN2;
             N1Cmd = N1Target + 3.0 * N2error;
             N1Cmd = limit(N1Cmd, ENG_RPM_IDLE_PCT, ENG_RPM_IDLE_PCT + throttleInput * (ENG_RPM_MAX_LIMIT_PCT - ENG_RPM_IDLE_PCT));
@@ -284,10 +284,10 @@ public:
         // TODO added heat with scav air on
         // 10deg increase when anti-ice is on
         // TOT data from from fig.7-33 (pg.7-19)
-        double startTmp = LinInterp(p_EFMdata.altitudeMSL_FT, 0, 10000, 435, 460);
-        double endTmp = LinInterp(p_EFMdata.altitudeMSL_FT, 0, 10000, 705, 835);
+        double startTmp = LinInterp(p_EFMdata->altitudeMSL_FT, 0, 10000, 435, 460);
+        double endTmp = LinInterp(p_EFMdata->altitudeMSL_FT, 0, 10000, 705, 835);
         double baseTemp = LinInterp(Torque_PSI, 0, 70, startTmp, endTmp);// ambient temp 15C
-        double ambientBias = (p_EFMdata.ambientTemp_C - 15) * 2.5;// based on chart, 10deg change in ambient~=25deg change in TOT
+        double ambientBias = (p_EFMdata->ambientTemp_C - 15) * 2.5;// based on chart, 10deg change in ambient~=25deg change in TOT
         TOTcmd = baseTemp + ambientBias;
         if (TOTcmd < turbineOutletTemp)
         {
@@ -307,7 +307,7 @@ public:
         {
             engOilTempCmd_degC = LinInterp(N1_PCT, 20.0, ENG_RPM_MAX_LIMIT_PCT, 5.0, 80.0);
         }
-        engOilTempCmd_degC += p_EFMdata.ambientTemp_C;
+        engOilTempCmd_degC += p_EFMdata->ambientTemp_C;
         oilTemp = deltaLimit(oilTemp, engOilTempCmd_degC, 0.3);      
         cockpitAPI.setCockpitDrawArg(INT_OilTempNeedle, (float)LinInterp(oilTemp, 15.0, 125.0, 0.0, 1.0));
 

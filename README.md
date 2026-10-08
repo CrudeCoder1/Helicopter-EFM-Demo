@@ -5,6 +5,19 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 
 
 ## Change log
+v0.7.1
+- More accurate fuel system
+  - Auxiliary fuel tanks selectable between no tank, 27 gal tank, and 62 gal tank
+  - Fuel transfer handle functional (only aft tank works for now)
+  - Fuel Quantity indicator (FQI) now displays aft or main tank quantity depending on FQI switch
+  - Added Fuel shutoff handle
+- Fixed ARC182 mode knob not working
+- Sound setup improvement (thanks Hayds_93)
+- Added basic amp gauge functionality
+- Clock reset button added
+- Collective button connectors now stay with collective as it moves
+- EFM now deallocates memory
+
 v0.7.1 2 Oct 2026
 - Fixed crash on mission exit if re-arming menu was opened during mission
 - Fixed error preventing intercom volume control
@@ -124,7 +137,6 @@ Known issues: Some radio knobs don't line up properly with panel text
 - Initial Release
 
 Credits:
-Modelled using Blender 4
+Modeled using Blender 4
 Textured in Substance Painter
-Luiz Renault for providing avSimplestRadio.dll for functioning radios
 M134 model downloaded from https://sketchfab.com/3d-models/minigun-m-134-2961cd5d09844921b045761108956470 and modified (CC Attribution)
