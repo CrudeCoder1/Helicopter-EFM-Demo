@@ -338,75 +338,75 @@ void ed_fm_set_command(int command, float value)
 		flightControls->CollectiveInput = limit(((-value + 1.0) / 2.0) , 0.0, 1.0);
 		break;
 
-	case trimUp:
+	case (int)Keys::trimUp:
 		flightControls->pitchTrim = limit(flightControls->pitchTrim + 0.0015, -1, 1);
 		break;
-	case trimDown:
+	case (int)Keys::trimDown:
 		flightControls->pitchTrim = limit(flightControls->pitchTrim - 0.0015, -1, 1);
 		break;
-	case trimLeft:
+	case (int)Keys::trimLeft:
 		flightControls->rollTrim = limit(flightControls->rollTrim - 0.0015, -1, 1);
 		break;
-	case trimRight:
+	case (int)Keys::trimRight:
 		flightControls->rollTrim = limit(flightControls->rollTrim + 0.0015, -1, 1);
 		break;
 
-	case KeyRudderLeft:
+	case (int)Keys::KeyRudderLeft:
 		flightControls->setPedLeft();
 		break;
-	case KeyRudderRight:
+	case (int)Keys::KeyRudderRight:
 		flightControls->setPedRight();
 		break;
-	case KeyRudderStop:
+	case (int)Keys::KeyRudderStop:
 		flightControls->setPedStop();
 		break;
-	case KeyCollectiveUp:
+	case (int)Keys::KeyCollectiveUp:
 		flightControls->setCollUp();
 		break;
-	case KeyCollectiveDown:
+	case (int)Keys::KeyCollectiveDown:
 		flightControls->setCollDown();
 		break;
 
-	case KeyCyclicForward:
+	case (int)Keys::KeyCyclicForward:
 		flightControls->setCyclicForward();
 		break;
-	case KeyCyclicBack:
+	case (int)Keys::KeyCyclicBack:
 		flightControls->setCyclicBack();
 		break;
-	case KeyCyclicLeft:
+	case (int)Keys::KeyCyclicLeft:
 		flightControls->setCyclicLeft();
 		break;
-	case KeyCyclicRight:
+	case (int)Keys::KeyCyclicRight:
 		flightControls->setCyclicRight();
 		break;
 	
-	case starterButton:
+	case (int)device_commands::starterButton:
 		Electrics->setStarterButton(value);
 		break;
 	
 
-	case throttle:
+	case (int)device_commands::throttle:
 		Engine->throttleInput = value;
 		Fuel->setThrottle(value);
 		break;
-	case throttleAxis:
+	case (int)Keys::throttleAxis:
 		//Engine->setThrottleInput((-value + 1.0) / 2.0);
 		break;
 		
-	case batterySwitch:
+	case (int)device_commands::batterySwitch:
 		Electrics->setPowerSw(value);
 			break;
-	case generatorSwitch:
+	case (int)device_commands::generatorSwitch:
 		Electrics->setGeneratorSw(value);
 		break;
-	case inverterSwitch:
+	case (int)device_commands::inverterSwitch:
 		Electrics->setInverterSw(value);
 		break;
-	case MasterRadioSw:
+	case (int)device_commands::MasterRadioSw:
 		Electrics->setMasterRadioSw(value);
 		break;
 
-	case rotorBrake:
+	case (int)device_commands::rotorBrake:
 		Aero->setRotorBrake(value);
 
 	default:

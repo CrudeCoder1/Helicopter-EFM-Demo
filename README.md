@@ -5,10 +5,12 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 
 
 ## Change log
+v0.7.1
 - More accurate fuel system
   - Auxiliary fuel tanks selectable between no tank, 27 gal tank, and 62 gal tank
   - Fuel transfer handle functional (only aft tank works for now)
   - Fuel Quantity indicator (FQI) now displays aft or main tank quantity depending on FQI switch
+  - Added Fuel shutoff handle
 - Fixed ARC182 mode knob not working
 - Sound setup improvement (thanks Hayds_93)
 - Added basic amp gauge functionality

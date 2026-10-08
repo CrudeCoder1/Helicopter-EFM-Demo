@@ -8,24 +8,24 @@ _ = gettext.translate
 
 elements = {}
 -- Electric system
-elements["PNT_17"]	= default_3_position_tumb(_("Power Selector Switch, BATT/OFF/EXT"),	devices.EFM_HELPER, EFM_commands.batterySwitch,		17)
-elements["PNT_18"]	= default_2_position_tumb(_("Generator Switch, ON/OFF"),			devices.EFM_HELPER, EFM_commands.generatorSwitch,	18)
-elements["PNT_19"]	= default_2_position_tumb(_("Inverter Switch, ON/OFF"),				devices.EFM_HELPER, EFM_commands.inverterSwitch,	19)
-elements["PNT_21"]	= default_2_position_tumb(_("Master Radio Switch, ON/OFF"),		    devices.EFM_HELPER, EFM_commands.MasterRadioSw,	21)
+elements["PNT_17"]	= default_3_position_tumb(_("Power Selector Switch, BATT/OFF/EXT"),	devices.EFM_HELPER, device_commands.batterySwitch,		17)
+elements["PNT_18"]	= default_2_position_tumb(_("Generator Switch, ON/OFF"),			devices.EFM_HELPER, device_commands.generatorSwitch,	18)
+elements["PNT_19"]	= default_2_position_tumb(_("Inverter Switch, ON/OFF"),				devices.EFM_HELPER, device_commands.inverterSwitch,	19)
+elements["PNT_21"]	= default_2_position_tumb(_("Master Radio Switch, ON/OFF"),		    devices.EFM_HELPER, device_commands.MasterRadioSw,	21)
 
 
 -- Fuel System
-elements["PNT_152"] = default_3_position_tumb(_("Aux Fuel Valve Handle, AFT/OFF/FWD"),			devices.FUEL_SYSTEM, EFM_commands.AuxHandle,	152)
+elements["PNT_152"] = default_3_position_tumb(_("Aux Fuel Valve Handle, AFT/OFF/FWD"),			devices.FUEL_SYSTEM, device_commands.AuxHandle,	152)
 elements["PNT_12"]	= default_2_position_tumb(_("Start Pump Switch, ON/OFF"),		devices.FUEL_SYSTEM,	device_commands.FuelPumpSw,		12)
---elements["PNT_150"]	= default_2_position_tumb(_("Fuel Cutoff Valve, PULL TO CLOSE"),	devices.EFM_HELPER,	device_commands.FuelCutoffSw,		150)
+elements["PNT_150"]	= default_2_position_tumb(_("Fuel Shutoff Valve, PULL TO CLOSE"),	devices.FUEL_SYSTEM,	device_commands.FuelShutoffSw,		150)
 elements["PNT_31"]	= default_axis_limited(_("Fuel Qty Brightness Knob"), 		devices.FUEL_SYSTEM, device_commands.FQIbrtKnob, 31, 1)
 elements["PNT_34"]	= default_2_position_tumb(_("FQI Day/Night Switch, DAY/NIGHT"),		devices.FUEL_SYSTEM,	device_commands.FQIdayNhtSw,		34)
 elements["PNT_16"] = multiposition_switch(_("FQI Selector, MAIN/AFT/BIT/FTI"),devices.FUEL_SYSTEM, device_commands.FQIselectSw, 16, 4, 1/4, true, 0, nil, true)
 
 
 -- Engines
-elements["PNT_154"]	= default_axis_limited(_("Throttle"),devices.EFM_HELPER,EFM_commands.throttle,154,nil,0.1,true,false,{-1,1})
-elements["PNT_155"]	= default_2_position_tumb(_("Throttle Cutoff"),	devices.EFM_HELPER, EFM_commands.throttleIdleCutoff, 155)
+elements["PNT_154"]	= default_axis_limited(_("Throttle"),devices.EFM_HELPER,device_commands.throttle,154,nil,0.1,true,false,{-1,1})
+elements["PNT_155"]	= default_2_position_tumb(_("Throttle Cutoff"),	devices.EFM_HELPER, device_commands.throttleIdleCutoff, 155)
 
 -- Weapons panel
 elements["PNT_59"]	= default_2_position_tumb(_("AMS Power Switch, OFF/ON"),			devices.WEAPON_SYSTEM,	device_commands.AMSPwrSw,	59)
@@ -86,7 +86,7 @@ elements["PNT_26"] = switch_button_3pos_2(_("VIDS Digit Switch, OFF/NORM/TST"),	
 elements["PNT_27"] = default_axis_limited(_("VIDS Brightness Knob"), 		 		devices.VIDS, device_commands.VIDSbrtKnob, 27, 1)
 
 
-elements["PNT_151"]	= default_2_position_tumb(_("Rotor Brake Handle, ON/OFF"),			devices.EFM_HELPER, EFM_commands.rotorBrake,	151)
+elements["PNT_151"]	= default_2_position_tumb(_("Rotor Brake Handle, ON/OFF"),			devices.EFM_HELPER, device_commands.rotorBrake,	151)
 
 
 --- VHF AN/ARC-186 control panel

@@ -52,6 +52,7 @@ private:
 	bool isUnlimitedFuel = false;
 	bool isIdleCutoff = false; // true means no fuel flow
 	float auxValvePos = 0;
+	bool shutoffValveOpen = true;
 
 	FuelTank MainTank{ 401 / Convert::kg_to_lb };
 	FuelTank AftTank{ 412 / Convert::kg_to_lb };// aux tank #1
@@ -158,9 +159,12 @@ public:
 	{
 		switch (command)
 		{
-			case AuxHandle:
+			case (int)device_commands::AuxHandle:
 				auxValvePos = value;
-			break;
+				break;
+			case (int)device_commands::FuelShutoffSw:
+				shutoffValveOpen = value == 0;
+				break;
 		}
 	}
 
@@ -183,7 +187,7 @@ public:
 		//fuelBurnPerFrame_kg = AuxTank.decFuel(fuelBurnPerFrame_kg);
 		fuelBurnPerFrame_kg = MainTank.decFuel(fuelBurnPerFrame_kg);
 
-		if (getInternalFuel() > 0 && !isIdleCutoff)
+		if (getInternalFuel() > 0 && !isIdleCutoff && shutoffValveOpen)
 		{
 			isFuelFlow = true;
 		}

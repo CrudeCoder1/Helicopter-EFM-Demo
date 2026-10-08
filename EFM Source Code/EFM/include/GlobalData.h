@@ -1,5 +1,7 @@
 #pragma once
 
+#include "command_defs.h"
+
 // Items used across the EFM
 // Animation arguments, input commands, conversions, deivce IDs
 
@@ -63,38 +65,8 @@ enum ExternalAnimationArgs
 };
 
 // Used in ed_fm_set_command() 
-// These must match Cockpit\Scripts\command_defs.lua
 enum AH6InputCommands
 {
-	// commands from command_defs.lua
-	starterButton = 3010,
-	throttleIdleCutoff = 3011,
-	throttle = 3012,
-	batterySwitch = 3013,
-	generatorSwitch = 3014,
-	inverterSwitch = 3015,
-	throttleAxis = 3016,
-	trimUp = 3017,
-	trimDown = 3018,
-	trimLeft = 3019,
-	trimRight = 3020,
-	rotorBrake = 3021,
-	KeyRudderLeft = 3022,
-	KeyRudderRight = 3023,
-	KeyRudderStop = 3024,
-	KeyCollectiveUp = 3025,
-	KeyCollectiveDown = 3026,
-	KeyCyclicForward = 3027,
-	KeyCyclicBack = 3028,
-	KeyCyclicLeft = 3029,
-	KeyCyclicRight = 3030,
-	MasterRadioSw = 3031,
-	AuxHandle = 3032,
-
-	cautionTest = 3201,
-
-
-
 	// joystick axis commands
 	JoystickPitch = 2001,
 	JoystickRoll = 2002,

@@ -30,7 +30,7 @@ public:
 
 	void setCommand(int command, const float value)
 	{
-		if (command == cautionTest)
+		if (command == (int)device_commands::CautionTest)
 		{
 			testSwOn = value > 0;
 		}						
