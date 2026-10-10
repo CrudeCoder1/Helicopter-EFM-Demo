@@ -29,8 +29,8 @@ local R_StationReady = false
 
 local L_OB_Station = 0
 local L_IB_Station = 1
-local R_IB_Station = 3
-local R_OB_Station = 4
+local R_IB_Station = 4 --ANDR0ID Edit
+local R_OB_Station = 5 --ANDR0ID Edit
 
 function post_initialize()	
 	dev:performClickableAction(device_commands.AMSbuttonBrght,1)
