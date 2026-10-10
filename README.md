@@ -5,7 +5,7 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 
 
 ## Change log
-v0.7.1
+v0.7.2 8 Oct 26
 - More accurate fuel system
   - Auxiliary fuel tanks selectable between no tank, 27 gal tank, and 62 gal tank
   - Fuel transfer handle functional (only aft tank works for now)

@@ -133,12 +133,25 @@ elements["PNT_41"]	= default_button(_("ENRoute Button"), devices.ARGUS7000, devi
 elements["PNT_40"]	= default_button(_("ARRival Button"), devices.ARGUS7000, device_commands.ArgusARRbutton, 40)
 elements["PNT_39"]	= default_button(_("AUXilary Button"), devices.ARGUS7000, device_commands.ArgusAUXbutton, 39)
 elements["PNT_38"]	= default_axis_limited(_("ARGUS Brightness Knob"), 	 devices.ARGUS7000, device_commands.ArgusBrightness, 38, 1)
-
-
 -- not buttons but require pushing 2 buttons at the same time. Using clickable on text position instead
 --elements["PNT_70"]	= default_button(_("SELect"), devices.ARGUS7000, device_commands.ArgusSELbutton, 70)
 --elements["PNT_71"]	= default_button(_("INFOrmation"), devices.ARGUS7000, device_commands.ArgusINFObutton, 71)
 --elements["PNT_72"]	= default_button(_("EMERgency"), devices.ARGUS7000, device_commands.ArgusEMERbutton, 72)
+
+-- Trimble TNL3100 GPS system
+elements["PNT_73"]	= default_2_position_tumb(_("Trimble Power Knob"),		devices.TNL3100, device_commands.TNL_PWR,	73)
+elements["PNT_74"]	= multiposition_switch(_("Trimble Outer Selector Knob"), devices.TNL3100, device_commands.TNL_OutKnob, 74,20,0.05,false,0,nil,true)
+elements["PNT_75"]	= multiposition_switch(_("Trimble Inner Selector Knob"), devices.TNL3100, device_commands.TNL_InnKnob, 75,20,0.05,false,0,nil,true)
+elements["PNT_76"]	= default_button(_("Trimble ENT Button"), devices.TNL3100, device_commands.TNL_ENT, 76)
+elements["PNT_77"]	= default_button(_("Trimble NAV Button"), devices.TNL3100, device_commands.TNL_NAV, 77)
+elements["PNT_78"]	= default_button(_("Trimble WPT Button"), devices.TNL3100, device_commands.TNL_WPT, 78)
+elements["PNT_79"]	= default_button(_("Trimble APT Button"), devices.TNL3100, device_commands.TNL_APT, 79)
+elements["PNT_80"]	= default_button(_("Trimble DIRECT Button"), devices.TNL3100, device_commands.TNL_DCT, 80)
+elements["PNT_81"]	= default_button(_("Trimble FPL Button"), devices.TNL3100, device_commands.TNL_FPL, 81)
+elements["PNT_82"]	= default_button(_("Trimble CALC Button"), devices.TNL3100, device_commands.TNL_CALC, 82)
+elements["PNT_83"]	= default_button(_("Trimble AUX Button"), devices.TNL3100, device_commands.TNL_AUX, 83)
+elements["PNT_84"]	= default_button(_("Trimble MSG Button"), devices.TNL3100, device_commands.TNL_MSG, 84)
+
 
 -- TACAN
 elements["PNT_121"]	= multiposition_switch(_("TACAN Channel Selector Tens"), devices.TACAN, device_commands.TACAN10s, 121,20,0.05,false,0,3,true)

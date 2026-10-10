@@ -157,7 +157,18 @@ device_commands = { -- commands for lua
 	ARC186_load = counter(),
 	ARC186_SquelchToneSw = counter(),
 
-
+	TNL_PWR = counter(),
+	TNL_OutKnob = counter(),
+	TNL_InnKnob = counter(),
+	TNL_ENT = counter(),
+	TNL_NAV = counter(),
+	TNL_WPT = counter(),
+	TNL_APT = counter(),
+	TNL_DCT = counter(),
+	TNL_FPL = counter(),
+	TNL_CALC = counter(),
+	TNL_AUX = counter(),
+	TNL_MSG = counter(),
 }
 
 
