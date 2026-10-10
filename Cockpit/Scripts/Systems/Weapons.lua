@@ -170,7 +170,7 @@ function SetCommand(command,value)
 	if command == device_commands.JettSw then
 		if value == 1 then -- direct battery connection
 			dev:emergency_jettison(0)
-			dev:emergency_jettison(4)		
+			dev:emergency_jettison(5) --ANDR0ID Edit		
 		end
 	elseif command == device_commands.AMSPwrSw then	
 		PwrSwOn = value == 1
