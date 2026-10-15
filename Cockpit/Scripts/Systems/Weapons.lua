@@ -169,8 +169,8 @@ dev:listen_command(Keys.MasterArmToggle)
 function SetCommand(command,value)
 	if command == device_commands.JettSw then
 		if value == 1 then -- direct battery connection
-			dev:emergency_jettison(0)
-			dev:emergency_jettison(4)		
+			dev:emergency_jettison(L_OB_Station)
+			dev:emergency_jettison(R_OB_Station)		
 		end
 	elseif command == device_commands.AMSPwrSw then	
 		PwrSwOn = value == 1
