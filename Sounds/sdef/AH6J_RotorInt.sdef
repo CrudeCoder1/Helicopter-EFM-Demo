@@ -1,0 +1,8 @@
+wave = "Effects/AH6J_RotorInt"
+inner_radius = 100
+position = {0.0, 0.0, 0.0}
+gain = 1.4
+outer_radius = 1500
+direction = {0, 1, 0}
+cone_inner_angle = 60
+cone_outer_angle = 30

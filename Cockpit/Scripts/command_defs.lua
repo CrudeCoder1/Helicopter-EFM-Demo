@@ -34,6 +34,9 @@ Keys =
 	trimDown			= counter(),
 	trimLeft			= counter(),
 	trimRight			= counter(),
+	trimHere			= counter(),	-- Pilot Trimmer (hold, centre the stick, release)
+	trimReset			= counter(),	-- Trimmer reset
+	RotorBrakeToggle	= counter(),	-- Rotor brake handle on/off
 
 	iCommandPlane_ShowControls = 851;--need this bc show controls is in common_keyboard_binding
 }
@@ -156,6 +159,9 @@ device_commands = { -- commands for lua
 	ARC186_chan = counter(),
 	ARC186_load = counter(),
 	ARC186_SquelchToneSw = counter(),
+
+	DebugToggle = counter(),	-- debug readout on/off (Avionics.lua)
+	DebugDensityToggle = counter(),	-- debug: air density effect on/off in flight (Avionics.lua / EFM)
 
 
 }

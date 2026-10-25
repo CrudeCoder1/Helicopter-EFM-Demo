@@ -57,6 +57,7 @@ dev:listen_command(Keys.ExtPwrSwitch)
 dev:listen_command(Keys.ThrottleIncrease)
 dev:listen_command(Keys.ThrottleDecrease)
 dev:listen_command(Keys.ThrottleCutoff)
+dev:listen_command(Keys.RotorBrakeToggle)
 dev:listen_command(Keys.iCommandPlane_ShowControls)
 
 function SetCommand(command,value)
@@ -92,6 +93,11 @@ function SetCommand(command,value)
 	elseif command==Keys.ThrottleCutoff then
 		dev:performClickableAction(device_commands.throttleIdleCutoff,1-CutOffpos)
 		dispatch_action(nil,device_commands.throttleIdleCutoff,1-CutOffpos)
+	elseif command == Keys.RotorBrakeToggle then
+		local brakePos = 1 - get_cockpit_draw_argument_value(151)-- toggle the handle (arg 151)
+		dev:performClickableAction(device_commands.rotorBrake,brakePos)
+		dispatch_action(nil,device_commands.rotorBrake,brakePos)
+		print_message_to_user(brakePos > 0.5 and "Rotor brake ON" or "Rotor brake OFF", 3)
 	elseif command == Keys.iCommandPlane_ShowControls then
 		SHOW_CONTROLS:set(1-SHOW_CONTROLS:get())
 		

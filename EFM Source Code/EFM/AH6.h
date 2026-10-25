@@ -22,6 +22,7 @@
 #include "Systems/FlightControls.h"
 #include "Systems/CautionLights.h"
 #include "FlightModel/Aero.h"		// Aerodynamic model functions
+#include "Systems/OperatingLimits.h"	// VNE and exceedance tracking (OH-6A manual chapter 5)
 
 
 EFM_Globals G_Params;
@@ -35,6 +36,7 @@ static FlightControls* flightControls = NULL;
 static LightSystem* Lighting = NULL;
 static TurboshaftEngine* Engine = NULL;
 static AH6Aero* Aero = NULL;
+static OperatingLimits* Limits = NULL;
 
 void createHeli()
 {
@@ -46,6 +48,7 @@ void createHeli()
 	Lighting = new LightSystem;
 	Engine = new TurboshaftEngine(*EFMdata, *flightControls, *Electrics);
 	Aero = new AH6Aero(*EFMdata, *damageModel, *flightControls);
+	Limits = new OperatingLimits;
 }
 void releaseHeli()
 {
@@ -57,6 +60,7 @@ void releaseHeli()
 	delete Lighting;
 	delete Engine;
 	delete Aero;
+	delete Limits;
 	EFMdata = NULL;
 	Fuel = NULL;
 	damageModel = NULL;
@@ -65,6 +69,7 @@ void releaseHeli()
 	Lighting = NULL;
 	Engine = NULL;
 	Aero = NULL;
+	Limits = NULL;
 }
 
 

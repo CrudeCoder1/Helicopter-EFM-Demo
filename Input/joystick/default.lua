@@ -11,6 +11,7 @@ join(res.keyCommands,{
     {down = Keys.ThrottleCutoff, name = _('Throttle Idle Cutoff'), category = _('Systems')},
 	{pressed = Keys.ThrottleIncrease, up = Keys.ThrottleStop,  name = _('Throttle Up'), category = _('Systems')},
     {pressed = Keys.ThrottleDecrease, up = Keys.ThrottleStop,  name = _('Throttle Down'), category = _('Systems')},
+    {down = Keys.RotorBrakeToggle, name = _('Rotor Brake On/Off'), category = _('Systems')},
     {down = Keys.BattSwitch, name = _('Battery Switch'), category = _('Systems')}, 
 	{down = Keys.ExtPwrSwitch, name = _('External Power Switch'), category = _('Systems')}, 
 	
@@ -54,6 +55,9 @@ join(res.keyCommands,{
 	{pressed = Keys.trimDown, name = _('Cyclic Trim Down'), category = _('Flight Control')},
 	{pressed = Keys.trimLeft, name = _('Cyclic Trim Left'), category = _('Flight Control')},
 	{pressed = Keys.trimRight, name = _('Cyclic Trim Right'), category = _('Flight Control')},
+
+	{down = Keys.trimHere, up = Keys.trimHere, value_down = 1.0, value_up = 0.0, name = _('Pilot Trimmer (sim aid, not in the real aircraft; hold, centre stick, release)'), category = _('Flight Control')},
+	{down = Keys.trimReset, name = _('Trimmer Reset (sim aid, not in the real aircraft)'), category = _('Flight Control')},
 })
 
 -- joystick axis 

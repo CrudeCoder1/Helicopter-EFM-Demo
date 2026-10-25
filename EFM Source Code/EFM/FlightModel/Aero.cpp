@@ -90,8 +90,8 @@ void AH6Aero::update(double engtorque)
 // check control input pitch amounts
 void AH6Aero::MainRotorModule()
 {
-	double ThetaCUFF = p_flightControl->CollectiveInput * 19.0 + 2.0;//impressed MR collective pitch, [deg]
-	double A1S = p_flightControl->rollOutput * 8.0;//total lat cyclic input, -8 to 8 [deg]
+	double ThetaCUFF = p_flightControl->CollectiveInput * CollectiveRange + CollectiveMin;//impressed MR collective pitch, [deg]
+	double A1S = p_flightControl->rollOutput * LatCyclicMax;//total lat cyclic input, -8 to 8 [deg]
 	double B1S = p_flightControl->pitchOutput * 12.0;//total long cyclic input, -11 to 15 [deg]
 
 
@@ -556,6 +556,10 @@ void AH6Aero::FuselageModule()
 	fuseMoment.y = -Nf * Convert::lbft_to_Nm;
 	fuseMoment.z = Mf * Convert::lbft_to_Nm;
 	aeroMoments.push_back(fuseMoment);
+	{
+		static void* P_F_M = cockpitAPI.getParamHandle("DBG_M_F");
+		cockpitAPI.setParamNumber(P_F_M, Mf);
+	}
 
 }//end fuselage module
 
@@ -638,8 +642,18 @@ void AH6Aero::EmpennageModule()
 	HTForce.pos.z = 0.0;
 	aeroForces.push_back(HTForce);
 
+	// debug: tail pitching moment about the CG, nose-up positive [ft-lb] (force up behind the CG = nose down)
+	{
+		static void* P_HT_M = cockpitAPI.getParamHandle("DBG_M_HT");
+		static void* P_HT_A = cockpitAPI.getParamHandle("DBG_A_HT");
+		static void* P_F_A = cockpitAPI.getParamHandle("DBG_A_F");
+		cockpitAPI.setParamNumber(P_HT_M, ZHTU * lHT + XHTU * hHT);
+		cockpitAPI.setParamNumber(P_HT_A, alphaHTT);
+		cockpitAPI.setParamNumber(P_F_A, alphaF_deg);
+	}
+
 	//--------------------------------------
-	//		 vertical tail 
+	//		 vertical tail
 	//--------------------------------------
 	double lVT = (FSVT - FSCG) / 12.0;//vertical tail moment arm x axis, [ft]
 	double hVT = (WLVT - WLCG) / 12.0;//vertical tail moment arm z axis, [ft]
@@ -707,8 +721,9 @@ void AH6Aero::TailRotorModule()
 {
 	double ThetaCTR = p_flightControl->PedalInput * 16.0 + 9.0;//TR collective pitch, 14.0 + 4.0
 
-	double DeltaPsi = OmegaTR * p_EFMdata->deltaTime;//MR advance angle, [rad]
-	PsiTR += DeltaPsi;//MR rotational position
+	// visual spin only: real TR speed (2838 rpm) aliases against the frame rate, so scale it down (still proportional to rpm)
+	double DeltaPsi = (OmegaTR / OmegaTR_T) * TRVisualOmegaMax * p_EFMdata->deltaTime;//TR visual advance angle, [rad]
+	PsiTR += DeltaPsi;//TR visual rotational position
 	if (PsiTR > M_PI)
 	{
 		PsiTR -= 2.0 * M_PI;
@@ -718,7 +733,7 @@ void AH6Aero::TailRotorModule()
 	{
 		animPos += 1.0;
 	}
-	cockpitAPI.setExternalDrawArg(EXT_TRspin, (float)animPos);// TODO change rotation speed of TR
+	cockpitAPI.setExternalDrawArg(EXT_TRspin, (float)animPos);
 
 	double lTR = (FSTR - FSCG) / 12.0;//TR moment arm x axis, [ft]
 	double hTR = (WLTR - WLCG) / 12.0;//TR moment arm z axis, [ft]
@@ -751,6 +766,15 @@ void AH6Aero::TailRotorModule()
 	double CTHTR = 2.0 * DWTR * sqrt(MuTR2 + pow(LambdaTR, 2));//TR thrust coef
 	TTR = CTHTR * pow(Omega / OmegaT, 2) * p_EFMdata->rho_SlgFt3 * M_PI * pow(RTR, 4) * pow(OmegaTR_T, 2) * KTRBLK;//Thrust TR, [lb]
 
+	// TR power draw: induced power + profile power, reflected to the MR shaft as a torque load
+	double OmegaRatio = Omega / OmegaT;
+	double TRTipSpeed = OmegaTR_T * RTR;//[ft/s]
+	double TRDiskArea = M_PI * pow(RTR, 2);//[ft^2]
+	double PTRInduced = fabs(TTR * DWTR * TRTipSpeed);//[ft-lb/s]
+	double PTRProfile = (TRSolidity * CdoTR / 8.0) * p_EFMdata->rho_SlgFt3 * TRDiskArea * pow(TRTipSpeed * OmegaRatio, 3);//[ft-lb/s]
+	double QTR = (PTRInduced + PTRProfile) / limit(Omega, OmegaT * 0.2, OmegaT * 1.2);//torque at MR shaft [ft-lb]
+	QTRfiltered = QTRfiltered * ((KFRQ - 1.0) / KFRQ) + (1.0 / KFRQ) * QTR;
+
 	double XTR = -DragTR * 0.5 * p_EFMdata->rho_SlgFt3 * pow(VXTR, 2);
 	double YTR = TTR * sin(GammaTR);
 	double ZTR = -TTR * cos(GammaTR);
@@ -765,7 +789,7 @@ void AH6Aero::TailRotorModule()
 	aeroForces.push_back(TRForce);
 }
 
-// todo: add TR torque?, tune inertias/ratios
+// TR torque is included via QTRfiltered. todo: tune inertias/ratios
 void AH6Aero::RotorDegreeOfFreedom(double engtorque)
 {
 	/* Summary of operation
@@ -779,12 +803,116 @@ void AH6Aero::RotorDegreeOfFreedom(double engtorque)
 
 	// torque "required/used" by main rotor	
 	QMRfiltered = QMRfiltered * ((KFRQ - 1.0) / KFRQ) + (1.0 / KFRQ) * QMR;//filtered torque (required to maintain constant rpm) from main rotor
+	// Rotor brake. MD 530F RFM 2-5: apply only after engine shutdown with the rotor at or below 195 rpm.
+	// Above that the lining fades and the sudden stop damages the blades and strap pack.
+	// Brake torque and the spin-down friction below are estimates (no figures in the manual), tuned for a ~25 s stop from 195 rpm.
+	const double BRAKE_RPM_LIMIT = 195.0;
+	double nrRpm = Omega / OmegaT * 475.0;
+	bool brakeOverLimit = isRotorBrakeEngaged && nrRpm > BRAKE_RPM_LIMIT;
 	double rotorBrakeTorque = 0.0;
-	if (isRotorBrakeEngaged)// additional torque from rotor brake to help MR stop sooner
+	if (isRotorBrakeEngaged)
 	{
-		rotorBrakeTorque = LinInterp(Omega, OmegaT * 0.4, 0.0, 200, 500);
+		// tuned for JMR = 600; scaled with the inertia so the stopping time stays about 23 s from 195 rpm
+		rotorBrakeTorque = (JMR / 600.0) * (brakeOverLimit ? 280.0 : LinInterp(Omega, OmegaT * 0.4, 0.0, 400.0, 600.0));
 	}
-	double netMRTorque = -QMRfiltered - rotorBrakeTorque;
+	if (brakeOverLimit)
+	{
+		brakeOverLimitTime += p_EFMdata->deltaTime;
+		if (brakeOverLimitTime > 3.0)// the sudden stop starts to wreck the strap packs / blades
+		{
+			brakeDamage = std::min(1.0, brakeDamage + 0.12 * p_EFMdata->deltaTime);
+			for (int b = 0; b < NUM_BLADES; b++)
+			{
+				double& integ = p_Damage->elementIntegrity[BLADE_1_CENTER + b * 3];
+				integ = std::min(integ, 1.0 - 0.7 * brakeDamage);
+			}
+		}
+	}
+	else
+	{
+		brakeOverLimitTime = std::max(0.0, brakeOverLimitTime - p_EFMdata->deltaTime);
+	}
+	// MD 500 / MD 530F RFM: release the rotor brake during the last revolution, sudden stoppage damages the blades and drive train.
+	// The last revolution here is below about 12 rpm (2.5% rotor speed). Still braking when the rotor stops is a sudden stoppage.
+	bool brakeLastRev = isRotorBrakeEngaged && Omega > 0.003 * OmegaT && Omega < 0.025 * OmegaT;
+	if (Omega > 0.05 * OmegaT)
+	{
+		rotorWasTurning = true;
+	}
+	else if (Omega <= 0.003 * OmegaT && rotorWasTurning)
+	{
+		rotorWasTurning = false;
+		if (isRotorBrakeEngaged)
+		{
+			brakeDamage = std::max(brakeDamage, 0.3);// sudden stoppage: some blade / drive train damage
+		}
+	}
+	// MD 500 RFM 2-5: holding the collective anywhere but full down while the rotor brake is applied can damage the strap pack.
+	bool collectiveWithBrake = isRotorBrakeEngaged && Omega > 0.02 * OmegaT && p_flightControl->CollectiveInput > 0.10;
+	if (collectiveWithBrake)
+	{
+		strapTime += p_EFMdata->deltaTime;
+		if (strapTime > 1.0)
+		{
+			strapDamage = std::min(1.0, strapDamage + 0.12 * p_EFMdata->deltaTime);
+			if (strapDamage >= 1.0 && !strapFailed)
+			{
+				strapFailed = true;// the strap pack gives out and a blade is lost
+				p_Damage->elementIntegrity[BLADE_1_CENTER] = 0.0;
+			}
+		}
+	}
+	else
+	{
+		strapTime = std::max(0.0, strapTime - p_EFMdata->deltaTime);
+	}
+	{
+		// a DCS repair puts the blade integrity back above what this code left it at last frame
+		if ((brakeDamage > 0.0 || strapDamage > 0.0 || strapFailed) && p_Damage->elementIntegrity[BLADE_1_CENTER] > lastBrakeInteg + 0.05)
+		{
+			brakeDamage = 0.0;// repaired
+			strapDamage = 0.0;
+			strapFailed = false;
+		}
+		double worn = std::max(brakeDamage, strapDamage);
+		if (worn > 0.0)
+		{
+			for (int b = strapFailed ? 1 : 0; b < NUM_BLADES; b++)
+			{
+				double& integ = p_Damage->elementIntegrity[BLADE_1_CENTER + b * 3];
+				integ = std::min(integ, 1.0 - 0.7 * worn);
+			}
+		}
+		lastBrakeInteg = p_Damage->elementIntegrity[BLADE_1_CENTER];
+	}
+	{
+		static void* P_BRAKE_WARN = cockpitAPI.getParamHandle("ROTOR_BRAKE_WARN");
+		double warn = 0.0;
+		if (strapFailed) warn = 5.0;
+		else if (strapDamage > 0.0) warn = 4.0;
+		else if (collectiveWithBrake) warn = 3.0;
+		else if (brakeDamage > 0.0) warn = 2.0;
+		else if (brakeOverLimit) warn = 1.0;
+		else if (brakeLastRev) warn = 6.0;
+		cockpitAPI.setParamNumber(P_BRAKE_WARN, warn);
+	}
+	// transmission / bearing / windage drag so the rotor spins down on its own after shutdown (estimate)
+	// Spin-down with the engine off, shaped after a real Jet Ranger shutdown (about 3.4 min to stop, no brake): roughly 15 s to 50%
+	// rotor speed, 100 s to 10% and 3.3 min to a stop (estimates, the manuals give no coast-down figure).
+	// Total drag = (JMR/600) * (24 ft-lb + 0.79*Omega^2). The blade model already supplies about 0.24*Omega^2 of that
+	// (fitted from flight tests), so only the difference is added. Scaling with JMR keeps the times if the inertia is changed later.
+	double rotorFriction = 0.0;
+	if (Omega > 0.0)
+	{
+		rotorFriction = engtorque < 50.0 ? std::max(0.0, (JMR / 600.0) * (24.0 + 0.79 * Omega * Omega) - 0.24 * Omega * Omega) : 12.0 + 30.0 * (Omega / OmegaT);
+		if (engtorque < 50.0)
+		{
+			// bearing stiction: in a flight test the blade model alone kept pushing the rotor round at about 10 rpm (about 25 ft-lb,
+			// probably wind), so below 5% rotor speed extra friction holds it, up to 60 ft-lb at a standstill
+			rotorFriction += (JMR / 600.0) * 60.0 * std::max(0.0, 1.0 - Omega / (0.05 * OmegaT));
+		}
+	}
+	double netMRTorque = -QMRfiltered - QTRfiltered - rotorBrakeTorque - rotorFriction;
 
 	// torque produced by engine pre-clutch
 	double QEng = engtorque; // torque produced by N1 gas producer

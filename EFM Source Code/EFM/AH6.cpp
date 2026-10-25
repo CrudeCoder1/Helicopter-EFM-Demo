@@ -49,6 +49,9 @@ void ed_fm_set_atmosphere(double h,	//altitude above sea level	(meters)
 						  double wind_vz //components of velocity vector, including turbulence in world coordinate system (meters/sec)
 )
 {
+	// debug: the density effect can be switched off in flight from the cockpit (Avionics.lua sets DBG_DENSITY_OFF)
+	static void* P_DENSITY_OFF = cockpitAPI.getParamHandle("DBG_DENSITY_OFF");
+	EFMdata->densityEffect = cockpitAPI.getParamNumber(P_DENSITY_OFF) < 0.5;
 	EFMdata->setAtmosphere(h, t, a, ro, p);
 }
 
@@ -132,7 +135,22 @@ void ed_fm_simulate(double dt)
 	Aero->update(Engine->getEngTorque());
 	Fuel->update(Engine->getFuelFlow(), dt); // note, still uses fuel when sim is paused
 	Electrics->update(dt, Engine->getN1RPM());
+	{
+		// ENGINE OUT / low rotor warning (MD 530F RFM 1-12, 3-3): light and horn when N1 is below 55% or rotor speed below 453 rpm (95% N2).
+		// Same logic as the OH-6A mod: with N1 below 55% it always shows; the low rotor case only counts once the throttle is at the
+		// flight position (>95%), so the slow rotor at ground idle does not sound the horn. The horn itself is played from
+		// Avionics.lua through ENG_OUT_WARN, and only with the generator on (late generic system, RFM 1-12).
+		static void* P_ENG_OUT_WARN = cockpitAPI.getParamHandle("ENG_OUT_WARN");
+		bool lowN1 = Engine->getN1PCT() < 55.0;
+		bool lowRotor = Aero->getMRomega() * Convert::radSecToRPM < 453.0 && Engine->getThrottleInput() > 0.95;
+		G_Params.cautionLight[CL_EngOut] = G_Params.cautionLight[CL_EngOut] || lowN1 || lowRotor;
+		cockpitAPI.setParamNumber(P_ENG_OUT_WARN, (lowN1 || lowRotor) ? 1.0 : 0.0);
+	}
 	Lighting->updateFrame();
+	Limits->update(dt, *EFMdata, Aero->getMRomega(), Engine->getTorquePSI(), Engine->getTorqueLimitContinuousPSI(), Engine->getN1PCT(), Engine->getTOT(), Aero->getN2PCT());
+	Limits->updateDebug(*EFMdata, flightControls->CollectiveInput, flightControls->PedalInput, Engine->getFuelFlowLbHr(), Engine->getPowerDerateValue(), Engine->getTOT(), Engine->getN1PCT(),
+		Aero->getPitchDeg(), Aero->getRollDeg(), flightControls->pitchOutput, flightControls->rollOutput,
+		flightControls->PitchInput, flightControls->RollInput, flightControls->pitchTrim, flightControls->rollTrim);
 
 }
 
@@ -350,6 +368,12 @@ void ed_fm_set_command(int command, float value)
 	case (int)Keys::trimRight:
 		flightControls->rollTrim = limit(flightControls->rollTrim + 0.0015, -1, 1);
 		break;
+	case (int)Keys::trimHere:		// 'Pilot Trimmer': hold, centre the stick, release (like the UH-1H)
+		flightControls->setTrimmer(value);
+		break;
+	case (int)Keys::trimReset:		// 'Trimmer reset'
+		flightControls->resetTrim();
+		break;
 
 	case (int)Keys::KeyRudderLeft:
 		flightControls->setPedLeft();
@@ -510,7 +534,9 @@ double ed_fm_get_param(unsigned param_enum)
 	case ED_FM_ENGINE_1_RPM:
 		return Aero->getN2omega() * 6016.0;
 	case ED_FM_ENGINE_1_RELATED_RPM:
-		return Aero->getN2PCT() / 100.0; // DCS expects a ratio, not shaft rad/sec.
+		// DCS expects a ratio, not shaft rad/sec. This drives the rotor sound, so use whichever of N2 and the real rotor speed
+		// is higher: after shutdown the rotor keeps turning long after N2 has died.
+		return std::max(Aero->getN2PCT(), Aero->getMRomega() / OmegaT * 100.0) / 100.0;
 	case ED_FM_ENGINE_1_CORE_RPM:
 		return Engine->getN1RPM() * 6016.0;
 	case ED_FM_ENGINE_1_CORE_RELATED_RPM:		// This is important to use for engine sounds, heatblur, and for other internal functions like a functioning RWR
