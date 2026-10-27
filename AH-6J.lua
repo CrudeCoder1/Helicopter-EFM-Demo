@@ -284,6 +284,23 @@ AH6J = {
 		["WING_R"]			= {critical_damage = 5, args = {157}}, -- right skid shell
 		["ELEVATOR_R_OUT"]	= {critical_damage = 2, args = {157}}, -- right skid line F
 		["Line_STABIL_R"]	= {critical_damage = 2, args = {157}}, -- right skid line R
+
+		-- EXPERIMENTAL: the other skid shell segments in AH-6J_Collision.edm. DCS logs 'No property record for segment' for each
+		-- of them at load. Reusing the existing skid arguments; effect in game not confirmed.
+		["WING_L_01"]	= {critical_damage = 2, args = {156}},
+		["WING_L_02"]	= {critical_damage = 2, args = {156}},
+		["WING_L_03"]	= {critical_damage = 2, args = {156}},
+		["WING_L_04"]	= {critical_damage = 2, args = {156}},
+		["WING_L_05"]	= {critical_damage = 2, args = {156}},
+		["WING_L_06"]	= {critical_damage = 2, args = {156}},
+		["WING_L_07"]	= {critical_damage = 2, args = {156}},
+		["WING_L_08"]	= {critical_damage = 2, args = {156}},
+		["WING_L_09"]	= {critical_damage = 2, args = {156}},
+		["WING_L_10"]	= {critical_damage = 2, args = {156}},
+		["WING_L_11"]	= {critical_damage = 2, args = {156}},
+		["WING_R_01"]	= {critical_damage = 2, args = {157}},
+		["WING_R_02"]	= {critical_damage = 2, args = {157}},
+		["WING_R_03"]	= {critical_damage = 2, args = {157}},
 		
 		-- Tail
 		["TAIL"]			= {critical_damage = 4, args = {159}, deps_cells = {"TAIL_RIGHT_SIDE","TAIL_LEFT_SIDE"}},
