@@ -173,6 +173,16 @@ void AH6Aero::MainRotorModule()
 		double OmegaB = limit(Omega, OmegaT / 10.0, OmegaT * 5.0);//this variable is only for beta and betaDot equations to avoid divide by 0
 		Beta[b] = Beta[b] + BetaDot[b] * sin(DeltaPsi) / OmegaB + BetaDotDot[b] * (1.0 - cos(DeltaPsi)) / pow(OmegaB, 2);
 		Beta[b] = limit(Beta[b], betaDown, betaUp);//limit to avoid divide by zero. flapping angle shouldn't get past ~30deg anyways
+
+		if (Beta[b] < 0)
+		{
+			cockpitAPI.setExternalDrawArg(EXT_Blade1Flap + b, (float)(Beta[b] / (3.0 * Convert::degToRad)));
+		}
+		else
+		{
+			cockpitAPI.setExternalDrawArg(EXT_Blade1Flap + b, (float)(Beta[b] / (11.0 * Convert::degToRad)));
+		}
+		
 		
 
 		BetaDot[b] = BetaDot[b] * cos(DeltaPsi) + BetaDotDot[b] * sin(DeltaPsi) / OmegaB;
