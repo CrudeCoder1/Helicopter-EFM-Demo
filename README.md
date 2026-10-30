@@ -5,6 +5,10 @@ Original Thread: https://forum.dcs.world/topic/228394-helicopter-efm-demo/
 
 
 ## Change log
+- Fixed weapon system bugs due to change in pylon numbers
+- Added rotor flap animation
+- Fixed collision model issues (incorrect names and blade damage)
+
 v0.7.2 8 Oct 26
 - More accurate fuel system
   - Auxiliary fuel tanks selectable between no tank, 27 gal tank, and 62 gal tank
