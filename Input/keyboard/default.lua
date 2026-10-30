@@ -12,6 +12,7 @@ join(res.keyCommands,{
     {combos = {{key = 'End'}}, down = Keys.ThrottleCutoff, name = _('Throttle Idle Cutoff'), category = _('Systems')},
 	{combos = {{key = 'PageUp'}}, pressed = Keys.ThrottleIncrease, up = Keys.ThrottleStop,  name = _('Throttle Up'), category = _('Systems')},
     {combos = {{key = 'PageDown'}}, pressed = Keys.ThrottleDecrease, up = Keys.ThrottleStop,  name = _('Throttle Down'), category = _('Systems')},
+    {combos = {{key = 'R', reformers = {'LCtrl'}}}, down = Keys.RotorBrakeToggle, name = _('Rotor Brake On/Off'), category = _('Systems')},
     {combos = {{key = 'B'}}, down = Keys.BattSwitch, name = _('Battery Switch'), category = _('Systems')}, 
 	{combos = {{key = 'B', reformers = {'LCtrl'}}}, down = Keys.ExtPwrSwitch, name = _('External Power Switch'), category = _('Systems')}, 
 	
@@ -25,6 +26,10 @@ join(res.keyCommands,{
 -- Lighting
     {combos = {{key = 'L', reformers = {'RShift'}}},	down = Keys.LandingLight, 							name = _('Landing Light'),	category = _('Lighting')},
 	
+-- Debug
+	{combos = {{key = 'D', reformers = {'LCtrl', 'LAlt'}}}, down = device_commands.DebugToggle, cockpit_device_id = devices.AVIONICS, value_down = 1.0, name = _('Debug Readout On/Off'), category = _('General')},
+	{combos = {{key = 'U', reformers = {'LCtrl', 'LAlt'}}}, down = device_commands.DebugDensityToggle, cockpit_device_id = devices.AVIONICS, value_down = 1.0, name = _('Debug Air Density Effect On/Off'), category = _('General')},
+
 -- Others
 	{combos = {{key = 'E', reformers = {'LCtrl'}}}, down 	= iCommandPlaneEject, 				 name = _('Eject (3 times)'), category = _('General')},
 	
@@ -55,6 +60,10 @@ join(res.keyCommands,{
 	{combos = {{key = '.', reformers = {'RCtrl'}}}, pressed = Keys.trimDown, name = _('Cyclic Trim Down'), category = _('Flight Control')},
 	{combos = {{key = ',', reformers = {'RCtrl'}}}, pressed = Keys.trimLeft, name = _('Cyclic Trim Left'), category = _('Flight Control')},
 	{combos = {{key = '/', reformers = {'RCtrl'}}}, pressed = Keys.trimRight, name = _('Cyclic Trim Right'), category = _('Flight Control')},
+
+	-- Pilot Trimmer like the UH-1H (a sim aid, the real MD 500 only has the electric cyclic trim switch): hold, centre the stick, release. Unbound by default, assign in Controls.
+	{down = Keys.trimHere, up = Keys.trimHere, value_down = 1.0, value_up = 0.0, name = _('Pilot Trimmer (sim aid, not in the real aircraft; hold, centre stick, release)'), category = _('Flight Control')},
+	{down = Keys.trimReset, name = _('Trimmer Reset (sim aid, not in the real aircraft)'), category = _('Flight Control')},
 
 })
 return res

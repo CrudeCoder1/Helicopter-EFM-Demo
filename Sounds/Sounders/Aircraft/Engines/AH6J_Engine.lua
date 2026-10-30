@@ -1,6 +1,11 @@
 dofile("Tools.lua")
 
-engine = {number = 0, EXT_ROTOR_IN_CPT = 0.35}
+-- Rotor sound: original synthesized loops (AH6J_RotorExt / AH6J_RotorInt, beat about 55 Hz as heard) plus a low thump layer
+-- that reuses the existing Rotor.wav loop at its natural speed. Pitch follows rotor speed; tune the two values by ear.
+local ROTOR_PITCH_MULT = 1.0
+local THUMP_MIX = 1.0
+
+engine = {number = 0, EXT_ROTOR_IN_CPT = 0.9}
 
 function engine:new()
     local o = {exterior = {}, cockpit = {}}
@@ -10,7 +15,10 @@ function engine:new()
 end
 
 function engine:initNames()
-    self.rotor_name = "Rotor"
+    self.rotor_name = "AH6J_RotorExt"
+    self.rotor_cpt_name = "AH6J_RotorInt"
+    self.thump_name = "AH6J_RotorThumpExt"
+    self.thump_cpt_name = "AH6J_RotorThumpInt"
     self.engine_name = "EngineTV3117L"
     self.engine_r_name = "EngineTV3117R"
     self.start_name = "EngineTV3117Start"
@@ -29,6 +37,7 @@ end
 
 function engine:createSounds(host)
     self.exterior.rotor = ED_AudioAPI.createSource(host, self.rotor_name)
+    self.exterior.thump = ED_AudioAPI.createSource(host, self.thump_name)
     -- self.exterior.engine = ED_AudioAPI.createSource(host, self.engine_name)
     -- self.exterior.engine_r = ED_AudioAPI.createSource(host, self.engine_r_name)
     -- self.exterior.start = ED_AudioAPI.createSource(host, self.start_name)
@@ -37,7 +46,8 @@ end
 function engine:createSoundsCpt(hostCpt)
     -- self.cockpit.engine_l = ED_AudioAPI.createSource(hostCpt, self.engine_l_cpt_name)
     -- self.cockpit.engine_r = ED_AudioAPI.createSource(hostCpt, self.engine_r_cpt_name)
-    self.cockpit.rotor = ED_AudioAPI.createSource(hostCpt, self.rotor_name)
+    self.cockpit.rotor = ED_AudioAPI.createSource(hostCpt, self.rotor_cpt_name)
+    self.cockpit.thump = ED_AudioAPI.createSource(hostCpt, self.thump_cpt_name)
 end
 
 function engine:destroySoundsCpt()
@@ -73,16 +83,18 @@ function engine:update(coreRPM, fanRPM, turbPower, thrust, flame, vTrue)
     local rotor = math.max(0, fanRPM or 0)
     -- The EFM supplies N1 as core RPM and geared N2 as fan RPM.
     -- N2 follows the engine shaft; it can differ from rotor speed with the clutch disengaged.
-    local rotorGain = math.min(1.2, rotor * rotor)
+    local rotorGain = math.min(1.2, math.sqrt(rotor))
     local running = math.min(1, math.max(0, (core - 0.45) / 0.30))
     local engineGain = math.min(1.2, core) * running
     local startGain = math.min(1, core / 0.25) * (1 - running)
 
-    self:controlSound(self.exterior.rotor, rotor, rotorGain)
+    self:controlSound(self.exterior.rotor, rotor * ROTOR_PITCH_MULT, rotorGain)
+    self:controlSound(self.exterior.thump, rotor, rotorGain * THUMP_MIX)
     -- self:controlSound(self.exterior.engine, core, engineGain * 0.5)
     -- self:controlSound(self.exterior.engine_r, core, engineGain * 0.5)
     -- self:controlSound(self.exterior.start, 0.5 + 0.5 * core, startGain)
     -- self:controlSound(self.cockpit.engine_l, core, math.min(1, core) * 0.4)
     -- self:controlSound(self.cockpit.engine_r, core, math.min(1, core) * 0.4)
-    self:controlSound(self.cockpit.rotor, rotor, rotorGain * self.EXT_ROTOR_IN_CPT)
+    self:controlSound(self.cockpit.rotor, rotor * ROTOR_PITCH_MULT, rotorGain * 0.8)
+    self:controlSound(self.cockpit.thump, rotor, rotorGain * 0.8 * THUMP_MIX)
 end

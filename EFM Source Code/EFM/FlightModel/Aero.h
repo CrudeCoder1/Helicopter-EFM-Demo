@@ -96,6 +96,8 @@ public:
         ThetaB = pitch;
     }
 
+    double getPitchDeg() const { return ThetaB * 57.29578; }
+    double getRollDeg() const { return PhiB * 57.29578; }
     double getMRomega()
     {
         return Omega;
@@ -123,8 +125,13 @@ private:
     const double FSCG{ 100 };		//Center of Gravity Fuselage Station position(longitudinal;x), [inch]
     const double WLCG{ 49.6 };		//Center of Gravity Waterline position(vertical;z), [inch]
     const double BLCG{ 0.0 };		//Center of Gravity Buttline position(lateral;y), [inch]
+    //============== Control throws ====================
+    const double CollectiveRange{ 19.0 };	// collective pitch travel, [deg] (full down = CollectiveMin)
+    const double CollectiveMin{ 2.0 };		// collective pitch at full down, [deg]
+    const double LatCyclicMax{ 8.0 };		// lateral cyclic travel each side, [deg]
+
     //============== Main rotor constants ============== 
-    const double RMR{ 13.167 };				// main rotor radius, [ft]
+    const double RMR{ 13.675 };				// main rotor radius, [ft] (27.35 ft diameter as in AH-6J.lua; the OH-6A had 13.167)
     const double BLMR{ 0.0 };				// buttline pos(left/right) MR, [inch]
     const double FSMR{ 100.0 };				// fuselage station MR, [inch]
     const double WLMR{ 83.0 };				// waterline MR, [inch]
@@ -182,10 +189,12 @@ private:
     const double Theta1TR{ -8.0 };		//TR blade twist, [deg]
     const double DragTR{ 1.3 };         // Tail Rotor Drag coefficient
     const double da0overdT{ 0.00129 };	// rate of change of cone angle, [deg/lb]
-    const double KlambdaPrimeTR{ 0.1 };			//downwash loop filter const 
+    const double KlambdaPrimeTR{ 0.1 };			//downwash loop filter const
+    const double CdoTR{ 0.010 };				//TR blade profile drag coefficient, used for TR profile power ***estimate
+    const double TRVisualOmegaMax{ 37.7 };		//visual TR spin rate at 100% rpm, [rad/s] (~6 rev/s, real 47 rev/s aliases against frame rate)
 
     //============== Gearbox Constants ==================
-    const double JMR = 600.0;// inertia of MR, [slug-ft2] can be estimated J=N*I_B
+    const double JMR = 350.0;// inertia of MR, [slug-ft2] can be estimated J=N*I_B (TEST: was 600, probably 2-4x too high for the light MD 530F blades; 200 was too light in a flight test)
     const double JE = 150.0;//engine (N2 turbine) inertia, [slug-ft^2]
     const double KFRQ = 25.0;// MR torque filter constant
 
@@ -285,9 +294,17 @@ private:
     // Rotor Degree Of Freedom (DOF)
     double QMR = 0.0;// MR torque shaft axis, [ft-lb]
     double QMRfiltered = 0.0;// filtered MR torque, [ft-lb]
+    double QTRfiltered = 0.0;// filtered TR torque as seen at the MR shaft, [ft-lb]
     bool isClutchEngaged = true;
     double OmegaE = 0.0;//engine shaft speed (N2), [rad/sec]
     bool isRotorBrakeEngaged = false;
+    double brakeOverLimitTime = 0.0;// time the rotor brake has been applied above the rotor speed limit, [s]
+    double strapTime = 0.0;// time collective has been held up with the rotor brake applied and the rotor turning, [s]
+    double strapDamage = 0.0;// strap pack damage from collective held up while braking, 0..1
+    bool rotorWasTurning = false;// the rotor has been turning faster than a few rpm since it was last stopped
+    double lastBrakeInteg = 1.0;// blade 1 integrity as left by the brake damage code last frame (repair detection)
+    bool strapFailed = false;// a strap pack has let go and a blade is lost
+    double brakeDamage = 0.0;// accumulated rotor / strap pack damage from brake misuse, 0..1
 
 };
 

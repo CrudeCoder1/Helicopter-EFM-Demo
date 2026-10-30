@@ -1,0 +1,5 @@
+wave = "Effects/AH6J_EngineWarning.wav"
+inner_radius = 10
+outer_radius = 100
+attack = 0.01
+gain = 0.7

@@ -41,6 +41,8 @@ enum class Keys
 	trimDown = 10022,
 	trimLeft = 10023,
 	trimRight = 10024,
+	trimHere = 10025,
+	trimReset = 10026,
 
 	iCommandPlane_ShowControls = 851, // need this bc show controls is in common_keyboard_binding
 };

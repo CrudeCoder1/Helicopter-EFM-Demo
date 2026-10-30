@@ -7,6 +7,9 @@ class EFMData
 {
 public:
 
+	bool densityEffect = true;	// air density follows altitude/temperature (see setAtmosphere); switched from Lua with the debug key
+	constexpr static double SEA_LEVEL_RHO_KGM3 = 1.225;		// ISA sea level air density [kg/m^3]
+
 	EFMData()
 		: centerOfGravity()
 		, inertia()
@@ -65,7 +68,12 @@ public:
 		speedOfSound = speedSound_mps;
 		speedOfSound_fts = speedSound_mps * Convert::meterToFoot;
 		rho = airDensity_kgm3;
-		rho_SlgFt3 = Convert::kgm3ToSlugFt3;
+		// The original code set rho_SlgFt3 to the unit conversion constant only (0.00194 slug/ft^3, i.e. a fixed density of
+		// 1.0 kg/m^3), so the rotor and airframe aerodynamics never changed with altitude or temperature, and the rotor was
+		// tuned against that fixed value. The density ratio is applied here so that sea level standard conditions give
+		// exactly the same value as before (the tuned baseline) while altitude and temperature now change the air density.
+		// densityEffect = false gives the original behaviour back (it can be toggled in flight, see AH6.cpp / Avionics.lua).
+		rho_SlgFt3 = densityEffect ? Convert::kgm3ToSlugFt3 * (airDensity_kgm3 / SEA_LEVEL_RHO_KGM3) : Convert::kgm3ToSlugFt3;
 		airPressure = airPressure_Nm2;
 	}
 
