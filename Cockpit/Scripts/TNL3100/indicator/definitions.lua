@@ -1,4 +1,5 @@
 dofile(LockOn_Options.common_script_path.."elements_defs.lua")
+dofile(LockOn_Options.common_script_path.."Fonts/symbols_locale.lua")
 
 SetScale(METERS) --FOV, Milliradians, Meters
 DEFAULT_LEVEL = 8
@@ -11,67 +12,88 @@ degreeToRadian = 0.0174533
 
 --------- Materials ------------
 TRIMBLE_Green = {10,230,10,220}
---[[
-symbol_pixels_x =  44.0 * 2
-symbol_pixels_y =  72.0 * 2
-local font_desc = {
-	texture     = LockOn_Options.script_path.."../Textures/Avionics/font_Argus7000.tga",
-	size        = {7, 7},
+
+symbol_pixels_x =  85
+symbol_pixels_y =  128--108
+local fontMatrix_desc = {
+	texture     = LockOn_Options.script_path.."../Textures/Avionics/AH6J_LED_MATRIX_FONT.tga",
+	size        = {8, 12},-- rows, columns
 	resolution  = {1024, 1024},
 	default     = {symbol_pixels_x, symbol_pixels_y},
 	chars	    = {
 
-		 [1]   = {32, symbol_pixels_x, symbol_pixels_y}, -- [space]
-		 [2]   = {42, symbol_pixels_x, symbol_pixels_y}, -- *
-		 [3]   = {43, symbol_pixels_x, symbol_pixels_y}, -- +
-		 [4]   = {45, symbol_pixels_x, symbol_pixels_y}, -- -
-		 [5]   = {46, symbol_pixels_x, symbol_pixels_y}, -- .
-		 [6]   = {47, symbol_pixels_x, symbol_pixels_y}, -- /
-		 [7]   = {48, symbol_pixels_x, symbol_pixels_y}, -- 0
-		 [8]   = {49, symbol_pixels_x, symbol_pixels_y}, -- 1
-		 [9]   = {50, symbol_pixels_x, symbol_pixels_y}, -- 2
-		 [10]  = {51, symbol_pixels_x, symbol_pixels_y}, -- 3
-		 [11]  = {52, symbol_pixels_x, symbol_pixels_y}, -- 4
-		 [12]  = {53, symbol_pixels_x, symbol_pixels_y}, -- 5
-		 [13]  = {54, symbol_pixels_x, symbol_pixels_y}, -- 6
-		 [14]  = {55, symbol_pixels_x, symbol_pixels_y}, -- 7
-		 [15]  = {56, symbol_pixels_x, symbol_pixels_y}, -- 8
-		 [16]  = {57, symbol_pixels_x, symbol_pixels_y}, -- 9
-		 [17]  = {58, symbol_pixels_x, symbol_pixels_y}, -- :
-		 [18]  = {65, symbol_pixels_x, symbol_pixels_y}, -- A
-		 [19]  = {66, symbol_pixels_x, symbol_pixels_y}, -- B
-		 [20]  = {67, symbol_pixels_x, symbol_pixels_y}, -- C
-		 [21]  = {68, symbol_pixels_x, symbol_pixels_y}, -- D
-		 [22]  = {69, symbol_pixels_x, symbol_pixels_y}, -- E
-		 [23]  = {70, symbol_pixels_x, symbol_pixels_y}, -- F
-		 [24]  = {71, symbol_pixels_x, symbol_pixels_y}, -- G
-		 [25]  = {72, symbol_pixels_x, symbol_pixels_y}, -- H
-		 [26]  = {73, symbol_pixels_x, symbol_pixels_y}, -- I
-		 [27]  = {74, symbol_pixels_x, symbol_pixels_y}, -- J
-		 [28]  = {75, symbol_pixels_x, symbol_pixels_y}, -- K
-		 [29]  = {76, symbol_pixels_x, symbol_pixels_y}, -- L
-		 [30]  = {77, symbol_pixels_x, symbol_pixels_y}, -- M
-		 [31]  = {78, symbol_pixels_x, symbol_pixels_y}, -- N
-		 [32]  = {79, symbol_pixels_x, symbol_pixels_y}, -- O
-		 [33]  = {80, symbol_pixels_x, symbol_pixels_y}, -- P
-		 [34]  = {81, symbol_pixels_x, symbol_pixels_y}, -- Q
-		 [35]  = {82, symbol_pixels_x, symbol_pixels_y}, -- R
-		 [36]  = {83, symbol_pixels_x, symbol_pixels_y}, -- S
-		 [37]  = {84, symbol_pixels_x, symbol_pixels_y}, -- T
-		 [38]  = {85, symbol_pixels_x, symbol_pixels_y}, -- U
-		 [39]  = {86, symbol_pixels_x, symbol_pixels_y}, -- V
-		 [40]  = {87, symbol_pixels_x, symbol_pixels_y}, -- W
-		 [41]  = {88, symbol_pixels_x, symbol_pixels_y}, -- X
-		 [42]  = {89, symbol_pixels_x, symbol_pixels_y}, -- Y
-		 [43]  = {90, symbol_pixels_x, symbol_pixels_y}, -- Z
-		 [44]  = {91, symbol_pixels_x, symbol_pixels_y}, -- [
-		 [45]  = {93, symbol_pixels_x, symbol_pixels_y}, -- ]
-		 [46]  = {62, symbol_pixels_x, symbol_pixels_y}, -- >
-		 [47]  = {176, symbol_pixels_x, symbol_pixels_y}, -- degree °
-		 [48]  = {94 ,  symbol_pixels_x, symbol_pixels_y}} -- ^
+		 [1]   = {latin['A'], symbol_pixels_x, symbol_pixels_y},
+		 [2]   = {latin['B'], symbol_pixels_x, symbol_pixels_y},
+		 [3]   = {latin['C'], symbol_pixels_x, symbol_pixels_y},
+		 [4]   = {latin['D'], symbol_pixels_x, symbol_pixels_y},
+		 [5]   = {latin['E'], symbol_pixels_x, symbol_pixels_y},
+		 [6]   = {latin['F'], symbol_pixels_x, symbol_pixels_y},
+		 [7]   = {latin['G'], symbol_pixels_x, symbol_pixels_y},
+		 [8]   = {latin['H'], symbol_pixels_x, symbol_pixels_y},
+		 [9]   = {latin['I'], symbol_pixels_x, symbol_pixels_y},
+		 [10]  = {latin['J'], symbol_pixels_x, symbol_pixels_y},
+		 [11]  = {latin['K'], symbol_pixels_x, symbol_pixels_y},
+		 [12]  = {latin['L'], symbol_pixels_x, symbol_pixels_y},
+		 [13]  = {latin['M'], symbol_pixels_x, symbol_pixels_y},
+		 [14]  = {latin['N'], symbol_pixels_x, symbol_pixels_y},
+		 [15]  = {latin['O'], symbol_pixels_x, symbol_pixels_y},
+		 [16]  = {latin['P'], symbol_pixels_x, symbol_pixels_y},
+		 [17]  = {latin['Q'], symbol_pixels_x, symbol_pixels_y},
+		 [18]  = {latin['R'], symbol_pixels_x, symbol_pixels_y},
+		 [19]  = {latin['S'], symbol_pixels_x, symbol_pixels_y},
+		 [20]  = {latin['T'], symbol_pixels_x, symbol_pixels_y},
+		 [21]  = {latin['U'], symbol_pixels_x, symbol_pixels_y},
+		 [22]  = {latin['V'], symbol_pixels_x, symbol_pixels_y},
+		 [23]  = {latin['W'], symbol_pixels_x, symbol_pixels_y},
+		 [24]  = {latin['X'], symbol_pixels_x, symbol_pixels_y},
+		 [25]  = {latin['Y'], symbol_pixels_x, symbol_pixels_y},
+		 [26]  = {latin['Z'], symbol_pixels_x, symbol_pixels_y},
+		 [27]  = {symbol['0'], symbol_pixels_x, symbol_pixels_y},
+		 [28]  = {symbol['1'], symbol_pixels_x, symbol_pixels_y},
+		 [29]  = {symbol['2'], symbol_pixels_x, symbol_pixels_y},
+		 [30]  = {symbol['3'], symbol_pixels_x, symbol_pixels_y},
+		 [31]  = {symbol['4'], symbol_pixels_x, symbol_pixels_y},
+		 [32]  = {symbol['5'], symbol_pixels_x, symbol_pixels_y},
+		 [33]  = {symbol['6'], symbol_pixels_x, symbol_pixels_y},
+		 [34]  = {symbol['7'], symbol_pixels_x, symbol_pixels_y},
+		 [35]  = {symbol['8'], symbol_pixels_x, symbol_pixels_y},
+		 [36]  = {symbol['9'], symbol_pixels_x, symbol_pixels_y},
+		 [37]  = {symbol[' '], symbol_pixels_x, symbol_pixels_y},
+		 [38]  = {symbol['_'], symbol_pixels_x, symbol_pixels_y},
+		 [39]  = {symbol['['], symbol_pixels_x, symbol_pixels_y},
+		 [40]  = {symbol[']'], symbol_pixels_x, symbol_pixels_y},
+		 [41]  = {symbol['°'], symbol_pixels_x, symbol_pixels_y},
+		 [42]  = {symbol['-'], symbol_pixels_x, symbol_pixels_y},
+		 [43]  = {symbol['<'], symbol_pixels_x, symbol_pixels_y},
+		 [44]  = {symbol['>'], symbol_pixels_x, symbol_pixels_y},
+		 [45]  = {symbol['@'], symbol_pixels_x, symbol_pixels_y},-- down arrow
+		 [46]  = {symbol['|'], symbol_pixels_x, symbol_pixels_y},
+		 [47]  = {symbol['*'], symbol_pixels_x, symbol_pixels_y},
+		 [48]  = {symbol[':'], symbol_pixels_x, symbol_pixels_y},
+		 [49]  = {latin['t'], symbol_pixels_x, symbol_pixels_y},-- TK
+		 [50]  = {latin['k'], symbol_pixels_x, symbol_pixels_y},-- KT
+		 [51]  = {symbol['`'], symbol_pixels_x, symbol_pixels_y},--NM
+		 [52]  = {latin['o'], symbol_pixels_x, symbol_pixels_y},--TO
+		 [53]  = {symbol['.'], symbol_pixels_x, symbol_pixels_y},
+		 [54]  = {symbol['='], symbol_pixels_x, symbol_pixels_y},--right arrow
+		 [55]  = {symbol['~'], symbol_pixels_x, symbol_pixels_y},--KF
+		 [56]  = {latin['d'], symbol_pixels_x, symbol_pixels_y},--DT
+		 [57]  = {latin['f'], symbol_pixels_x, symbol_pixels_y},--Fr
+		 [58]  = {latin['l'], symbol_pixels_x, symbol_pixels_y},--AT
+		 [59]  = {latin['z'], symbol_pixels_x, symbol_pixels_y},
+		 [60]  = {latin['a'], symbol_pixels_x, symbol_pixels_y},
+		 [61]  = {latin['m'], symbol_pixels_x, symbol_pixels_y},
+		 [62]  = {latin['v'], symbol_pixels_x, symbol_pixels_y},
+		 [63]  = {latin['n'], symbol_pixels_x, symbol_pixels_y},
+		 [64]  = {latin['i'], symbol_pixels_x, symbol_pixels_y},
+		 [65]  = {latin['u'], symbol_pixels_x, symbol_pixels_y},
+		 [66]  = {symbol['('], symbol_pixels_x, symbol_pixels_y},
+		 [67]  = {symbol[')'], symbol_pixels_x, symbol_pixels_y},
+		 [68]  = {symbol['!'], symbol_pixels_x, symbol_pixels_y},-- CDI "needle"
+		}
 }
---]]
-TrimbleFont = MakeFont({used_DXUnicodeFontData = "AH6J_LED_MATRIX_FONT"}, TRIMBLE_Green)
+
+TrimbleFont = MakeFont(fontMatrix_desc, TRIMBLE_Green, "TrimbleFont")
 
 
 stringdefDefault = {0.007, 0.007*0.65, -0.0003, 0}-- {size vertical, size horizontal, horizontal spacing, vert spacing}
