@@ -61,6 +61,11 @@ enum ExternalAnimationArgs
 	EXT_NavLights = 190,
 	EXT_LandingLight = 208,
 	EXT_TRcollective = 17,
+	EXT_Blade1Flap = 280, // -3 deg to 11 deg
+	EXT_Blade2Flap = 281, // -3 deg to 11 deg
+	EXT_Blade3Flap = 282, // -3 deg to 11 deg
+	EXT_Blade4Flap = 283, // -3 deg to 11 deg
+	EXT_Blade5Flap = 284, // -3 deg to 11 deg
 	//510 aiming mark
 };
 

@@ -14,11 +14,11 @@ local unitPayloads = {
 				},
 				[5] = {
 					["CLSID"] = "{M134 Minigun}",
-					["num"] = 4,
+					["num"] = 5,
 				},
 				[6] = {
 					["CLSID"] = "{A021F29D-18AB-4d3e-985C-FC9C60E35E9E}",
-					["num"] = 5,
+					["num"] = 6,
 				},
 			},
 			["tasks"] = {
@@ -40,7 +40,7 @@ local unitPayloads = {
 				},
 				[6] = {
 					["CLSID"] = "{AH6_GAU-19}",
-					["num"] = 5,
+					["num"] = 6,
 				},
 			},
 			["tasks"] = {

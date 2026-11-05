@@ -247,21 +247,21 @@ AH6J = {
 	Damage = verbose_to_dmg_properties( --index meaning see in Scripts\Aircrafts\_Common\Damage.lua
 	{		-- deps_cells defines what other parts get destroyed along with it
 		["ROTOR"]			= {critical_damage = 3, args = {160}, deps_cells = {"BLADE_1_IN", "BLADE_2_IN", "BLADE_3_IN", "BLADE_4_IN", "BLADE_5_IN"}},
-		["BLADE_1_IN"]		= {critical_damage = 1, args = {161}, deps_cells = {"BLADE_1_CENTER"}},
-		["BLADE_1_CENTER"]	= {critical_damage = 1, args = {161}, deps_cells = {"BLADE_1_OUT"}},
-		["BLADE_1_OUT"]		= {critical_damage = 1, args = {161}},
-		["BLADE_2_IN"]		= {critical_damage = 1, args = {162}, deps_cells = {"BLADE_2_CENTER"}},
-		["BLADE_2_CENTER"]	= {critical_damage = 1, args = {162}, deps_cells = {"BLADE_2_OUT"}},
-		["BLADE_2_OUT"]		= {critical_damage = 1, args = {162}},
-		["BLADE_3_IN"]		= {critical_damage = 1, args = {163}, deps_cells = {"BLADE_3_CENTER"}},
-		["BLADE_3_CENTER"]	= {critical_damage = 1, args = {163}, deps_cells = {"BLADE_3_OUT"}},
-		["BLADE_3_OUT"]		= {critical_damage = 1, args = {163}},
-		["BLADE_4_IN"]		= {critical_damage = 1, args = {164}, deps_cells = {"BLADE_4_CENTER"}},
-		["BLADE_4_CENTER"]	= {critical_damage = 1, args = {164}, deps_cells = {"BLADE_4_OUT"}},
-		["BLADE_4_OUT"]		= {critical_damage = 1, args = {164}},
-		["BLADE_5_IN"]		= {critical_damage = 1, args = {165}, deps_cells = {"BLADE_5_CENTER"}},
-		["BLADE_5_CENTER"]	= {critical_damage = 1, args = {165}, deps_cells = {"BLADE_5_OUT"}},
-		["BLADE_5_OUT"]		= {critical_damage = 1, args = {165}},
+		["BLADE_1_IN"]		= {critical_damage = 1, args = {117}, deps_cells = {"BLADE_1_CENTER"}},
+		["BLADE_1_CENTER"]	= {critical_damage = 1, args = {116}, deps_cells = {"BLADE_1_OUT"}},
+		["BLADE_1_OUT"]		= {critical_damage = 1, args = {115}},
+		["BLADE_2_IN"]		= {critical_damage = 1, args = {120}, deps_cells = {"BLADE_2_CENTER"}},
+		["BLADE_2_CENTER"]	= {critical_damage = 1, args = {119}, deps_cells = {"BLADE_2_OUT"}},
+		["BLADE_2_OUT"]		= {critical_damage = 1, args = {118}},
+		["BLADE_3_IN"]		= {critical_damage = 1, args = {123}, deps_cells = {"BLADE_3_CENTER"}},
+		["BLADE_3_CENTER"]	= {critical_damage = 1, args = {122}, deps_cells = {"BLADE_3_OUT"}},
+		["BLADE_3_OUT"]		= {critical_damage = 1, args = {121}},
+		["BLADE_4_IN"]		= {critical_damage = 1, args = {126}, deps_cells = {"BLADE_4_CENTER"}},
+		["BLADE_4_CENTER"]	= {critical_damage = 1, args = {125}, deps_cells = {"BLADE_4_OUT"}},
+		["BLADE_4_OUT"]		= {critical_damage = 1, args = {124}},
+		["BLADE_5_IN"]		= {critical_damage = 1, args = {129}, deps_cells = {"BLADE_5_CENTER"}},
+		["BLADE_5_CENTER"]	= {critical_damage = 1, args = {128}, deps_cells = {"BLADE_5_OUT"}},
+		["BLADE_5_OUT"]		= {critical_damage = 1, args = {127}},
 		
 		-- Fuselage
 		["MAIN"]  			= {critical_damage = 10, args = {151}},
@@ -290,7 +290,6 @@ AH6J = {
 		["TAIL_RIGHT_SIDE"]	= {critical_damage = 3, args = {159}, deps_cells = {"TAIL_TOP","TAIL_BOTTOM"}}, -- vertical tail
 		["TAIL_TOP"]		= {critical_damage = 3, args = {166}}, -- horizontal tail
 		["TAIL_BOTTOM"]		= {critical_damage = 1, args = {166}}, -- tail skid shell
-		["WING_L_00"]		= {critical_damage = 1, args = {166}}, -- tail skid line
 		["TAIL_LEFT_SIDE"]	= {critical_damage = 3, args = {159}, deps_cells = {"BLADE_6_OUT","BLADE_6_IN"}}, -- TR transmission
 		["BLADE_6_OUT"]		= {critical_damage = 1, args = {166}}, -- tail rotor blade 1
 		["BLADE_6_IN"]		= {critical_damage = 1, args = {166}}, -- tail rotor blade 2
@@ -310,7 +309,7 @@ AH6J = {
 		[2] = "AH-6_Skid",  --wing left
 		--[3] = "",    --nose part
 		[4] = "AH-6_Skid",  -- tail part
-		[5] = "AH-6_Rotor",	--blade
+		[5] = "AH-6J_Rotor",	--blade
 	},
 	
 	--[[

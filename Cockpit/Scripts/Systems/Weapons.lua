@@ -29,8 +29,8 @@ local R_StationReady = false
 
 local L_OB_Station = 0
 local L_IB_Station = 1
-local R_IB_Station = 3
-local R_OB_Station = 4
+local R_IB_Station = 4 --ANDR0ID Edit
+local R_OB_Station = 5 --ANDR0ID Edit
 
 function post_initialize()	
 	dev:performClickableAction(device_commands.AMSbuttonBrght,1)
@@ -169,8 +169,8 @@ dev:listen_command(Keys.MasterArmToggle)
 function SetCommand(command,value)
 	if command == device_commands.JettSw then
 		if value == 1 then -- direct battery connection
-			dev:emergency_jettison(0)
-			dev:emergency_jettison(4)		
+			dev:emergency_jettison(L_OB_Station)
+			dev:emergency_jettison(R_OB_Station)		
 		end
 	elseif command == device_commands.AMSPwrSw then	
 		PwrSwOn = value == 1
