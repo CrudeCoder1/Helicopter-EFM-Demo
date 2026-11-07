@@ -317,6 +317,16 @@ void AH6Aero::MainRotorModule()
 
 			CDY[b][s] = CDfinal;// _CD_NACA0015(limit(abs(alphaY), 0.0, 180.0)) + DeltaCD;
 
+			// EXPERIMENTAL: blade damage. A damaged blade keeps only its inner part (DCS wrecks a blade from the tip inward), so lift
+			// and drag of segments outboard of the remaining span fade out. Blade health 1 leaves every segment untouched.
+			double bladeHealth = p_Damage->elementIntegrity[BLADE_1_CENTER + b * 3];
+			if (bladeHealth < 1.0)
+			{
+				double sf = limit((bladeHealth - Y2[s]) / 0.08 + 1.0, 0.0, 1.0);
+				CLY[b][s] *= sf;
+				CDY[b][s] *= sf;
+			}
+
 			// Blade segment forces (blade span axis)
 			FP[b][s] = 0.5 * p_EFMdata->rho_SlgFt3 * pow(OmegaT, 2) * pow(RMR, 3) * (CR * DeltaY[s]) * UYAW * (CLY[b][s] * (UT[b][s] / cosGamma) + CDY[b][s] * UP[b][s]);// main source of lift
 			FT[b][s] = 0.5 * p_EFMdata->rho_SlgFt3 * pow(OmegaT, 2) * pow(RMR, 3) * (CR * DeltaY[s]) * UYAW * (CDY[b][s] * UT[b][s] - CLY[b][s] * UP[b][s] * cosGamma);

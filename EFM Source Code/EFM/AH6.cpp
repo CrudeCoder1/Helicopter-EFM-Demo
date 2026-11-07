@@ -492,9 +492,11 @@ double ed_fm_get_param(unsigned param_enum)
 	case ED_FM_PROPELLER_0_RPM:	// this is neccesary for rotor sound, rpm should match definition in AH-6.lua rotor_RPM
 		return Aero->getMRomega() * Convert::radSecToRPM;
 	case ED_FM_PROPELLER_0_PITCH:  // propeller blade pitch
-		
-	case ED_FM_PROPELLER_0_TILT:   // for helicopter
 		return flightControls->CollectiveInput * 19;
+	case ED_FM_PROPELLER_0_TILT:   // for helicopter
+		// EXPERIMENTAL: the UH-60L tilts its rotor disc with cyclic through this value, this one only repeated the collective.
+		// Whether DCS drives anything from it for this aircraft is untested.
+		return flightControls->pitchOutput * 12;
 	case ED_FM_PROPELLER_0_INTEGRITY_FACTOR:   // for 0 to 1 , 0 is fully broken 
 		return 1;
 
