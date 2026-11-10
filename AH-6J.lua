@@ -516,4 +516,5 @@ AH6J = {
 	},
 }
 
+dofile(current_mod_path..'/FlightModelProfiles.lua').applyAircraft(AH6J)
 add_aircraft(AH6J)

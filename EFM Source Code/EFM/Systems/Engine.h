@@ -17,6 +17,8 @@ constexpr static const int _N1_Points = 9;
 static double _N1percent[_N1_Points] = { 0.0, 20.0,  62.0,  80.0,  95.0,  98.0,  100.0,  105.0, 106.0};
 static double _HP_data[_N1_Points] =   { 0.0,  0.0,  45.0, 135.0, 312.0, 370.0,  400.0,  425.0, 575.0};
 
+struct UhEfmAh6jOutput;
+
 class TurboshaftEngine
 {
 private:
@@ -61,6 +63,8 @@ private:
     double TOTwhenIgnited = 0.0;
 
 public:
+    void updateFromFlightModel(const UhEfmAh6jOutput& state);
+
     double throttleInput = 0.0;	// Throttle input command
 
     TurboshaftEngine(EFMData& ptr_EFMdata, FlightControls& ptr_fltCntrl, ElectricSystem& ptr_elec)
