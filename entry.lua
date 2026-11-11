@@ -70,7 +70,7 @@ local cfg_path = current_mod_path.."/FM_Config.lua"
 dofile(cfg_path)
 EFM[1] 				= self_ID
 EFM[2] 				= 'AH6J'
-EFM.config_path 	= cfg_path
+EFM.config_path 	= current_mod_path.."/FlightModelSelection.lua"
 
 make_flyable('AH-6J',current_mod_path..'/Cockpit/Scripts/', EFM, current_mod_path..'/comm.lua')
 

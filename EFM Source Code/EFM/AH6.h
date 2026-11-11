@@ -21,7 +21,7 @@
 #include "Systems/ElectricSystem.h"	// Generators, battery etc.
 #include "Systems/FlightControls.h"
 #include "Systems/CautionLights.h"
-#include "FlightModel/Aero.h"		// Aerodynamic model functions
+#include "FlightModel/SelectedFlightModel.h"		// Aerodynamic model functions
 
 
 EFM_Globals G_Params;
@@ -34,7 +34,7 @@ static ElectricSystem* Electrics = NULL;
 static FlightControls* flightControls = NULL;
 static LightSystem* Lighting = NULL;
 static TurboshaftEngine* Engine = NULL;
-static AH6Aero* Aero = NULL;
+static SelectedFlightModel* Aero = NULL;
 
 void createHeli()
 {
@@ -45,7 +45,7 @@ void createHeli()
 	flightControls = new FlightControls;
 	Lighting = new LightSystem;
 	Engine = new TurboshaftEngine(*EFMdata, *flightControls, *Electrics);
-	Aero = new AH6Aero(*EFMdata, *damageModel, *flightControls);
+	Aero = new SelectedFlightModel(*EFMdata, *damageModel, *flightControls);
 }
 void releaseHeli()
 {

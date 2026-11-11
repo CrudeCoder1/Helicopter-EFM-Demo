@@ -8,6 +8,9 @@ local res = external_profile("Config/Input/Aircrafts/common_keyboard_binding.lua
 join(res.keyCommands,{
 
 -- Systems
+	{down = device_commands.rotorBrake, up = device_commands.rotorBrake, value_down = 1.0, value_up = 0.0, name = _('Rotor Brake (hold)'), category = _('Systems')},
+	{down = device_commands.rotorBrake, value_down = 1.0, name = _('Rotor Brake ON'), category = _('Systems')},
+	{down = device_commands.rotorBrake, value_down = 0.0, name = _('Rotor Brake OFF'), category = _('Systems')},
 	{combos = {{key = 'Home'}}, down = device_commands.starterButton, up = device_commands.starterButton, value_down = 1.0, value_up = 0.0, name = _('Starter Button'), category = _('Systems')},
     {combos = {{key = 'End'}}, down = Keys.ThrottleCutoff, name = _('Throttle Idle Cutoff'), category = _('Systems')},
 	{combos = {{key = 'PageUp'}}, pressed = Keys.ThrottleIncrease, up = Keys.ThrottleStop,  name = _('Throttle Up'), category = _('Systems')},

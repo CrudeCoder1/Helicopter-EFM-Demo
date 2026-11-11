@@ -34,6 +34,7 @@ enum InternalAnimationArgs
 	INT_StickRoll = 2,
 	INT_Collective = 3,
 	INT_Pedals = 4,
+	INT_RotorBrake = 151,
 	INT_Throttle = 154,
 	INT_IdleCutoff = 155,
 

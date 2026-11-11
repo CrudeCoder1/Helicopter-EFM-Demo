@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='utf-8'?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <IntDir>$(ProjectDir)x64\$(Configuration)\</IntDir>
+    <Ah6jRuntimeDll>$(ProjectDir)..\..\bin\AH6J_UH_EFM.dll</Ah6jRuntimeDll>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PrecompiledHeader Condition="'$(Configuration)'=='Debug'">NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>$(ProjectDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>FM_EXPORTS;NOMINMAX;_USE_MATH_DEFINES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>$(ProjectDir)lib\x64\AH6J_UH_EFM.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="FlightModel\SelectedFlightModel.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="Systems\UhEfmEngineInstruments.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClInclude Include="FlightModel\SelectedFlightModel.h" />
+    <ClCompile Include="FlightModel\UH_EFM\ConstructAircraft.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClInclude Include="FlightModel\UH_EFM\ConstructAircraft.h" />
+    <ClInclude Include="FlightModel\UH_EFM_ModelConstruction.h" />
+    <ClInclude Include="FlightModel\UH_EFM\Parameters\Airframe.h" />
+    <ClInclude Include="FlightModel\UH_EFM\Parameters\MainRotor.h" />
+    <ClInclude Include="FlightModel\UH_EFM\Parameters\TailRotor.h" />
+    <ClInclude Include="FlightModel\UH_EFM\Parameters\Engine.h" />
+    <ClInclude Include="FlightModel\UH_EFM\Parameters\Drivetrain.h" />
+    <ClInclude Include="FlightModel\UH_EFM\Parameters\Aerodynamics.h" />
+    <ClInclude Include="FlightModel\UH_EFM\Parameters\ModelSettings.h" />
+    <ClInclude Include="FlightModel\ModelSelection.h" />
+    <ClInclude Include="FlightModel\UH_EFM_Ah6jApi.h" />
+    <ClInclude Include="Systems\ThrottleControlInput.h" />
+  </ItemGroup>
+  <Target Name="CheckAh6jRuntimePackage" BeforeTargets="PrepareForBuild">
+    <Error Condition="!Exists('$(Ah6jRuntimeDll)')" Text="AH6J_UH_EFM.dll is missing. Install the binary SDK built in the UH_EFM repository." />
+    <Error Condition="!Exists('$(ProjectDir)lib\x64\AH6J_UH_EFM.lib')" Text="The AH6J_UH_EFM import library is missing." />
+  </Target>
+  <Target Name="CopyAh6jRuntime" AfterTargets="Build">
+    <Copy SourceFiles="$(Ah6jRuntimeDll)" DestinationFolder="$(OutDir)" SkipUnchangedFiles="true" />
+  </Target>
+</Project>

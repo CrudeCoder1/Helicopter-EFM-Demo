@@ -18,6 +18,7 @@
 // the Y and the Z and reverse the Y prior to output to DCS World
 //---------------------------------------------------------------------------
 #include "AH6.h"
+#include "Systems/ThrottleControlInput.h"
 
 
 
@@ -36,6 +37,7 @@ void ed_fm_set_surface( double		h,//height of surface under the center of aircra
 )
 {
 	EFMdata->setSurface(h_obj, surface_type);
+	Aero->setGroundPlane(normal_x, normal_y, normal_z);
 }
 
 // called before simulation to set up your environment for the next step
@@ -87,7 +89,7 @@ void ed_fm_set_current_state(double ax,//linear acceleration component in world 
 							double quaternion_w //orientation quaternion components in world coordinate system
 )
 {
-
+	Aero->setPose(py, quaternion_x, quaternion_y, quaternion_z, quaternion_w);
 }
 
 // Body axis
@@ -128,8 +130,7 @@ void ed_fm_simulate(double dt)
 	EFMdata->update(dt);
 
 	flightControls->update();
-	Engine->update(dt, Fuel->isFuelFlow, Aero->getN2PCT());
-	Aero->update(Engine->getEngTorque());
+	Aero->updateFlightModel(dt, Fuel->isFuelFlow, *Engine, *Electrics);
 	Fuel->update(Engine->getFuelFlow(), dt); // note, still uses fuel when sim is paused
 	Electrics->update(dt, Engine->getN1RPM());
 	Lighting->updateFrame();
@@ -390,8 +391,20 @@ void ed_fm_set_command(int command, float value)
 		Fuel->setThrottle(value);
 		break;
 	case (int)Keys::throttleAxis:
-		//Engine->setThrottleInput((-value + 1.0) / 2.0);
+	{
+		const auto axis = ThrottleControlInput::commandFromDcsAxis(value);
+		cockpitAPI.setCockpitDrawArg(INT_Throttle, static_cast<float>(axis.cockpitPosition));
+		Engine->throttleInput = axis.engineCommand;
+		// Axis travel ends at idle; it does not release an engaged fuel cutoff.
 		break;
+	}
+	case (int)device_commands::throttleIdleCutoff:
+	{
+		const auto cutoff = ThrottleControlInput::commandFromIdleCutoff(value, Engine->throttleInput);
+		Engine->throttleInput = cutoff.engineCommand;
+		Fuel->setThrottle(cutoff.engaged ? -1.0f : 0.0f);
+		break;
+	}
 		
 	case (int)device_commands::batterySwitch:
 		Electrics->setPowerSw(value);
@@ -408,6 +421,8 @@ void ed_fm_set_command(int command, float value)
 
 	case (int)device_commands::rotorBrake:
 		Aero->setRotorBrake(value);
+		cockpitAPI.setCockpitDrawArg(INT_RotorBrake, value > 0 ? 1.0f : 0.0f);
+		break;
 
 	default:
 		break;
@@ -492,9 +507,11 @@ double ed_fm_get_param(unsigned param_enum)
 	case ED_FM_PROPELLER_0_RPM:	// this is neccesary for rotor sound, rpm should match definition in AH-6.lua rotor_RPM
 		return Aero->getMRomega() * Convert::radSecToRPM;
 	case ED_FM_PROPELLER_0_PITCH:  // propeller blade pitch
-		
-	case ED_FM_PROPELLER_0_TILT:   // for helicopter
 		return flightControls->CollectiveInput * 19;
+	case ED_FM_PROPELLER_0_TILT:   // for helicopter
+		// AH6J_UH_EFM supplies coning/flapping in its per-blade pose.
+		// Do not add the legacy collective-derived tilt on top of that pose.
+		return Ah6jModelSelection::ah6jUhEfmSelected() ? 0.0 : flightControls->CollectiveInput * 19;
 	case ED_FM_PROPELLER_0_INTEGRITY_FACTOR:   // for 0 to 1 , 0 is fully broken 
 		return 1;
 
@@ -611,10 +628,11 @@ bool ed_fm_enable_debug_info()
 
 
 // Gives path to config file as defined in entry.lua (EFM.config_path)
-// Note: this config file is "FM_Config.lua" in the AH-6
+// FlightModelSelection.lua selects the solver; FM_Config.lua still defines the suspension.
 void ed_fm_configure(const char* cfg_path)
 { 
-// most commonly used location is /Mods/aircraft/*AC name*/Config/config.lua
+	Ah6jModelSelection::current() = Ah6jModelSelection::read(cfg_path);
+	if (Aero) Aero->selectModel();
 }
 
 // path to your plugin installed
